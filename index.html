@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07090f">
+  <meta name="description" content="ODEVI+ — simple video tools. Download, convert and create.">
+  <title>ODEVI+ — Download. Convert. Create.</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: #07090f;
+      color: #ffffff;
+      min-height: 100vh;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      width: 100%;
+      padding: 22px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .logo {
+      font-size: 27px;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+    }
+
+    .logo span {
+      opacity: .55;
+    }
+
+    .badge {
+      font-size: 12px;
+      border: 1px solid #292e3a;
+      padding: 7px 11px;
+      border-radius: 20px;
+      color: #aeb5c4;
+    }
+
+    main {
+      width: 100%;
+      max-width: 760px;
+      margin: auto;
+      padding: 50px 20px 80px;
+      text-align: center;
+    }
+
+    .hero-label {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #8d96a8;
+      margin-bottom: 18px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(42px, 11vw, 72px);
+      line-height: .98;
+      letter-spacing: -4px;
+      margin-bottom: 20px;
+    }
+
+    h1 span {
+      color: #7c5cff;
+    }
+
+    .subtitle {
+      color: #a7adba;
+      font-size: 17px;
+      line-height: 1.6;
+      max-width: 540px;
+      margin: auto;
+    }
+
+    .downloader {
+      margin: 38px auto 0;
+      background: #10131c;
+      border: 1px solid #272c38;
+      padding: 8px;
+      border-radius: 18px;
+      display: flex;
+      gap: 8px;
+      max-width: 650px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.35);
+    }
+
+    input {
+      flex: 1;
+      min-width: 0;
+      background: transparent;
+      border: 0;
+      outline: none;
+      color: white;
+      padding: 16px;
+      font-size: 16px;
+    }
+
+    input::placeholder {
+      color: #6f7787;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+      font-weight: 700;
+      border-radius: 13px;
+      font-size: 15px;
+    }
+
+    .download-btn {
+      background: #ffffff;
+      color: #080a10;
+      padding: 0 22px;
+      min-height: 54px;
+    }
+
+    .download-btn:active {
+      transform: scale(.97);
+    }
+
+    .supported {
+      margin-top: 18px;
+      color: #697181;
+      font-size: 13px;
+    }
+
+    .supported strong {
+      color: #9ba3b2;
+    }
+
+    .result {
+      display: none;
+      margin: 24px auto 0;
+      max-width: 650px;
+      background: #10131c;
+      border: 1px solid #272c38;
+      border-radius: 18px;
+      padding: 20px;
+      text-align: left;
+    }
+
+    .result.show {
+      display: block;
+      animation: appear .25s ease;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .result-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .check {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #17251e;
+      color: #6ee7a1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+    }
+
+    .result-title {
+      font-weight: 700;
+    }
+
+    .result-platform {
+      color: #737c8c;
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    .format {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-top: 1px solid #202530;
+    }
+
+    .format-name {
+      font-weight: 600;
+    }
+
+    .format-info {
+      color: #737c8c;
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    .format button {
+      background: #7c5cff;
+      color: white;
+      padding: 10px 15px;
+    }
+
+    .tools {
+      margin-top: 80px;
+    }
+
+    .tools h2 {
+      font-size: 27px;
+      margin-bottom: 10px;
+      letter-spacing: -1px;
+    }
+
+    .tools-subtitle {
+      color: #777f8e;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .tool {
+      background: #0e1118;
+      border: 1px solid #202530;
+      border-radius: 15px;
+      padding: 19px 14px;
+      text-align: left;
+    }
+
+    .tool-icon {
+      font-size: 21px;
+      margin-bottom: 13px;
+    }
+
+    .tool-name {
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .tool-description {
+      color: #6f7787;
+      font-size: 11px;
+      margin-top: 5px;
+    }
+
+    footer {
+      margin-top: auto;
+      text-align: center;
+      padding: 30px 20px;
+      color: #555d6c;
+      font-size: 12px;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 18px 16px;
+      }
+
+      main {
+        padding: 45px 16px 70px;
+      }
+
+      h1 {
+        letter-spacing: -2.5px;
+      }
+
+      .downloader {
+        flex-direction: column;
+        padding: 7px;
+      }
+
+      input {
+        width: 100%;
+        min-height: 52px;
+      }
+
+      .download-btn {
+        width: 100%;
+      }
+
+      .tool-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page">
+
+    <header>
+      <div class="logo">ODEVI<span>+</span></div>
+      <div class="badge">TOOLS</div>
+    </header>
+
+    <main>
+
+      <div class="hero-label">Simple media tools</div>
+
+      <h1>
+        Download.<br>
+        <span>Convert.</span><br>
+        Create.
+      </h1>
+
+      <p class="subtitle">
+        Simple video tools designed for your phone.
+        Paste a link and get started.
+      </p>
+
+      <div class="downloader">
+
+        <input
+          id="urlInput"
+          type="url"
+          inputmode="url"
+          placeholder="Paste your video link..."
+          autocomplete="off"
+        >
+
+        <button
+          class="download-btn"
+          onclick="processLink()">
+          Continue
+        </button>
+
+      </div>
+
+      <div class="supported">
+        Works with <strong>YouTube</strong> ·
+        <strong>TikTok</strong> ·
+        <strong>Instagram</strong>
+      </div>
+
+      <div id="result" class="result">
+
+        <div class="result-top">
+
+          <div class="check">✓</div>
+
+          <div>
+            <div class="result-title">Link detected</div>
+            <div id="platform" class="result-platform">
+              Media link
+            </div>
+          </div>
+
+        </div>
+
+        <div class="format">
+
+          <div>
+            <div class="format-name">MP4 Video</div>
+            <div class="format-info">High quality</div>
+          </div>
+
+          <button onclick="showMessage()">
+            Continue
+          </button>
+
+        </div>
+
+        <div class="format">
+
+          <div>
+            <div class="format-name">Audio</div>
+            <div class="format-info">MP3</div>
+          </div>
+
+          <button onclick="showMessage()">
+            Continue
+          </button>
+
+        </div>
+
+      </div>
+
+      <section class="tools">
+
+        <h2>ODEVI+ Tools</h2>
+
+        <p class="tools-subtitle">
+          Everything you need for your media.
+        </p>
+
+        <div class="tool-grid">
+
+          <div class="tool">
+            <div class="tool-icon">↓</div>
+            <div class="tool-name">Downloader</div>
+            <div class="tool-description">
+              Save supported media
+            </div>
+          </div>
+
+          <div class="tool">
+            <div class="tool-icon">↔</div>
+            <div class="tool-name">Converter</div>
+            <div class="tool-description">
+              Convert your files
+            </div>
+          </div>
+
+          <div class="tool">
+            <div class="tool-icon">◉</div>
+            <div class="tool-name">Compressor</div>
+            <div class="tool-description">
+              Make files smaller
+            </div>
+          </div>
+
+          <div class="tool">
+            <div class="tool-icon">9:16</div>
+            <div class="tool-name">Resize</div>
+            <div class="tool-description">
+              Ready for Shorts & Reels
+            </div>
+          </div>
+
+          <div class="tool">
+            <div class="tool-icon">GIF</div>
+            <div class="tool-name">GIF Maker</div>
+            <div class="tool-description">
+              Turn video into GIF
+            </div>
+          </div>
+
+          <div class="tool">
+            <div class="tool-icon">CC</div>
+            <div class="tool-name">Subtitles</div>
+            <div class="tool-description">
+              Create captions
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+    <footer>
+      © 2026 ODEVI+ · Download. Convert. Create.
+    </footer>
+
+  </div>
+
+  <script>
+
+    function processLink() {
+
+      const input = document.getElementById("urlInput");
+      const result = document.getElementById("result");
+      const platform = document.getElementById("platform");
+
+      const url = input.value.trim();
+
+      if (!url) {
+        input.focus();
+        input.placeholder = "Paste a link first...";
+        return;
+      }
+
+      let detected = "Media link";
+
+      if (url.includes("youtube.com") || url.includes("youtu.be")) {
+        detected = "YouTube link detected";
+      } else if (url.includes("tiktok.com")) {
+        detected = "TikTok link detected";
+      } else if (url.includes("instagram.com")) {
+        detected = "Instagram link detected";
+      }
+
+      platform.textContent = detected;
+
+      result.classList.add("show");
+
+      result.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+    }
+
+    function showMessage() {
+
+      alert(
+        "ODEVI+ is being built. The processing engine will be connected in the next stage."
+      );
+
+    }
+
+  </script>
+
+</body>
+</html>
