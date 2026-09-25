@@ -386,7 +386,7 @@
             <div class="format-info">High quality</div>
           </div>
 
-          <button onclick="showMessage()">
+          <button onclick="downloadMedia('mp4')"></button>
             Continue
           </button>
 
@@ -399,7 +399,7 @@
             <div class="format-info">MP3</div>
           </div>
 
-          <button onclick="showMessage()">
+          <onclick="downloadMedia('mp3')"></onclick>
             Continue
           </button>
 
@@ -511,13 +511,63 @@
         behavior: "smooth",
         block: "center"
       });
+    async function downloadMedia(format) {
+
+  const url = document.getElementById("urlInput").value.trim();
+
+  if (!url) {
+    alert("Paste a link first.");
+    return;
+  }
+
+  try {
+
+    const response = await fetch(
+      "https://odevi-backend.onrender.com/download",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          url: url,
+          format: format
+        })
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Download failed");
     }
 
-    function showMessage() {
+    const blob = await response.blob();
 
-      alert(
-        "ODEVI+ is being built. The processing engine will be connected in the next stage."
-      );
+    const downloadUrl = window.URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = downloadUrl;
+    a.download = format === "mp3"
+      ? "odevi-audio.mp3"
+      : "odevi-video.mp4";
+
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    window.URL.revokeObjectURL(downloadUrl);
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert("Something went wrong while processing the video.");
+
+  }
+}
+
+     
+
+      
 
     }
 
