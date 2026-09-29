@@ -71,7 +71,11 @@ def download_media(request: DownloadRequest):
 
     if request.format == "mp3":
         options = {
-            "format": "bestaudio/best",
+          "extractor_args": {
+    "youtubepot-bgutilhttp": {
+        "base_url": "http://127.0.0.1:4416"
+    }
+},  "format": "bestaudio/best",
             "outtmpl": output_template,
             "noplaylist": True,
             "postprocessors": [
@@ -79,8 +83,13 @@ def download_media(request: DownloadRequest):
                     "key": "FFmpegExtractAudio",
                     "preferredcodec": "mp3",
                     "preferredquality": "192",
-                }
+                 } 
             ],
+   "extractor_args": {
+    "youtubepot-bgutilhttp": {
+        "base_url": "http://127.0.0.1:4416"
+    }
+},        
         }
     else:
         options = {
