@@ -96,7 +96,12 @@ def download_media(request: DownloadRequest):
             "format": "bestvideo+bestaudio/best",
             "outtmpl": output_template,
             "merge_output_format": "mp4",
-            "noplaylist": True,
+            "noplaylist": True, 
+          "extractor_args": {
+    "youtubepot-bgutilhttp": {
+        "base_url": "http://127.0.0.1:4416"
+    }
+},  
         }
 
     try:
