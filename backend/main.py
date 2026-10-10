@@ -57,12 +57,15 @@ def download_media(request: DownloadRequest):
 
     # Primeira versão: YouTube
     allowed_hosts = (
-        "youtube.com",
-        "www.youtube.com",
-        "youtu.be",
-        "www.youtube-nocookie.com",
-    )
-
+    "youtube.com",
+    "www.youtube.com",
+    "youtu.be",
+    "www.youtube-nocookie.com",
+    "tiktok.com",
+    "www.tiktok.com",
+    "vm.tiktok.com",
+    "vt.tiktok.com",
+)
     if not any(host in request.url.lower() for host in allowed_hosts):
         raise HTTPException(
             status_code=400,
