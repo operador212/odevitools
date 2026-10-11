@@ -453,7 +453,74 @@
       nas fontes oficiais antes de iniciar um pedido.
     </aside>
 
-    <section class="tools">
+    
+<section id="passaporte" style="margin:32px 0;padding:22px;background:#11151d;border:1px solid #68f39a;border-radius:18px;color:#fff">
+  <p style="color:#68f39a;font-weight:bold">FERRAMENTA GRATUITA</p>
+  <h2>Preparar o passaporte brasileiro</h2>
+  <p style="color:#b8c0cc">Organize os próximos passos antes de iniciar o pedido em Portugal.</p>
+
+  <label for="tipoPass">Qual é a sua situação?</label>
+  <select id="tipoPass" style="display:block;width:100%;padding:12px;margin:10px 0 18px;background:#090b10;color:white;border-radius:8px">
+    <option value="renovacao">Já tenho passaporte</option>
+    <option value="primeiro">Primeiro passaporte</option>
+    <option value="perdido">Passaporte perdido ou roubado</option>
+  </select>
+
+  <label for="idadePass">Idade</label>
+  <select id="idadePass" style="display:block;width:100%;padding:12px;margin:10px 0 18px;background:#090b10;color:white;border-radius:8px">
+    <option value="adulto">18 anos ou mais</option>
+    <option value="menor">Menos de 18 anos</option>
+  </select>
+
+  <button type="button" onclick="criarListaPass()" style="width:100%;padding:14px;background:#68f39a;color:#07110b;border:0;border-radius:9px;font-weight:bold;font-size:16px">Criar a minha lista</button>
+
+  <div id="listaPass" style="display:none;margin-top:20px">
+    <h3>Lista de preparação</h3>
+    <p style="color:#b8c0cc;font-size:13px">Confirme cada requisito nas instruções oficiais. Esta lista é orientativa.</p>
+    <div id="itensPass"></div>
+    <button type="button" onclick="window.print()" style="margin-top:15px;padding:12px;border-radius:8px">Imprimir / guardar em PDF</button>
+  </div>
+
+  <p style="font-size:12px;color:#b8c0cc;margin-top:20px">O ODEVI+ é independente e não é um serviço governamental. Os requisitos variam conforme a situação.</p>
+  <p><a href="https://ec-lisboa.itamaraty.gov.br/" target="_blank" rel="noopener noreferrer" style="color:#68f39a">Abrir e-Consular de Lisboa ↗</a></p>
+  <p><a href="https://www.gov.br/mre/pt-br/consulado-lisboa" target="_blank" rel="noopener noreferrer" style="color:#68f39a">Consultar o Consulado oficial ↗</a></p>
+</section>
+
+<script>
+function criarListaPass() {
+  const tipo = document.getElementById("tipoPass").value;
+  const idade = document.getElementById("idadePass").value;
+  const itens = [
+    "Consultar os requisitos oficiais para o seu pedido.",
+    "Confirmar os documentos de identidade e nacionalidade exigidos.",
+    "Verificar o formulário e os documentos que devem ser enviados.",
+    "Confirmar as taxas, o pagamento e a apresentação dos originais.",
+    "Consultar as regras de agendamento no e-Consular."
+  ];
+
+  if (tipo === "renovacao") itens.push("Confirmar os requisitos relativos ao passaporte anterior.");
+  if (tipo === "primeiro") itens.push("Confirmar os requisitos específicos do primeiro passaporte.");
+  if (tipo === "perdido") itens.push("Consultar as instruções para perda ou roubo e confirmar se é necessária participação policial.");
+  if (idade === "menor") itens.push("Confirmar a autorização dos responsáveis e os documentos exigidos para menores.");
+  if (idade === "adulto") itens.push("Confirmar os requisitos eleitorais e militares aplicáveis.");
+  
+  const destino = document.getElementById("itensPass");
+  destino.replaceChildren();
+  itens.forEach((item, i) => {
+    const label = document.createElement("label");
+    label.style.cssText = "display:flex;gap:10px;margin:14px 0;line-height:1.5";
+    const check = document.createElement("input");
+    check.type = "checkbox";
+    check.id = "passCheck" + i;
+    const span = document.createElement("span");
+    span.textContent = item;
+    label.append(check, span);
+    destino.append(label);
+  });
+  document.getElementById("listaPass").style.display = "block";
+}
+</script>
+ <section class="tools">
       <div class="section-heading">
         <h2>O universo ODEVI+</h2>
         <p>Novas ferramentas práticas estão a caminho.</p>
