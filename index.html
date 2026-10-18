@@ -303,6 +303,11 @@
       outline: 3px solid var(--green);
       outline-offset: 3px;
     }
+    #itensPass .passport-group {
+      margin: 18px 0 6px;
+      font-size: 15px;
+      color: var(--green);
+    }
     #itensPass .passport-item {
       display: flex;
       align-items: flex-start;
@@ -580,14 +585,29 @@ function criarListaPass() {
   }
 
   const destino = document.getElementById("itensPass");
+  const marcadosAntes = new Set(
+    Array.from(destino.querySelectorAll('input[type="checkbox"]:checked'))
+      .map((check) => check.dataset.itemTexto)
+  );
   destino.replaceChildren();
 
+  let grupoAtual = "";
   itens.forEach((item, i) => {
+    if (item.grupo !== grupoAtual) {
+      grupoAtual = item.grupo;
+      const tituloGrupo = document.createElement("h4");
+      tituloGrupo.className = "passport-group";
+      tituloGrupo.textContent = grupoAtual;
+      destino.append(tituloGrupo);
+    }
+
     const label = document.createElement("label");
     label.className = "passport-item";
     const check = document.createElement("input");
     check.type = "checkbox";
     check.id = "passCheck" + i;
+    check.dataset.itemTexto = item.texto;
+    check.checked = marcadosAntes.has(item.texto);
     check.setAttribute("aria-label", item.texto);
     const span = document.createElement("span");
     span.textContent = item.texto;
