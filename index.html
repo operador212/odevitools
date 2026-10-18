@@ -295,6 +295,49 @@
       text-underline-offset: 3px;
     }
 
+    /* Passport checklist: accessible controls and clean print/PDF output. */
+    #passaporte label { display: block; margin: 12px 0 6px; }
+    #passaporte select, #passaporte button { font: inherit; }
+    #passaporte select:focus-visible, #passaporte button:focus-visible,
+    #passaporte input:focus-visible, #passaporte a:focus-visible {
+      outline: 3px solid var(--green);
+      outline-offset: 3px;
+    }
+    #itensPass .passport-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 12px 0;
+      line-height: 1.5;
+    }
+    #itensPass input { margin-top: 6px; flex: 0 0 auto; }
+    .passport-meta { color: var(--muted); font-size: 12px; margin: 8px 0 16px; }
+    @media print {
+      body { background: #fff !important; color: #111 !important; }
+      body * { visibility: hidden !important; }
+      #passaporte, #passaporte * { visibility: visible !important; }
+      #passaporte {
+        position: absolute !important;
+        inset: 0 auto auto 0 !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: #fff !important;
+        color: #111 !important;
+      }
+      #passaporte h2, #passaporte h3, #passaporte p, #passaporte label,
+      #passaporte .passport-meta { color: #111 !important; }
+      #passaporte select, #passaporte button, #passaporte .screen-only { display: none !important; }
+      #listaPass { display: block !important; margin-top: 12px !important; }
+      #itensPass .passport-item { break-inside: avoid; padding: 5px 0; }
+      #itensPass input { appearance: none; width: 13px; height: 13px; border: 1px solid #111; }
+      #passaporte a { color: #111 !important; text-decoration: underline !important; }
+      #passaporte a::after { content: " (" attr(href) ")"; font-size: 9pt; overflow-wrap: anywhere; }
+      #passaporte { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    }
+
     @media (max-width: 650px) {
       header {
         padding: 19px 17px;
@@ -469,66 +512,92 @@
 <section id="passaporte" style="margin:32px 0;padding:22px;background:#11151d;border:1px solid #68f39a;border-radius:18px;color:#fff">
   <p style="color:#68f39a;font-weight:bold">FERRAMENTA GRATUITA</p>
   <h2>Preparar o passaporte brasileiro</h2>
-  <p style="color:#b8c0cc">Organize os próximos passos antes de iniciar o pedido em Portugal.</p>
+  <p style="color:#b8c0cc">Crie uma lista de preparação adaptada à sua situação antes de iniciar o pedido em Portugal.</p>
 
   <label for="tipoPass">Qual é a sua situação?</label>
   <select id="tipoPass" style="display:block;width:100%;padding:12px;margin:10px 0 18px;background:#090b10;color:white;border-radius:8px">
-    <option value="renovacao">Já tenho passaporte</option>
+    <option value="renovacao">Já tenho ou tive passaporte</option>
     <option value="primeiro">Primeiro passaporte</option>
     <option value="perdido">Passaporte perdido ou roubado</option>
   </select>
 
-  <label for="idadePass">Idade</label>
+  <label for="idadePass">Idade da pessoa que vai pedir o passaporte</label>
   <select id="idadePass" style="display:block;width:100%;padding:12px;margin:10px 0 18px;background:#090b10;color:white;border-radius:8px">
     <option value="adulto">18 anos ou mais</option>
     <option value="menor">Menos de 18 anos</option>
   </select>
 
-  <button type="button" onclick="criarListaPass()" style="width:100%;padding:14px;background:#68f39a;color:#07110b;border:0;border-radius:9px;font-weight:bold;font-size:16px">Criar a minha lista</button>
+  <button class="screen-only" type="button" onclick="criarListaPass()" style="width:100%;padding:14px;background:#68f39a;color:#07110b;border:0;border-radius:9px;font-weight:bold;font-size:16px;cursor:pointer">Criar a minha lista</button>
 
   <div id="listaPass" style="display:none;margin-top:20px">
     <h3>Lista de preparação</h3>
-    <p style="color:#b8c0cc;font-size:13px">Confirme cada requisito nas instruções oficiais. Esta lista é orientativa.</p>
+    <p style="color:#b8c0cc;font-size:13px">Marque os itens à medida que os confirma. A lista é orientativa e não substitui as instruções do consulado.</p>
+    <p id="resumoPass" class="passport-meta"></p>
     <div id="itensPass"></div>
-    <button type="button" onclick="window.print()" style="margin-top:15px;padding:12px;border-radius:8px">Imprimir / guardar em PDF</button>
+    <div class="screen-only" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:15px">
+      <button type="button" onclick="window.print()" style="padding:12px;border-radius:8px;cursor:pointer">Imprimir / guardar em PDF</button>
+      <button type="button" onclick="criarListaPass()" style="padding:12px;border-radius:8px;cursor:pointer">Atualizar lista</button>
+    </div>
   </div>
 
-  <p style="font-size:12px;color:#b8c0cc;margin-top:20px">O ODEVI+ é independente e não é um serviço governamental. Os requisitos variam conforme a situação.</p>
-  <p><a href="https://ec-lisboa.itamaraty.gov.br/" target="_blank" rel="noopener noreferrer" style="color:#68f39a">Abrir e-Consular de Lisboa ↗</a></p>
-  <p><a href="https://www.gov.br/mre/pt-br/consulado-lisboa" target="_blank" rel="noopener noreferrer" style="color:#68f39a">Consultar o Consulado oficial ↗</a></p>
+  <div class="screen-only">
+    <p style="font-size:12px;color:#b8c0cc;margin-top:20px">O ODEVI+ é independente e não é um serviço governamental. Confirme sempre os documentos, taxas e procedimentos atuais nas fontes oficiais.</p>
+    <p><a href="https://ec-lisboa.itamaraty.gov.br/" target="_blank" rel="noopener noreferrer" style="color:#68f39a">Abrir e-Consular de Lisboa ↗</a></p>
+    <p><a href="https://www.gov.br/mre/pt-br/consulado-lisboa" target="_blank" rel="noopener noreferrer" style="color:#68f39a">Consultar o Consulado oficial ↗</a></p>
+  </div>
 </section>
 
 <script>
 function criarListaPass() {
   const tipo = document.getElementById("tipoPass").value;
   const idade = document.getElementById("idadePass").value;
+  const situacoes = {
+    renovacao: "Passaporte anterior",
+    primeiro: "Primeiro passaporte",
+    perdido: "Perda ou roubo"
+  };
   const itens = [
-    "Consultar os requisitos oficiais para o seu pedido.",
-    "Confirmar os documentos de identidade e nacionalidade exigidos.",
-    "Verificar o formulário e os documentos que devem ser enviados.",
-    "Confirmar as taxas, o pagamento e a apresentação dos originais.",
-    "Consultar as regras de agendamento no e-Consular."
+    { texto: "Abrir as instruções oficiais do Consulado-Geral do Brasil em Lisboa e confirmar o procedimento aplicável.", grupo: "Antes de começar" },
+    { texto: "Confirmar a lista atualizada de documentos e os formatos aceites pelo e-Consular.", grupo: "Antes de começar" },
+    { texto: "Confirmar como preencher o pedido e quais os documentos que devem ser enviados pela plataforma.", grupo: "Pedido" },
+    { texto: "Verificar as taxas, os meios de pagamento e se é necessário apresentar documentos originais.", grupo: "Pedido" },
+    { texto: "Confirmar as regras atuais de agendamento, atendimento e recolha do passaporte.", grupo: "Atendimento" }
   ];
 
-  if (tipo === "renovacao") itens.push("Confirmar os requisitos relativos ao passaporte anterior.");
-  if (tipo === "primeiro") itens.push("Confirmar os requisitos específicos do primeiro passaporte.");
-  if (tipo === "perdido") itens.push("Consultar as instruções para perda ou roubo e confirmar se é necessária participação policial.");
-  if (idade === "menor") itens.push("Confirmar a autorização dos responsáveis e os documentos exigidos para menores.");
-  if (idade === "adulto") itens.push("Confirmar os requisitos eleitorais e militares aplicáveis.");
-  
+  if (tipo === "renovacao") {
+    itens.push({ texto: "Verificar as instruções para apresentar o passaporte anterior e confirmar o que fazer se estiver expirado ou indisponível.", grupo: "Situação específica" });
+  } else if (tipo === "primeiro") {
+    itens.push({ texto: "Confirmar os documentos específicos exigidos para um primeiro pedido de passaporte.", grupo: "Situação específica" });
+  } else if (tipo === "perdido") {
+    itens.push({ texto: "Ler as instruções oficiais para passaporte perdido ou roubado e confirmar se é necessária participação policial ou declaração específica.", grupo: "Situação específica" });
+  }
+
+  if (idade === "menor") {
+    itens.push({ texto: "Confirmar os documentos de identificação do menor e os requisitos de autorização dos responsáveis.", grupo: "Menores de idade" });
+    itens.push({ texto: "Confirmar quem deve acompanhar o menor no atendimento e quais assinaturas ou autorizações são aceites.", grupo: "Menores de idade" });
+  } else {
+    itens.push({ texto: "Confirmar os requisitos eleitorais e, quando aplicável, militares para a situação pessoal do requerente.", grupo: "Adultos" });
+  }
+
   const destino = document.getElementById("itensPass");
   destino.replaceChildren();
+
   itens.forEach((item, i) => {
     const label = document.createElement("label");
-    label.style.cssText = "display:flex;gap:10px;margin:14px 0;line-height:1.5";
+    label.className = "passport-item";
     const check = document.createElement("input");
     check.type = "checkbox";
     check.id = "passCheck" + i;
+    check.setAttribute("aria-label", item.texto);
     const span = document.createElement("span");
-    span.textContent = item;
+    span.textContent = item.texto;
     label.append(check, span);
     destino.append(label);
   });
+
+  document.getElementById("resumoPass").textContent =
+    "Situação: " + situacoes[tipo] + " · Idade: " + (idade === "menor" ? "Menor de 18 anos" : "18 anos ou mais") +
+    " · Criada em: " + new Date().toLocaleDateString("pt-PT");
   document.getElementById("listaPass").style.display = "block";
 }
 </script>
