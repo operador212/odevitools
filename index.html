@@ -309,14 +309,47 @@
       color: var(--green);
     }
     #itensPass .passport-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 7px;
       margin: 12px 0;
-      line-height: 1.5;
+      padding: 12px;
+      line-height: 1.45;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #0c1017;
     }
-    #itensPass input { margin-top: 6px; flex: 0 0 auto; }
+    #itensPass .passport-item > span:first-child { display: block; }
+    #itensPass .passport-item select {
+      width: 100%;
+      padding: 9px 10px;
+      color: var(--text);
+      background: #090b10;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    .status-print { display: none; }
+    .passport-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin: 14px 0;
+    }
+    .passport-summary > div {
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: #0c1017;
+    }
+    .passport-summary strong { display: block; font-size: 20px; }
+    .passport-summary span { color: var(--muted); font-size: 11px; }
+    .passport-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+    .passport-actions button { flex: 1 1 180px; padding: 12px; border-radius: 8px; cursor: pointer; }
     .passport-meta { color: var(--muted); font-size: 12px; margin: 8px 0 16px; }
+    @media (max-width: 480px) {
+      .passport-summary { grid-template-columns: 1fr; }
+      .passport-summary > div { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    }
     @page {
       size: A4;
       margin: 12mm;
@@ -381,31 +414,27 @@
         break-after: avoid !important;
         page-break-after: avoid !important;
       }
+      #listaPass .passport-summary { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 3mm !important; margin: 3mm 0 5mm !important; }
+      #listaPass .passport-summary > div { padding: 2mm !important; border: 1px solid #aaa !important; border-radius: 2mm !important; background: #fff !important; }
+      #listaPass .passport-summary strong { display: block !important; font-size: 13pt !important; color: #111 !important; }
+      #listaPass .passport-summary span { font-size: 7.5pt !important; color: #333 !important; }
       #itensPass .passport-item {
-        display: flex !important;
-        align-items: flex-start !important;
-        gap: 2.5mm !important;
+        display: block !important;
         margin: 0 0 2mm !important;
-        padding: 0 !important;
+        padding: 2mm !important;
+        border: 1px solid #ddd !important;
+        border-radius: 1.5mm !important;
+        background: #fff !important;
         color: #111 !important;
         font-size: 9.5pt !important;
         line-height: 1.3 !important;
         break-inside: avoid !important;
         page-break-inside: avoid !important;
       }
-      #itensPass input {
-        appearance: none !important;
-        -webkit-appearance: none !important;
-        flex: 0 0 11px !important;
-        width: 11px !important;
-        height: 11px !important;
-        margin: 2px 0 0 !important;
-        border: 1px solid #111 !important;
-        background: #fff !important;
-      }
-      #itensPass input:checked {
-        background: #ddd !important;
-      }
+      #itensPass .passport-item > span:first-child { display: block !important; color: #111 !important; }
+      #itensPass .passport-item select { display: none !important; }
+      #itensPass .status-print { display: block !important; margin-top: 1mm !important; font-size: 8.5pt !important; font-weight: bold !important; color: #111 !important; }
+      #itensPass .passport-group { break-after: avoid !important; page-break-after: avoid !important; }
       #passaporte a { color: #111 !important; text-decoration: underline !important; }
       #passaporte a::after { content: " (" attr(href) ")"; font-size: 8pt; overflow-wrap: anywhere; }
       #passaporte { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
@@ -603,14 +632,17 @@
   <button class="screen-only" type="button" onclick="criarListaPass()" style="width:100%;padding:14px;background:#68f39a;color:#07110b;border:0;border-radius:9px;font-weight:bold;font-size:16px;cursor:pointer">Criar a minha lista</button>
 
   <div id="listaPass" style="display:none;margin-top:20px">
-    <h3>Lista de preparação</h3>
-    <p style="color:#b8c0cc;font-size:13px">Marque os itens à medida que os confirma. A lista é orientativa e não substitui as instruções do consulado.</p>
+    <h3>O meu plano de preparação</h3>
+    <p class="screen-only" style="color:#b8c0cc;font-size:13px;margin-top:6px">Indica o estado de cada ponto. O relatório vai mostrar o que já tens, o que falta reunir e o que deves confirmar.</p>
     <p id="resumoPass" class="passport-meta"></p>
+    <div id="resumoEstados" class="passport-summary" aria-live="polite"></div>
     <div id="itensPass"></div>
-    <div class="screen-only" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:15px">
-      <button type="button" onclick="window.print()" style="padding:12px;border-radius:8px;cursor:pointer">Imprimir / guardar em PDF</button>
-      <button type="button" onclick="criarListaPass()" style="padding:12px;border-radius:8px;cursor:pointer">Atualizar lista</button>
+    <div class="screen-only passport-actions">
+      <button type="button" onclick="guardarRelatorioPass()" style="background:#68f39a;color:#07110b;border:0;font-weight:bold">Guardar o meu relatório (.txt)</button>
+      <button type="button" onclick="window.print()">Imprimir / guardar como PDF</button>
+      <button type="button" onclick="criarListaPass()">Atualizar lista</button>
     </div>
+    <p class="screen-only" style="font-size:12px;color:#b8c0cc;margin-top:10px">O relatório é criado neste dispositivo. Não envia os teus dados para o ODEVI+ nem para o consulado.</p>
   </div>
 
   <div class="screen-only">
@@ -622,13 +654,55 @@
 </section>
 
 <script>
+const estadoPassLabel = {
+  tenho: "Já tenho",
+  falta: "Falta reunir",
+  confirmar: "A confirmar"
+};
+
+function chaveEstadoPass(tipo, idade, texto) {
+  return "odevi-passaporte-v2:" + tipo + ":" + idade + ":" + texto;
+}
+
+function lerEstadoPass(tipo, idade, texto) {
+  try { return localStorage.getItem(chaveEstadoPass(tipo, idade, texto)) || "confirmar"; }
+  catch (e) { return "confirmar"; }
+}
+
+function guardarEstadoPass(tipo, idade, texto, estado) {
+  try { localStorage.setItem(chaveEstadoPass(tipo, idade, texto), estado); } catch (e) {}
+}
+
+function atualizarResumoPass() {
+  const selects = Array.from(document.querySelectorAll("#itensPass select[data-item-texto]"));
+  const total = selects.length;
+  const contagem = { tenho: 0, falta: 0, confirmar: 0 };
+  selects.forEach((select) => { contagem[select.value] = (contagem[select.value] || 0) + 1; });
+  const resumo = document.getElementById("resumoEstados");
+  resumo.replaceChildren();
+  [
+    ["tenho", "Já tenho"],
+    ["falta", "Falta reunir"],
+    ["confirmar", "A confirmar"]
+  ].forEach(([estado, titulo]) => {
+    const caixa = document.createElement("div");
+    const numero = document.createElement("strong");
+    numero.textContent = contagem[estado] || 0;
+    const texto = document.createElement("span");
+    texto.textContent = titulo;
+    caixa.append(numero, texto);
+    resumo.append(caixa);
+  });
+  resumo.setAttribute("aria-label", total + " pontos: " + contagem.tenho + " já tenho, " + contagem.falta + " falta reunir, " + contagem.confirmar + " a confirmar.");
+}
+
 function criarListaPass() {
   const tipo = document.getElementById("tipoPass").value;
   const idade = document.getElementById("idadePass").value;
   const situacoes = {
-    renovacao: "Passaporte anterior",
+    renovacao: "Passaporte anterior / renovação",
     primeiro: "Primeiro passaporte",
-    perdido: "Perda ou roubo"
+    perdido: "Passaporte perdido ou roubado"
   };
   const itens = [
     { texto: "Abrir as instruções oficiais do Consulado-Geral do Brasil em Lisboa e confirmar o procedimento aplicável.", grupo: "Antes de começar" },
@@ -655,12 +729,7 @@ function criarListaPass() {
   }
 
   const destino = document.getElementById("itensPass");
-  const marcadosAntes = new Set(
-    Array.from(destino.querySelectorAll('input[type="checkbox"]:checked'))
-      .map((check) => check.dataset.itemTexto)
-  );
   destino.replaceChildren();
-
   let grupoAtual = "";
   itens.forEach((item, i) => {
     if (item.grupo !== grupoAtual) {
@@ -671,26 +740,100 @@ function criarListaPass() {
       destino.append(tituloGrupo);
     }
 
-    const label = document.createElement("label");
-    label.className = "passport-item";
-    const check = document.createElement("input");
-    check.type = "checkbox";
-    check.id = "passCheck" + i;
-    check.dataset.itemTexto = item.texto;
-    check.checked = marcadosAntes.has(item.texto);
-    check.setAttribute("aria-label", item.texto);
-    const span = document.createElement("span");
-    span.textContent = item.texto;
-    label.append(check, span);
-    destino.append(label);
+    const cartao = document.createElement("div");
+    cartao.className = "passport-item";
+    const texto = document.createElement("span");
+    texto.textContent = item.texto;
+
+    const select = document.createElement("select");
+    select.setAttribute("aria-label", "Estado: " + item.texto);
+    select.dataset.itemTexto = item.texto;
+    select.dataset.grupo = item.grupo;
+    select.dataset.index = String(i);
+    [
+      ["tenho", "Já tenho"],
+      ["falta", "Falta reunir"],
+      ["confirmar", "A confirmar"]
+    ].forEach(([valor, rotulo]) => {
+      const option = document.createElement("option");
+      option.value = valor;
+      option.textContent = rotulo;
+      select.append(option);
+    });
+    select.value = lerEstadoPass(tipo, idade, item.texto);
+    const estadoImpressao = document.createElement("span");
+    estadoImpressao.className = "status-print";
+    estadoImpressao.textContent = "Estado: " + estadoPassLabel[select.value];
+
+    select.addEventListener("change", () => {
+      guardarEstadoPass(tipo, idade, item.texto, select.value);
+      estadoImpressao.textContent = "Estado: " + estadoPassLabel[select.value];
+      atualizarResumoPass();
+    });
+    cartao.append(texto, select, estadoImpressao);
+    destino.append(cartao);
   });
 
   document.getElementById("resumoPass").textContent =
     "Situação: " + situacoes[tipo] + " · Idade: " + (idade === "menor" ? "Menor de 18 anos" : "18 anos ou mais") +
-    " · Criada em: " + new Date().toLocaleDateString("pt-PT");
+    " · Relatório criado em: " + new Date().toLocaleDateString("pt-PT");
   document.getElementById("listaPass").style.display = "block";
+  atualizarResumoPass();
 }
-</script>
+
+function guardarRelatorioPass() {
+  const tipo = document.getElementById("tipoPass").value;
+  const idade = document.getElementById("idadePass").value;
+  const resumo = document.getElementById("resumoPass").textContent;
+  const selects = Array.from(document.querySelectorAll("#itensPass select[data-item-texto]"));
+  if (!selects.length) {
+    criarListaPass();
+    return;
+  }
+  const linhas = [
+    "ODEVI+ — O MEU PLANO DE PREPARAÇÃO DO PASSAPORTE",
+    resumo,
+    "",
+    "RESUMO",
+    "Já tenho: " + selects.filter(s => s.value === "tenho").length,
+    "Falta reunir: " + selects.filter(s => s.value === "falta").length,
+    "A confirmar: " + selects.filter(s => s.value === "confirmar").length,
+    "",
+    "LISTA POR CATEGORIA",
+    ""
+  ];
+  let grupoAtual = "";
+  selects.forEach((select) => {
+    if (select.dataset.grupo !== grupoAtual) {
+      grupoAtual = select.dataset.grupo;
+      linhas.push("", "— " + grupoAtual.toUpperCase() + " —");
+    }
+    linhas.push("[" + estadoPassLabel[select.value].toUpperCase() + "] " + select.dataset.itemTexto);
+  });
+  linhas.push(
+    "",
+    "PRÓXIMOS PASSOS",
+    "- Trata primeiro os pontos marcados como “Falta reunir”.",
+    "- Verifica os pontos marcados como “A confirmar” nas instruções oficiais.",
+    "",
+    "Nota: lista orientativa; não substitui os requisitos oficiais do Consulado-Geral do Brasil em Lisboa.",
+    "e-Consular: https://ec-lisboa.itamaraty.gov.br/",
+    "Instruções oficiais: https://www.gov.br/mre/pt-br/consulado-lisboa/servicos-consulares/passaporte",
+    "",
+    "Este ficheiro foi criado localmente neste dispositivo."
+  );
+  const blob = new Blob(["\ufeff" + linhas.join("\n")], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  const data = new Date().toISOString().slice(0, 10);
+  link.href = url;
+  link.download = "odevi-plano-passaporte-" + data + ".txt";
+  document.body.append(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+</script>>
  <section class="tools">
       <div class="section-heading">
         <h2>O universo ODEVI+</h2>
