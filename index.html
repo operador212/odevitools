@@ -295,204 +295,6 @@
       text-underline-offset: 3px;
     }
 
-    /* Passport checklist: accessible controls and clean print/PDF output. */
-    #passaporte label { display: block; margin: 12px 0 6px; }
-    #passaporte select, #passaporte button { font: inherit; }
-    #passaporte select:focus-visible, #passaporte button:focus-visible,
-    #passaporte input:focus-visible, #passaporte a:focus-visible {
-      outline: 3px solid var(--green);
-      outline-offset: 3px;
-    }
-    #itensPass .passport-group {
-      margin: 18px 0 6px;
-      font-size: 15px;
-      color: var(--green);
-    }
-    #itensPass .passport-item {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      gap: 7px;
-      margin: 12px 0;
-      padding: 12px;
-      line-height: 1.45;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: #0c1017;
-    }
-    #itensPass .passport-item > span:first-child { display: block; }
-    #itensPass .passport-item select {
-      width: 100%;
-      padding: 9px 10px;
-      color: var(--text);
-      background: #090b10;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-    }
-    .status-print { display: none; }
-    .passport-summary {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
-      margin: 14px 0;
-    }
-    .passport-summary > div {
-      padding: 10px;
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      background: #0c1017;
-    }
-    .passport-summary strong { display: block; font-size: 20px; }
-    .passport-summary span { color: var(--muted); font-size: 11px; }
-    .passport-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
-    .passport-actions button { flex: 1 1 180px; padding: 12px; border-radius: 8px; cursor: pointer; }
-    .passport-meta { color: var(--muted); font-size: 12px; margin: 8px 0 16px; }
-    @media (max-width: 480px) {
-      .passport-summary { grid-template-columns: 1fr; }
-      .passport-summary > div { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    }
-    @page {
-      size: A4;
-      margin: 12mm;
-    }
-
-    @media print {
-      html, body {
-        width: auto !important;
-        min-height: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        background: #fff !important;
-        color: #111 !important;
-      }
-      body * { visibility: hidden !important; }
-      #passaporte, #passaporte * { visibility: visible !important; }
-      #passaporte {
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        border: 0 !important;
-        border-radius: 0 !important;
-        background: #fff !important;
-        color: #111 !important;
-        font-size: 10pt !important;
-        line-height: 1.3 !important;
-      }
-      /* Print only the generated checklist, not the form or website links. */
-      #passaporte > :not(#listaPass) { display: none !important; }
-      #listaPass {
-        display: block !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        font-size: 10pt !important;
-        line-height: 1.3 !important;
-      }
-      #listaPass h3 {
-        margin: 0 0 4mm !important;
-        color: #111 !important;
-        font-size: 17pt !important;
-        line-height: 1.15 !important;
-        break-after: avoid !important;
-      }
-      #listaPass > p:not(#resumoPass) {
-        margin: 0 0 3mm !important;
-        color: #333 !important;
-        font-size: 9pt !important;
-      }
-      #passaporte .passport-meta {
-        margin: 0 0 4mm !important;
-        color: #333 !important;
-        font-size: 8.5pt !important;
-      }
-      #itensPass .passport-group {
-        margin: 4mm 0 1.5mm !important;
-        color: #111 !important;
-        font-size: 10.5pt !important;
-        line-height: 1.2 !important;
-        break-after: avoid !important;
-        page-break-after: avoid !important;
-      }
-      #listaPass .passport-summary { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 3mm !important; margin: 3mm 0 5mm !important; }
-      #listaPass .passport-summary > div { padding: 2mm !important; border: 1px solid #aaa !important; border-radius: 2mm !important; background: #fff !important; }
-      #listaPass .passport-summary strong { display: block !important; font-size: 13pt !important; color: #111 !important; }
-      #listaPass .passport-summary span { font-size: 7.5pt !important; color: #333 !important; }
-      #itensPass .passport-item {
-        display: block !important;
-        margin: 0 0 2mm !important;
-        padding: 2mm !important;
-        border: 1px solid #ddd !important;
-        border-radius: 1.5mm !important;
-        background: #fff !important;
-        color: #111 !important;
-        font-size: 9.5pt !important;
-        line-height: 1.3 !important;
-        break-inside: avoid !important;
-        page-break-inside: avoid !important;
-      }
-      #itensPass .passport-item > span:first-child { display: block !important; color: #111 !important; }
-      #itensPass .passport-item select { display: none !important; }
-      #itensPass .status-print { display: block !important; margin-top: 1mm !important; font-size: 8.5pt !important; font-weight: bold !important; color: #111 !important; }
-      #itensPass .passport-group { break-after: avoid !important; page-break-after: avoid !important; }
-      #passaporte a { color: #111 !important; text-decoration: underline !important; }
-      #passaporte a::after { content: " (" attr(href) ")"; font-size: 8pt; overflow-wrap: anywhere; }
-      #passaporte { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-    }
-
-    @media (max-width: 650px) {
-      header {
-        padding: 19px 17px;
-      }
-
-      .logo {
-        font-size: 27px;
-      }
-
-      main {
-        padding: 34px 16px;
-      }
-
-      .intro {
-        margin-bottom: 27px;
-      }
-
-      .intro p {
-        font-size: 15px;
-      }
-
-      .countries {
-        grid-template-columns: 1fr;
-        gap: 18px;
-      }
-
-      .country-banner {
-        min-height: 125px;
-      }
-
-      .flag {
-        font-size: 56px;
-      }
-
-      .country-content {
-        padding: 21px;
-      }
-
-      .tool-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .tools {
-        margin-top: 38px;
-      }
-
-      .header-label {
-        max-width: 135px;
-      }
-    }
-  
-  
-
 .diaspora-section{margin:32px 0;padding:24px 0;color:var(--text,#fff)}
 .diaspora-heading{max-width:680px;margin-bottom:20px}
 .diaspora-heading .eyebrow{color:#68f39a;font-size:12px;font-weight:800;letter-spacing:.09em;margin-bottom:8px}
@@ -650,7 +452,7 @@
   <div class="diaspora-heading">
     <p class="eyebrow">BRASILEIROS PELO MUNDO</p>
     <h2 id="diaspora-title">Onde os brasileiros estão</h2>
-    <p>Os três países com as maiores comunidades brasileiras no exterior, segundo estimativas do Itamaraty para 2025.</p>
+    <p>Os três países com as maiores comunidades brasileiras no exterior, com base no levantamento do Itamaraty referente a 2023.</p>
   </div>
   <div class="diaspora-grid">
     <article class="diaspora-card">
@@ -670,7 +472,7 @@
     </article>
   </div>
   <div class="diaspora-footer">
-    <span>Estimativas de 2025 · Itamaraty</span>
+    <span>Estimativas referentes a 2023 · Itamaraty</span>
     <a href="https://www.gov.br/mre/pt-br/consulado-montevideu/servicos-consulares/informacoes-e-lins-uteis/brasileiros-no-mundo" target="_blank" rel="noopener noreferrer">Consultar fonte oficial <span aria-hidden="true">↗</span></a>
   </div>
 </section>
