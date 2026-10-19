@@ -382,7 +382,7 @@
   <div class="quiz-copy">
     <p class="eyebrow">FERRAMENTA PRINCIPAL</p>
     <h2 id="quiz-title">Viver em Portugal? Faça o teste aqui!</h2>
-    <p>Uma ferramenta gratuita para falantes de português. Responde a 3 perguntas e descobre os primeiros passos para a tua situação.</p>
+    <p>Responde a três perguntas sobre a tua situação, o teu objetivo e as oportunidades que já tens. Recebe um roteiro inicial para viver em Portugal.</p>
   </div>
   <form id="regularizacaoQuiz" class="quiz-card">
     <div class="quiz-question">
@@ -406,12 +406,14 @@
       </select>
     </div>
     <div class="quiz-question">
-      <label for="quizDestino">3. Qual é o país de destino?</label>
+      <label for="quizDestino">3. Que oportunidade ou apoio já tens?</label>
       <select id="quizDestino" required>
-        <option value="">Escolhe um país</option>
-        <option value="portugal">🇵🇹 Portugal</option>
-        <option value="uk">🇬🇧 Reino Unido</option>
-        <option value="usa">🇺🇸 Estados Unidos</option>
+        <option value="">Escolhe a opção mais próxima</option>
+        <option value="oferta">Tenho uma oferta ou proposta de trabalho</option>
+        <option value="familia">Tenho família ou companheiro/a em Portugal</option>
+        <option value="estudo">Tenho uma oportunidade de estudo</option>
+        <option value="recursos">Tenho recursos próprios e estou a pesquisar</option>
+        <option value="nenhuma">Ainda não tenho oportunidade definida</option>
       </select>
     </div>
     <button class="primary-button" type="submit">Ver os meus próximos passos <span aria-hidden="true">↗</span></button>
@@ -478,48 +480,7 @@
     <a class="radio-button" href="https://radiolusofoniadelondres.net/" target="_blank" rel="noopener noreferrer">🎧 Ouvir rádio ↗</a>
   </aside>
 </section>
-<section id="quiz-regularizacao" class="quiz-section" aria-labelledby="quiz-title">
-  <div class="quiz-copy">
-    <p class="eyebrow">FERRAMENTA PRINCIPAL</p>
-    <h2 id="quiz-title">Vai viver fora do Brasil?</h2>
-    <p>Responde a 3 perguntas e descobre por onde começar a procurar informação oficial para a tua situação.</p>
-  </div>
-  <form id="regularizacaoQuiz" class="quiz-card">
-    <div class="quiz-question">
-      <label for="quizSituacao">1. Qual é a tua situação atual?</label>
-      <select id="quizSituacao" required>
-        <option value="">Escolhe uma opção</option>
-        <option value="brasil">Ainda estou no Brasil</option>
-        <option value="fora">Já estou fora do Brasil</option>
-        <option value="outro">Estou a visitar / ainda não decidi</option>
-      </select>
-    </div>
-    <div class="quiz-question">
-      <label for="quizObjetivo">2. Qual é o teu objetivo?</label>
-      <select id="quizObjetivo" required>
-        <option value="">Escolhe uma opção</option>
-        <option value="viver">Viver ou reunir-me com família</option>
-        <option value="trabalhar">Trabalhar</option>
-        <option value="estudar">Estudar</option>
-        <option value="visitar">Visitar por um período curto</option>
-        <option value="regularizar">Verificar ou regularizar a minha situação atual</option>
-      </select>
-    </div>
-    <div class="quiz-question">
-      <label for="quizDestino">3. Qual é o país de destino?</label>
-      <select id="quizDestino" required>
-        <option value="">Escolhe um país</option>
-        <option value="portugal">🇵🇹 Portugal</option>
-        <option value="uk">🇬🇧 Reino Unido</option>
-        <option value="usa">🇺🇸 Estados Unidos</option>
-      </select>
-    </div>
-    <button class="primary-button" type="submit">Ver os meus próximos passos <span aria-hidden="true">↗</span></button>
-    <div id="quizResultado" class="quiz-result" aria-live="polite" hidden></div>
-    <p class="quiz-disclaimer">Este teste é orientativo, não decide a tua elegibilidade nem substitui aconselhamento jurídico. Confirma sempre as regras oficiais.</p>
-  </form>
-</section>
- <section class="tools">
+<section class="tools">
       <div class="section-heading">
         <h2>O universo ODEVI+</h2>
         <p>Novas ferramentas práticas estão a caminho.</p>
@@ -599,15 +560,18 @@
  const form=document.getElementById("regularizacaoQuiz");
  if(form)form.addEventListener("submit",function(event){
   event.preventDefault();
-  const situacao=document.getElementById("quizSituacao").value, objetivo=document.getElementById("quizObjetivo").value, destino=document.getElementById("quizDestino").value;
-  if(!situacao||!objetivo||!destino)return;
+  const situacao=document.getElementById("quizSituacao").value, objetivo=document.getElementById("quizObjetivo").value, oportunidade=document.getElementById("quizDestino").value;
+  if(!situacao||!objetivo||!oportunidade)return;
   const result=document.getElementById("quizResultado");
   const plans={
-   portugal:{name:"Portugal",url:"https://aima.gov.pt/pt",secondary:"https://eportugal.gov.pt/",steps:["Confirma qual o visto ou fundamento de residência adequado ao teu objetivo.","Consulta a AIMA e o portal ePortugal para os requisitos e os passos oficiais.","Reúne documentos apenas de acordo com a lista oficial aplicável ao teu caso."]},
-   uk:{name:"Reino Unido",url:"https://www.gov.uk/check-uk-visa",secondary:"https://www.gov.uk/browse/visas-immigration",steps:["Usa o verificador oficial para identificar se precisas de visto.","Lê os requisitos do tipo de visto adequado ao teu objetivo antes de pagar ou marcar.","Segue as instruções oficiais sobre pedido, documentos e prazos."]},
-   usa:{name:"Estados Unidos",url:"https://travel.state.gov/content/travel/en/us-visas.html",secondary:"https://www.uscis.gov/",steps:["Consulta o portal oficial de vistos para identificar a categoria adequada ao teu objetivo.","Confirma os requisitos e o processo no consulado ou na entidade oficial competente.","Não assumas que um visto de visita permite trabalhar ou residir."]}};
-  const p=plans[destino];const h=document.createElement("h3");h.textContent="O teu ponto de partida: "+p.name;result.replaceChildren(h);
-  const intro=document.createElement("p");intro.textContent="Com base nas tuas respostas, começa por estes passos gerais. A situação atual ("+({brasil:"ainda no Brasil",fora:"já fora do Brasil",outro:"visita ou destino por decidir"}[situacao])+") e o teu objetivo ("+({viver:"viver ou reunir família",trabalhar:"trabalhar",estudar:"estudar",visitar:"visitar",regularizar:"verificar a situação atual"}[objetivo])+") podem alterar os requisitos.";result.append(intro);
+   oferta:{title:"Tens uma proposta de trabalho",steps:["Confirma se a proposta e a entidade empregadora são legítimas; não pagues por promessas de emprego ou vistos.","Verifica qual o visto ou autorização adequada ao trabalho e à tua situação atual.","Confirma os requisitos e documentos nos portais oficiais antes de tomar decisões."]},
+   familia:{title:"Tens família ou companheiro/a em Portugal",steps:["Identifica a relação familiar e a situação legal da pessoa que vive em Portugal.","Confirma se o teu caso se enquadra num procedimento de visto ou reagrupamento familiar.","Consulta a AIMA e o consulado português competente antes de reunir documentos."]},
+   estudo:{title:"Tens uma oportunidade de estudo",steps:["Confirma se a instituição e o curso são reconhecidos e pede informação escrita sobre a admissão.","Consulta os requisitos do visto de residência para estudo e os comprovativos exigidos.","Confirma os procedimentos junto do consulado e da AIMA, conforme o caso."]},
+   recursos:{title:"Estás a pesquisar com recursos próprios",steps:["Define o objetivo principal e verifica qual o visto adequado antes de comprar viagens ou assumir compromissos.","Confirma os requisitos de meios de subsistência, alojamento e seguro aplicáveis ao teu caso.","Compara oportunidades reais de trabalho, estudo ou outras vias legais usando fontes oficiais."]},
+   nenhuma:{title:"Ainda não tens uma oportunidade definida",steps:["Começa por escolher entre trabalho, estudo, família ou visita; cada objetivo tem regras diferentes.","Pesquisa oportunidades verificáveis e confirma os requisitos legais antes de pagar a intermediários.","Não assumas que entrar como visitante permite trabalhar ou permanecer em Portugal a longo prazo."]}
+  };
+  const p=plans[oportunidade];const h=document.createElement("h3");h.textContent=p.title;result.replaceChildren(h);
+  const intro=document.createElement("p");intro.textContent="Roteiro inicial para quem "+({brasil:"ainda está no Brasil",fora:"já está fora do Brasil",outro:"está a visitar ou ainda está a decidir"})+" e pretende "+({viver:"viver em Portugal ou reunir-se com família",trabalhar:"trabalhar",estudar:"estudar",visitar:"visitar Portugal",regularizar:"verificar ou regularizar a situação atual"})+". A oportunidade que tens pode alterar os passos e os documentos exigidos.";result.append(intro);
   const ul=document.createElement("ul");p.steps.forEach(t=>{const li=document.createElement("li");li.textContent=t;ul.append(li);});result.append(ul);
   [[ "Abrir serviço oficial",p.url],["Mais informação oficial",p.secondary]].forEach(item=>{const a=document.createElement("a");a.href=item[1];a.target="_blank";a.rel="noopener noreferrer";a.textContent=item[0]+" ↗";a.style.display="inline-block";a.style.margin="5px 12px 0 0";result.append(a);});
   result.hidden=false;result.scrollIntoView({behavior:"smooth",block:"nearest"});
