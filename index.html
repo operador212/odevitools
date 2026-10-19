@@ -245,12 +245,14 @@
     }
 
     .tool {
+      display:block;color:inherit;text-decoration:none;
       border: 1px solid var(--border);
       background: var(--panel);
       border-radius: 16px;
       padding: 20px;
     }
 
+    .tool:hover {border-color:var(--green);transform:translateY(-2px)}
     .tool-icon {
       font-size: 26px;
       margin-bottom: 10px;
@@ -295,58 +297,40 @@
       text-underline-offset: 3px;
     }
 
-    @media (max-width: 650px) {
-      header {
-        padding: 19px 17px;
-      }
+.diaspora-section{margin:32px 0;padding:24px 0;color:var(--text,#fff)}
+.diaspora-heading{max-width:680px;margin-bottom:20px}
+.diaspora-heading .eyebrow{color:#68f39a;font-size:12px;font-weight:800;letter-spacing:.09em;margin-bottom:8px}
+.diaspora-heading h2{margin:0 0 8px}
+.diaspora-heading p:last-child{color:var(--muted,#b8c0cc);line-height:1.55}
+.diaspora-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.diaspora-card{padding:18px;background:var(--panel,#11151d);border:1px solid rgba(150,165,185,.2);border-radius:16px;min-width:0}
+.diaspora-country{display:flex;align-items:center;gap:10px;font-weight:650;line-height:1.35}
+.diaspora-flag{font-size:27px;line-height:1}
+.diaspora-number{font-size:clamp(24px,3vw,34px);font-weight:800;letter-spacing:-.04em;margin:22px 0 10px;white-space:nowrap}
+.diaspora-number span{font-size:14px;font-weight:600;letter-spacing:0;color:var(--muted,#b8c0cc)}
+.diaspora-rank{font-size:12px;color:var(--muted,#b8c0cc)}
+.diaspora-footer{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:14px;color:var(--muted,#b8c0cc);font-size:12px;line-height:1.5}
+.diaspora-footer a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:600px){.diaspora-section{padding:18px 0}.diaspora-grid{grid-template-columns:1fr;gap:10px}.diaspora-card{display:grid;grid-template-columns:1fr auto;align-items:center;gap:5px 12px;padding:15px}.diaspora-country{grid-column:1}.diaspora-number{grid-column:2;grid-row:1 / span 2;margin:0;font-size:25px}.diaspora-rank{grid-column:1}.diaspora-footer{align-items:flex-start;flex-direction:column}}
 
-      .logo {
-        font-size: 27px;
-      }
 
-      main {
-        padding: 34px 16px;
-      }
+.quiz-section{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,1.05fr);gap:24px;align-items:start;margin:28px 0;padding:24px;background:linear-gradient(135deg,rgba(104,243,154,.09),rgba(17,21,29,.95));border:1px solid var(--border);border-radius:18px}
+.quiz-copy .eyebrow,.uk-highlight .eyebrow,.radio-copy .eyebrow{color:var(--green);font-size:12px;font-weight:800;letter-spacing:.08em;margin-bottom:8px}
+.quiz-copy h2{font-size:clamp(26px,4vw,38px);line-height:1.15;margin-bottom:12px}.quiz-copy>p:last-child{color:var(--muted);line-height:1.6}
+.quiz-card{padding:18px;background:var(--panel);border:1px solid var(--border);border-radius:14px}
+.quiz-question{margin-bottom:15px}.quiz-question label{display:block;font-weight:700;margin-bottom:7px}
+.quiz-question select{width:100%;padding:12px;border:1px solid var(--border);border-radius:9px;background:var(--bg);color:var(--text);font:inherit}
+.primary-button,.radio-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 16px;border:0;border-radius:9px;background:var(--green);color:#07110b;font-weight:800;cursor:pointer;text-align:center}
+.primary-button{width:100%;font:inherit;font-weight:800}.quiz-result{margin-top:16px;padding:15px;border:1px solid var(--green);border-radius:10px;line-height:1.55}.quiz-result h3{margin-bottom:7px}.quiz-result ul{padding-left:20px;margin:8px 0}.quiz-result a{text-decoration:underline;text-underline-offset:3px}.quiz-disclaimer,.news-note{font-size:12px;color:var(--muted);line-height:1.5;margin-top:13px}
+.community-extras{margin:28px 0;display:grid;gap:20px}
+.uk-highlight{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px;align-items:center;padding:18px;border:1px solid var(--border);border-radius:15px;background:var(--panel)}
+.uk-flag{font-size:32px}.uk-highlight h3,.radio-copy h3{margin:0 0 4px}.uk-highlight p:not(.eyebrow),.radio-copy p:not(.eyebrow){color:var(--muted);font-size:14px;line-height:1.5}.uk-highlight>a{font-size:13px;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.news-section{padding:8px 0}.news-section .section-heading{margin-bottom:14px}.news-tabs{display:flex;gap:8px;margin:14px 0;flex-wrap:wrap}.news-tab{padding:9px 14px;border:1px solid var(--border);border-radius:999px;background:transparent;color:var(--text);cursor:pointer;font:inherit}.news-tab.active{background:var(--green);border-color:var(--green);color:#07110b;font-weight:800}
+.news-panel{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.news-link{display:block;padding:15px;border:1px solid var(--border);border-radius:12px;background:var(--panel)}.news-link strong,.news-link small{display:block}.news-link small{margin-top:6px;color:var(--muted);line-height:1.45}.news-link .arrow{display:block;color:var(--green);margin-top:10px}
+.radio-card{display:flex;align-items:center;gap:16px;padding:18px;border:1px solid var(--border);border-radius:15px;background:var(--panel)}.radio-icon{font-size:30px}.radio-copy{flex:1}.radio-copy p:not(.eyebrow){margin-top:5px}.radio-button{white-space:nowrap}
+@media(max-width:720px){.quiz-section{grid-template-columns:1fr;padding:18px}.uk-highlight{grid-template-columns:auto minmax(0,1fr)}.uk-highlight>a{grid-column:2;white-space:normal}.news-panel{grid-template-columns:1fr}.radio-card{align-items:flex-start;flex-wrap:wrap}.radio-copy{min-width:calc(100% - 60px)}.radio-button{width:100%}}
 
-      .intro {
-        margin-bottom: 27px;
-      }
-
-      .intro p {
-        font-size: 15px;
-      }
-
-      .countries {
-        grid-template-columns: 1fr;
-        gap: 18px;
-      }
-
-      .country-banner {
-        min-height: 125px;
-      }
-
-      .flag {
-        font-size: 56px;
-      }
-
-      .country-content {
-        padding: 21px;
-      }
-
-      .tool-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .tools {
-        margin-top: 38px;
-      }
-
-      .header-label {
-        max-width: 135px;
-      }
-    }
-  
-  </style>
+</style>
   
 </head>
 
@@ -362,102 +346,84 @@
   </header>
 
   <main>
-    <section class="intro">
-      <div class="eyebrow">Dois países, uma comunidade</div>
-      <h1>Resolve a tua burocracia entre Portugal e o Brasil</h1>
-      <p>
-        Consulta orientações práticas, prepara os teus documentos e acede diretamente aos serviços oficiais de Portugal e do Brasil.
-      </p>
-      
-    </section>
-
-    <section class="countries" aria-label="Escolha o seu país">
-
-      <article class="country portugal">
-        <div class="country-banner">
-          <div class="flag" role="img" aria-label="Bandeira de Portugal">🇵🇹</div>
-          <p>Portugal</p>
-        </div>
-
-        <div class="country-content">
-          <h2>Brasileiros em Portugal</h2>
-          <p>
-            Informações para brasileiros que vivem,
-            trabalham ou precisam de documentos em Portugal.
-          </p>
-
-          <div class="service-list">
-            <a class="service"
-               href="https://ec-lisboa.itamaraty.gov.br/"
-               target="_blank" rel="noopener noreferrer">
-              <span class="arrow">↗</span>
-              <strong>Serviços consulares</strong>
-              <small>Aceder ao sistema e-Consular de Lisboa</small>
-            </a>
-
-            <a class="service"
-               href="https://www.gov.br/mre/pt-br/consulado-lisboa"
-               target="_blank" rel="noopener noreferrer">
-              <span class="arrow">↗</span>
-              <strong>Passaporte e documentos</strong>
-              <small>Consultar informações oficiais do consulado</small>
-            </a>
-
-            <a class="service"
-               href="https://www.gov.br/receitafederal/pt-br"
-               target="_blank" rel="noopener noreferrer">
-              <span class="arrow">↗</span>
-              <strong>CPF e Receita Federal</strong>
-              <small>Consultar os serviços oficiais brasileiros</small>
-            </a>
-          </div>
-        </div>
-      </article>
-
-      <article class="country brazil">
-        <div class="country-banner">
-          <div class="flag" role="img" aria-label="Bandeira do Brasil">🇧🇷</div>
-          <p>Brasil</p>
-        </div>
-
-        <div class="country-content">
-          <h2>Portugueses no Brasil</h2>
-          <p>
-            Orientações para portugueses que vivem,
-            trabalham ou precisam de tratar de documentos no Brasil.
-          </p>
-
-          <div class="service-list">
-            <a class="service"
-               href="https://portaldascomunidades.mne.gov.pt/pt/"
-               target="_blank" rel="noopener noreferrer">
-              <span class="arrow">↗</span>
-              <strong>Portal das Comunidades</strong>
-              <small>Informações oficiais para cidadãos portugueses</small>
-            </a>
-
-            <a class="service"
-               href="https://eportugal.gov.pt/"
-               target="_blank" rel="noopener noreferrer">
-              <span class="arrow">↗</span>
-              <strong>Serviços públicos portugueses</strong>
-              <small>Consultar serviços e informações oficiais</small>
-            </a>
-
-            <a class="service"
-               href="https://www.gov.br/mre/pt-br/assuntos/portal-consular"
-               target="_blank" rel="noopener noreferrer">
-              <span class="arrow">↗</span>
-              <strong>Informações consulares</strong>
-              <small>Consultar orientações do portal consular brasileiro</small>
-            </a>
-          </div>
-        </div>
-      </article>
-
-    </section>
-
-    <aside class="notice">
+    
+<section class="intro">
+  <div class="eyebrow">ODEVI+ · COMUNIDADE LUSÓFONA</div>
+  <h1>Serviços para brasileiros e portugueses</h1>
+  <p>Encontra orientações e serviços oficiais para tratar de documentos, vistos, reforma e assuntos consulares.</p>
+</section>
+<section class="countries" aria-label="Escolhe a tua comunidade">
+  <article class="country portugal">
+    <div class="country-banner"><div class="flag" role="img" aria-label="Bandeira de Portugal">🇵🇹</div><p>Portugal</p></div>
+    <div class="country-content">
+      <h2>Brasileiros em Portugal</h2>
+      <p>Serviços úteis para viver, trabalhar e tratar de assuntos oficiais em Portugal.</p>
+      <div class="service-list">
+        <a class="service" href="guia-portugal.html#passaporte"><span class="arrow">↗</span><strong>Passaporte</strong><small>Consultar requisitos e instruções oficiais</small></a>
+        <a class="service" href="guia-portugal.html#vistos"><span class="arrow">↗</span><strong>Vistos e residência</strong><small>Consultar a AIMA e os procedimentos de imigração</small></a>
+        <a class="service" href="guia-portugal.html#vida"><span class="arrow">↗</span><strong>Aposentadoria e INSS</strong><small>Informações oficiais sobre benefícios brasileiros</small></a>
+        <a class="service" href="guia-portugal.html#passaporte"><span class="arrow">↗</span><strong>Serviços consulares</strong><small>Aceder ao e-Consular do Brasil em Lisboa</small></a>
+      </div>
+    </div>
+  </article>
+  <article class="country brazil">
+    <div class="country-banner"><div class="flag" role="img" aria-label="Bandeira do Brasil">🇧🇷</div><p>Brasil</p></div>
+    <div class="country-content">
+      <h2>Portugueses no Brasil</h2>
+      <p>Serviços úteis para portugueses que vivem, trabalham ou precisam de apoio no Brasil.</p>
+      <div class="service-list">
+        <a class="service" href="https://portaldascomunidades.mne.gov.pt/pt/" target="_blank" rel="noopener noreferrer"><span class="arrow">↗</span><strong>Passaporte português</strong><small>Localizar o consulado competente e consultar instruções</small></a>
+        <a class="service" href="https://vistos.mne.gov.pt/pt/" target="_blank" rel="noopener noreferrer"><span class="arrow">↗</span><strong>Vistos e residência</strong><small>Consultar informação oficial sobre vistos portugueses</small></a>
+        <a class="service" href="https://www.seg-social.pt/" target="_blank" rel="noopener noreferrer"><span class="arrow">↗</span><strong>Aposentadoria e Segurança Social</strong><small>Consultar informações e serviços oficiais</small></a>
+        <a class="service" href="https://portaldascomunidades.mne.gov.pt/pt/" target="_blank" rel="noopener noreferrer"><span class="arrow">↗</span><strong>Serviços consulares e complementares</strong><small>Encontrar contactos e apoio consular português</small></a>
+      </div>
+    </div>
+  </article>
+</section>
+<section id="quiz-regularizacao" class="quiz-section" aria-labelledby="quiz-title">
+  <div class="quiz-copy">
+    <p class="eyebrow">FERRAMENTA PRINCIPAL</p>
+    <h2 id="quiz-title">Viver em Portugal? Faça o teste aqui!</h2>
+    <p>Responde a três perguntas sobre a tua situação, o teu objetivo e as oportunidades que já tens. Recebe um roteiro inicial para viver em Portugal.</p>
+  </div>
+  <form id="regularizacaoQuiz" class="quiz-card">
+    <div class="quiz-question">
+      <label for="quizSituacao">1. Qual é a tua situação atual?</label>
+      <select id="quizSituacao" required>
+        <option value="">Escolhe uma opção</option>
+        <option value="brasil">Ainda estou no Brasil</option>
+        <option value="fora">Já estou fora do Brasil</option>
+        <option value="outro">Estou a visitar / ainda não decidi</option>
+      </select>
+    </div>
+    <div class="quiz-question">
+      <label for="quizObjetivo">2. Qual é o teu objetivo?</label>
+      <select id="quizObjetivo" required>
+        <option value="">Escolhe uma opção</option>
+        <option value="viver">Viver ou reunir-me com família</option>
+        <option value="trabalhar">Trabalhar</option>
+        <option value="estudar">Estudar</option>
+        <option value="visitar">Visitar por um período curto</option>
+        <option value="regularizar">Verificar ou regularizar a minha situação atual</option>
+      </select>
+    </div>
+    <div class="quiz-question">
+      <label for="quizDestino">3. Que oportunidade ou apoio já tens?</label>
+      <select id="quizDestino" required>
+        <option value="">Escolhe a opção mais próxima</option>
+        <option value="oferta">Tenho uma oferta ou proposta de trabalho</option>
+        <option value="familia">Tenho família ou companheiro/a em Portugal</option>
+        <option value="estudo">Tenho uma oportunidade de estudo</option>
+        <option value="recursos">Tenho recursos próprios e estou a pesquisar</option>
+        <option value="nenhuma">Ainda não tenho oportunidade definida</option>
+      </select>
+    </div>
+    <button class="primary-button" type="submit">Ver os meus próximos passos <span aria-hidden="true">↗</span></button>
+    <div id="quizResultado" class="quiz-result" aria-live="polite" hidden></div>
+    <p class="quiz-disclaimer">Este teste é orientativo, não decide a tua elegibilidade nem substitui aconselhamento jurídico. Confirma sempre as regras oficiais.</p>
+  </form>
+</section>
+<aside class="notice">
       <strong>Informação importante</strong><br>
       O ODEVI+ é uma plataforma independente de orientação.
       Não é um consulado nem um serviço governamental.
@@ -466,108 +432,66 @@
     </aside>
 
     
-<section id="passaporte" style="margin:32px 0;padding:22px;background:#11151d;border:1px solid #68f39a;border-radius:18px;color:#fff">
-  <p style="color:#68f39a;font-weight:bold">FERRAMENTA GRATUITA</p>
-  <h2>Preparar o passaporte brasileiro</h2>
-  <p style="color:#b8c0cc">Organize os próximos passos antes de iniciar o pedido em Portugal.</p>
-
-  <label for="tipoPass">Qual é a sua situação?</label>
-  <select id="tipoPass" style="display:block;width:100%;padding:12px;margin:10px 0 18px;background:#090b10;color:white;border-radius:8px">
-    <option value="renovacao">Já tenho passaporte</option>
-    <option value="primeiro">Primeiro passaporte</option>
-    <option value="perdido">Passaporte perdido ou roubado</option>
-  </select>
-
-  <label for="idadePass">Idade</label>
-  <select id="idadePass" style="display:block;width:100%;padding:12px;margin:10px 0 18px;background:#090b10;color:white;border-radius:8px">
-    <option value="adulto">18 anos ou mais</option>
-    <option value="menor">Menos de 18 anos</option>
-  </select>
-
-  <button type="button" onclick="criarListaPass()" style="width:100%;padding:14px;background:#68f39a;color:#07110b;border:0;border-radius:9px;font-weight:bold;font-size:16px">Criar a minha lista</button>
-
-  <div id="listaPass" style="display:none;margin-top:20px">
-    <h3>Lista de preparação</h3>
-    <p style="color:#b8c0cc;font-size:13px">Confirme cada requisito nas instruções oficiais. Esta lista é orientativa.</p>
-    <div id="itensPass"></div>
-    <button type="button" onclick="window.print()" style="margin-top:15px;padding:12px;border-radius:8px">Imprimir / guardar em PDF</button>
+<section id="brasileiros-mundo" class="diaspora-section" aria-labelledby="diaspora-title">
+  <div class="diaspora-heading">
+    <p class="eyebrow">BRASILEIROS PELO MUNDO</p>
+    <h2 id="diaspora-title">Onde os brasileiros estão</h2>
+    <p>Os três países com as maiores comunidades brasileiras no exterior, com base no levantamento do Itamaraty referente a 2023.</p>
   </div>
-
-  <p style="font-size:12px;color:#b8c0cc;margin-top:20px">O ODEVI+ é independente e não é um serviço governamental. Os requisitos variam conforme a situação.</p>
-  <p><a href="https://ec-lisboa.itamaraty.gov.br/" target="_blank" rel="noopener noreferrer" style="color:#68f39a">Abrir e-Consular de Lisboa ↗</a></p>
-  <p><a href="https://www.gov.br/mre/pt-br/consulado-lisboa" target="_blank" rel="noopener noreferrer" style="color:#68f39a">Consultar o Consulado oficial ↗</a></p>
+  <div class="diaspora-grid">
+    <article class="diaspora-card">
+      <div class="diaspora-country"><span class="diaspora-flag" aria-hidden="true">🇺🇸</span><span>Estados Unidos</span></div>
+      <p class="diaspora-number">2,06 <span>milhões</span></p>
+      <span class="diaspora-rank">1.º lugar</span>
+    </article>
+    <article class="diaspora-card">
+      <div class="diaspora-country"><span class="diaspora-flag" aria-hidden="true">🇵🇹</span><span>Portugal</span></div>
+      <p class="diaspora-number">628 <span>mil</span></p>
+      <span class="diaspora-rank">2.º lugar</span>
+    </article>
+    <article class="diaspora-card">
+      <div class="diaspora-country"><span class="diaspora-flag" aria-hidden="true">🇵🇾</span><span>Paraguai</span></div>
+      <p class="diaspora-number">270 <span>mil</span></p>
+      <span class="diaspora-rank">3.º lugar</span>
+    </article>
+  </div>
+  <div class="diaspora-footer">
+    <span>Estimativas referentes a 2023 · Itamaraty</span>
+    <a href="https://www.gov.br/mre/pt-br/consulado-montevideu/servicos-consulares/informacoes-e-lins-uteis/brasileiros-no-mundo" target="_blank" rel="noopener noreferrer">Consultar fonte oficial <span aria-hidden="true">↗</span></a>
+  </div>
 </section>
-
-<script>
-function criarListaPass() {
-  const tipo = document.getElementById("tipoPass").value;
-  const idade = document.getElementById("idadePass").value;
-  const itens = [
-    "Consultar os requisitos oficiais para o seu pedido.",
-    "Confirmar os documentos de identidade e nacionalidade exigidos.",
-    "Verificar o formulário e os documentos que devem ser enviados.",
-    "Confirmar as taxas, o pagamento e a apresentação dos originais.",
-    "Consultar as regras de agendamento no e-Consular."
-  ];
-
-  if (tipo === "renovacao") itens.push("Confirmar os requisitos relativos ao passaporte anterior.");
-  if (tipo === "primeiro") itens.push("Confirmar os requisitos específicos do primeiro passaporte.");
-  if (tipo === "perdido") itens.push("Consultar as instruções para perda ou roubo e confirmar se é necessária participação policial.");
-  if (idade === "menor") itens.push("Confirmar a autorização dos responsáveis e os documentos exigidos para menores.");
-  if (idade === "adulto") itens.push("Confirmar os requisitos eleitorais e militares aplicáveis.");
-  
-  const destino = document.getElementById("itensPass");
-  destino.replaceChildren();
-  itens.forEach((item, i) => {
-    const label = document.createElement("label");
-    label.style.cssText = "display:flex;gap:10px;margin:14px 0;line-height:1.5";
-    const check = document.createElement("input");
-    check.type = "checkbox";
-    check.id = "passCheck" + i;
-    const span = document.createElement("span");
-    span.textContent = item;
-    label.append(check, span);
-    destino.append(label);
-  });
-  document.getElementById("listaPass").style.display = "block";
-}
-</script>
- <section class="tools">
+<section class="community-extras" aria-label="Comunidade e notícias">
+  <div class="uk-highlight">
+    <div class="uk-flag" aria-hidden="true">🇬🇧</div>
+    <div><p class="eyebrow">TAMBÉM EM DESTAQUE</p><h3>Reino Unido</h3><p>Cerca de 190 mil brasileiros, segundo estimativas citadas para a comunidade. Os números variam conforme o ano e a metodologia.</p></div>
+    <a href="https://www.gov.br/mre/pt-br/assuntos/portal-consular/brasileiros-no-exterior-estimativas-ano-a-ano" target="_blank" rel="noopener noreferrer">Ver dados do Itamaraty ↗</a>
+  </div>
+  <section id="noticias-avisos" class="news-section" aria-labelledby="news-title">
+    <div class="section-heading"><h2 id="news-title">Notícias &amp; avisos rápidos</h2><p>Acede às páginas oficiais para veres as publicações mais recentes.</p></div>
+    <div class="news-tabs" role="tablist" aria-label="Filtrar notícias por país">
+      <button type="button" class="news-tab active" role="tab" aria-selected="true" data-news="pt">🇵🇹 Portugal</button>
+      <button type="button" class="news-tab" role="tab" aria-selected="false" data-news="uk">🇬🇧 Reino Unido</button>
+      <button type="button" class="news-tab" role="tab" aria-selected="false" data-news="us">🇺🇸 EUA</button>
+    </div>
+    <div id="newsPanel" class="news-panel" role="tabpanel"></div>
+    <p class="news-note">As ligações abrem fontes externas. A página não reproduz notícias automaticamente nem garante alertas em tempo real.</p>
+  </section>
+  <aside class="radio-card">
+    <div class="radio-icon" aria-hidden="true">🎵</div>
+    <div class="radio-copy"><p class="eyebrow">EM DESTAQUE NA COMUNIDADE</p><h3>Rádio Lusofonia de Londres 🇬🇧🇵🇹</h3><p>Música portuguesa e programação em português, emitida a partir de Londres.</p></div>
+    <a class="radio-button" href="https://radiolusofoniadelondres.net/" target="_blank" rel="noopener noreferrer">🎧 Ouvir rádio ↗</a>
+  </aside>
+</section>
+<section class="tools">
       <div class="section-heading">
         <h2>O universo ODEVI+</h2>
         <p>Novas ferramentas práticas estão a caminho.</p>
       </div>
 
       <div class="tool-grid">
-        <article class="tool">
-          <div class="tool-icon">📋</div>
-          <h3>Preparar documentos</h3>
-          <p>
-            Listas de verificação e orientações para
-            organizar os documentos antes de um pedido.
-          </p>
-          <span class="coming">Em preparação</span>
-        </article>
-
-        <article class="tool">
-          <div class="tool-icon">💱</div>
-          <h3>Conversor de moedas</h3>
-          <p>
-            Uma ferramenta para comparar valores
-            entre euros, reais e outras moedas.
-          </p>
-          <span class="coming">Em preparação</span>
-        </article>
-
-        <article class="tool">
-          <div class="tool-icon">💼</div>
-          <h3>Trabalho e currículo</h3>
-          <p>
-            Modelos e recursos para preparar CVs
-            e candidaturas em português e inglês.
-          </p>
-          <span class="coming">Em preparação</span>
-        </article>
+        <a class="tool" href="https://raw.githack.com/operador212/odevitools/feature/passport-checklist-improvements/ferramentas.html#documentos"><div class="tool-icon">📋</div><h3>Preparar documentos</h3><p>Cria uma lista de documentos, assinala o que já tens e imprime ou guarda em PDF.</p><span class="coming">Abrir ferramenta ↗</span></a>
+        <a class="tool" href="https://raw.githack.com/operador212/odevitools/feature/passport-checklist-improvements/ferramentas.html#moedas"><div class="tool-icon">💱</div><h3>Conversor de moedas</h3><p>Converte EUR, BRL, GBP e USD com taxa atualizada online quando disponível.</p><span class="coming">Abrir ferramenta ↗</span></a>
+        <a class="tool" href="https://raw.githack.com/operador212/odevitools/feature/passport-checklist-improvements/ferramentas.html#curriculo"><div class="tool-icon">💼</div><h3>Trabalho e currículo</h3><p>Preenche os teus dados e gera um CV simples, pronto para imprimir ou guardar em PDF.</p><span class="coming">Abrir ferramenta ↗</span></a>
       </div>
     </section>
   </main>
@@ -579,5 +503,57 @@ function criarListaPass() {
       O ODEVI+ não representa qualquer governo.
     </p>
   </footer>
+
+<script>
+(function(){
+ const destinations={
+  pt:{title:"Portugal: começa pelos serviços oficiais",links:[
+   ["AIMA — Notícias e avisos","Atualizações sobre serviços de imigração, agendamentos e comunicados.","https://aima.gov.pt/pt/noticias"],
+   ["Portal ePortugal — vistos e residência","Informação pública sobre serviços e procedimentos em Portugal.","https://eportugal.gov.pt/"],
+   ["Consulado do Brasil em Portugal","Serviços consulares e orientações para cidadãos brasileiros.","https://www.gov.br/mre/pt-br/consulado-lisboa"]
+  ]},
+  uk:{title:"Reino Unido: verifica as regras do Home Office",links:[
+   ["UK Visas and Immigration — notícias","Atualizações oficiais sobre vistos e imigração no Reino Unido.","https://www.gov.uk/search/news-and-communications?organisations%5B%5D=uk-visas-and-immigration"],
+   ["Verificar se precisas de visto","Consulta o serviço oficial para identificar o visto adequado à tua situação.","https://www.gov.uk/check-uk-visa"],
+   ["Consulado-Geral do Brasil em Londres","Informação consular para brasileiros no Reino Unido.","https://www.gov.br/mre/pt-br/consulado-londres"]
+  ]},
+  us:{title:"Estados Unidos: consulta fontes oficiais",links:[
+   ["USCIS — notícias e atualizações","Comunicados e atualizações dos serviços de imigração dos EUA.","https://www.uscis.gov/newsroom"],
+   ["Travel.State.gov — vistos","Informação oficial sobre vistos e procedimentos consulares.","https://travel.state.gov/content/travel/en/us-visas.html"],
+   ["Embaixada e Consulados dos EUA no Brasil","Informações consulares oficiais para quem está no Brasil.","https://br.usembassy.gov/"]
+  ]}
+ };
+ function showNews(key){
+  const panel=document.getElementById("newsPanel"); if(!panel)return;
+  panel.replaceChildren();
+  const data=destinations[key];
+  const h=document.createElement("h3");h.textContent=data.title;h.style.gridColumn="1 / -1";panel.append(h);
+  data.links.forEach(item=>{const a=document.createElement("a");a.className="news-link";a.href=item[2];a.target="_blank";a.rel="noopener noreferrer";const strong=document.createElement("strong");strong.textContent=item[0];const small=document.createElement("small");small.textContent=item[1];const arrow=document.createElement("span");arrow.className="arrow";arrow.textContent="Abrir fonte oficial ↗";a.append(strong,small,arrow);panel.append(a);});
+  document.querySelectorAll(".news-tab").forEach(b=>{const active=b.dataset.news===key;b.classList.toggle("active",active);b.setAttribute("aria-selected",String(active));});
+ }
+ document.querySelectorAll(".news-tab").forEach(b=>b.addEventListener("click",()=>showNews(b.dataset.news)));
+ showNews("pt");
+ const form=document.getElementById("regularizacaoQuiz");
+ if(form)form.addEventListener("submit",function(event){
+  event.preventDefault();
+  const situacao=document.getElementById("quizSituacao").value, objetivo=document.getElementById("quizObjetivo").value, oportunidade=document.getElementById("quizDestino").value;
+  if(!situacao||!objetivo||!oportunidade)return;
+  const result=document.getElementById("quizResultado");
+  const plans={
+   oferta:{title:"Tens uma proposta de trabalho",steps:["Confirma se a proposta e a entidade empregadora são legítimas; não pagues por promessas de emprego ou vistos.","Verifica qual o visto ou autorização adequada ao trabalho e à tua situação atual.","Confirma os requisitos e documentos nos portais oficiais antes de tomar decisões."]},
+   familia:{title:"Tens família ou companheiro/a em Portugal",steps:["Identifica a relação familiar e a situação legal da pessoa que vive em Portugal.","Confirma se o teu caso se enquadra num procedimento de visto ou reagrupamento familiar.","Consulta a AIMA e o consulado português competente antes de reunir documentos."]},
+   estudo:{title:"Tens uma oportunidade de estudo",steps:["Confirma se a instituição e o curso são reconhecidos e pede informação escrita sobre a admissão.","Consulta os requisitos do visto de residência para estudo e os comprovativos exigidos.","Confirma os procedimentos junto do consulado e da AIMA, conforme o caso."]},
+   recursos:{title:"Estás a pesquisar com recursos próprios",steps:["Define o objetivo principal e verifica qual o visto adequado antes de comprar viagens ou assumir compromissos.","Confirma os requisitos de meios de subsistência, alojamento e seguro aplicáveis ao teu caso.","Compara oportunidades reais de trabalho, estudo ou outras vias legais usando fontes oficiais."]},
+   nenhuma:{title:"Ainda não tens uma oportunidade definida",steps:["Começa por escolher entre trabalho, estudo, família ou visita; cada objetivo tem regras diferentes.","Pesquisa oportunidades verificáveis e confirma os requisitos legais antes de pagar a intermediários.","Não assumas que entrar como visitante permite trabalhar ou permanecer em Portugal a longo prazo."]}
+  };
+  const p=plans[oportunidade];const h=document.createElement("h3");h.textContent=p.title;result.replaceChildren(h);
+  const situacoes={brasil:"ainda está no Brasil",fora:"já está fora do Brasil",outro:"está a visitar ou ainda está a decidir"};const objetivos={viver:"viver em Portugal ou reunir-se com família",trabalhar:"trabalhar",estudar:"estudar",visitar:"visitar Portugal",regularizar:"verificar ou regularizar a situação atual"};const intro=document.createElement("p");intro.textContent="Roteiro inicial para quem "+situacoes[situacao]+" e pretende "+objetivos[objetivo]+". A oportunidade que tens pode alterar os passos e os documentos exigidos.";result.append(intro);
+  const ul=document.createElement("ul");p.steps.forEach(t=>{const li=document.createElement("li");li.textContent=t;ul.append(li);});result.append(ul);
+  [["Abrir guia ODEVI+ sobre viver em Portugal","guia-portugal.html"],["AIMA — imigração e residência","https://aima.gov.pt/pt"],["Portal oficial de vistos","https://vistos.mne.gov.pt/pt/"]].forEach(item=>{const a=document.createElement("a");a.href=item[1];a.target="_blank";a.rel="noopener noreferrer";a.textContent=item[0]+" ↗";a.style.display="inline-block";a.style.margin="5px 12px 0 0";result.append(a);});
+  result.hidden=false;result.scrollIntoView({behavior:"smooth",block:"nearest"});
+ });
+})();
+</script>
+
 </body>
 </html>
