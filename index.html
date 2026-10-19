@@ -509,6 +509,23 @@
 .diaspora-footer a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 @media(max-width:600px){.diaspora-section{padding:18px 0}.diaspora-grid{grid-template-columns:1fr;gap:10px}.diaspora-card{display:grid;grid-template-columns:1fr auto;align-items:center;gap:5px 12px;padding:15px}.diaspora-country{grid-column:1}.diaspora-number{grid-column:2;grid-row:1 / span 2;margin:0;font-size:25px}.diaspora-rank{grid-column:1}.diaspora-footer{align-items:flex-start;flex-direction:column}}
 
+
+.quiz-section{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,1.05fr);gap:24px;align-items:start;margin:28px 0;padding:24px;background:linear-gradient(135deg,rgba(104,243,154,.09),rgba(17,21,29,.95));border:1px solid var(--border);border-radius:18px}
+.quiz-copy .eyebrow,.uk-highlight .eyebrow,.radio-copy .eyebrow{color:var(--green);font-size:12px;font-weight:800;letter-spacing:.08em;margin-bottom:8px}
+.quiz-copy h2{font-size:clamp(26px,4vw,38px);line-height:1.15;margin-bottom:12px}.quiz-copy>p:last-child{color:var(--muted);line-height:1.6}
+.quiz-card{padding:18px;background:var(--panel);border:1px solid var(--border);border-radius:14px}
+.quiz-question{margin-bottom:15px}.quiz-question label{display:block;font-weight:700;margin-bottom:7px}
+.quiz-question select{width:100%;padding:12px;border:1px solid var(--border);border-radius:9px;background:var(--bg);color:var(--text);font:inherit}
+.primary-button,.radio-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 16px;border:0;border-radius:9px;background:var(--green);color:#07110b;font-weight:800;cursor:pointer;text-align:center}
+.primary-button{width:100%;font:inherit;font-weight:800}.quiz-result{margin-top:16px;padding:15px;border:1px solid var(--green);border-radius:10px;line-height:1.55}.quiz-result h3{margin-bottom:7px}.quiz-result ul{padding-left:20px;margin:8px 0}.quiz-result a{text-decoration:underline;text-underline-offset:3px}.quiz-disclaimer,.news-note{font-size:12px;color:var(--muted);line-height:1.5;margin-top:13px}
+.community-extras{margin:28px 0;display:grid;gap:20px}
+.uk-highlight{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px;align-items:center;padding:18px;border:1px solid var(--border);border-radius:15px;background:var(--panel)}
+.uk-flag{font-size:32px}.uk-highlight h3,.radio-copy h3{margin:0 0 4px}.uk-highlight p:not(.eyebrow),.radio-copy p:not(.eyebrow){color:var(--muted);font-size:14px;line-height:1.5}.uk-highlight>a{font-size:13px;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.news-section{padding:8px 0}.news-section .section-heading{margin-bottom:14px}.news-tabs{display:flex;gap:8px;margin:14px 0;flex-wrap:wrap}.news-tab{padding:9px 14px;border:1px solid var(--border);border-radius:999px;background:transparent;color:var(--text);cursor:pointer;font:inherit}.news-tab.active{background:var(--green);border-color:var(--green);color:#07110b;font-weight:800}
+.news-panel{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.news-link{display:block;padding:15px;border:1px solid var(--border);border-radius:12px;background:var(--panel)}.news-link strong,.news-link small{display:block}.news-link small{margin-top:6px;color:var(--muted);line-height:1.45}.news-link .arrow{display:block;color:var(--green);margin-top:10px}
+.radio-card{display:flex;align-items:center;gap:16px;padding:18px;border:1px solid var(--border);border-radius:15px;background:var(--panel)}.radio-icon{font-size:30px}.radio-copy{flex:1}.radio-copy p:not(.eyebrow){margin-top:5px}.radio-button{white-space:nowrap}
+@media(max-width:720px){.quiz-section{grid-template-columns:1fr;padding:18px}.uk-highlight{grid-template-columns:auto minmax(0,1fr)}.uk-highlight>a{grid-column:2;white-space:normal}.news-panel{grid-template-columns:1fr}.radio-card{align-items:flex-start;flex-wrap:wrap}.radio-copy{min-width:calc(100% - 60px)}.radio-button{width:100%}}
+
 </style>
   
 </head>
@@ -657,6 +674,69 @@
     <a href="https://www.gov.br/mre/pt-br/consulado-montevideu/servicos-consulares/informacoes-e-lins-uteis/brasileiros-no-mundo" target="_blank" rel="noopener noreferrer">Consultar fonte oficial <span aria-hidden="true">↗</span></a>
   </div>
 </section>
+<section class="community-extras" aria-label="Comunidade e notícias">
+  <div class="uk-highlight">
+    <div class="uk-flag" aria-hidden="true">🇬🇧</div>
+    <div><p class="eyebrow">TAMBÉM EM DESTAQUE</p><h3>Reino Unido</h3><p>Cerca de 190 mil brasileiros, segundo estimativas citadas para a comunidade. Os números variam conforme o ano e a metodologia.</p></div>
+    <a href="https://www.gov.br/mre/pt-br/assuntos/portal-consular/brasileiros-no-exterior-estimativas-ano-a-ano" target="_blank" rel="noopener noreferrer">Ver dados do Itamaraty ↗</a>
+  </div>
+  <section id="noticias-avisos" class="news-section" aria-labelledby="news-title">
+    <div class="section-heading"><h2 id="news-title">Notícias &amp; avisos rápidos</h2><p>Acede às páginas oficiais para veres as publicações mais recentes.</p></div>
+    <div class="news-tabs" role="tablist" aria-label="Filtrar notícias por país">
+      <button type="button" class="news-tab active" role="tab" aria-selected="true" data-news="pt">🇵🇹 Portugal</button>
+      <button type="button" class="news-tab" role="tab" aria-selected="false" data-news="uk">🇬🇧 Reino Unido</button>
+      <button type="button" class="news-tab" role="tab" aria-selected="false" data-news="us">🇺🇸 EUA</button>
+    </div>
+    <div id="newsPanel" class="news-panel" role="tabpanel"></div>
+    <p class="news-note">As ligações abrem fontes externas. A página não reproduz notícias automaticamente nem garante alertas em tempo real.</p>
+  </section>
+  <aside class="radio-card">
+    <div class="radio-icon" aria-hidden="true">🎵</div>
+    <div class="radio-copy"><p class="eyebrow">EM DESTAQUE NA COMUNIDADE</p><h3>Rádio Lusofonia de Londres 🇬🇧🇵🇹</h3><p>Música portuguesa e programação em português, emitida a partir de Londres.</p></div>
+    <a class="radio-button" href="https://radiolusofoniadelondres.net/" target="_blank" rel="noopener noreferrer">🎧 Ouvir rádio ↗</a>
+  </aside>
+</section>
+<section id="quiz-regularizacao" class="quiz-section" aria-labelledby="quiz-title">
+  <div class="quiz-copy">
+    <p class="eyebrow">FERRAMENTA PRINCIPAL</p>
+    <h2 id="quiz-title">Vai viver fora do Brasil?</h2>
+    <p>Responde a 3 perguntas e descobre por onde começar a procurar informação oficial para a tua situação.</p>
+  </div>
+  <form id="regularizacaoQuiz" class="quiz-card">
+    <div class="quiz-question">
+      <label for="quizSituacao">1. Qual é a tua situação atual?</label>
+      <select id="quizSituacao" required>
+        <option value="">Escolhe uma opção</option>
+        <option value="brasil">Ainda estou no Brasil</option>
+        <option value="fora">Já estou fora do Brasil</option>
+        <option value="outro">Estou a visitar / ainda não decidi</option>
+      </select>
+    </div>
+    <div class="quiz-question">
+      <label for="quizObjetivo">2. Qual é o teu objetivo?</label>
+      <select id="quizObjetivo" required>
+        <option value="">Escolhe uma opção</option>
+        <option value="viver">Viver ou reunir-me com família</option>
+        <option value="trabalhar">Trabalhar</option>
+        <option value="estudar">Estudar</option>
+        <option value="visitar">Visitar por um período curto</option>
+        <option value="regularizar">Verificar ou regularizar a minha situação atual</option>
+      </select>
+    </div>
+    <div class="quiz-question">
+      <label for="quizDestino">3. Qual é o país de destino?</label>
+      <select id="quizDestino" required>
+        <option value="">Escolhe um país</option>
+        <option value="portugal">🇵🇹 Portugal</option>
+        <option value="uk">🇬🇧 Reino Unido</option>
+        <option value="usa">🇺🇸 Estados Unidos</option>
+      </select>
+    </div>
+    <button class="primary-button" type="submit">Ver os meus próximos passos <span aria-hidden="true">↗</span></button>
+    <div id="quizResultado" class="quiz-result" aria-live="polite" hidden></div>
+    <p class="quiz-disclaimer">Este teste é orientativo, não decide a tua elegibilidade nem substitui aconselhamento jurídico. Confirma sempre as regras oficiais.</p>
+  </form>
+</section>
  <section class="tools">
       <div class="section-heading">
         <h2>O universo ODEVI+</h2>
@@ -704,5 +784,54 @@
       O ODEVI+ não representa qualquer governo.
     </p>
   </footer>
+
+<script>
+(function(){
+ const destinations={
+  portugal:{title:"Portugal: começa pelos serviços oficiais",links:[
+   ["AIMA — Notícias e avisos","Atualizações sobre serviços de imigração, agendamentos e comunicados.","https://aima.gov.pt/pt/noticias"],
+   ["Portal ePortugal — vistos e residência","Informação pública sobre serviços e procedimentos em Portugal.","https://eportugal.gov.pt/"],
+   ["Consulado do Brasil em Portugal","Serviços consulares e orientações para cidadãos brasileiros.","https://www.gov.br/mre/pt-br/consulado-lisboa"]
+  ]},
+  uk:{title:"Reino Unido: verifica as regras do Home Office",links:[
+   ["UK Visas and Immigration — notícias","Atualizações oficiais sobre vistos e imigração no Reino Unido.","https://www.gov.uk/search/news-and-communications?organisations%5B%5D=uk-visas-and-immigration"],
+   ["Verificar se precisas de visto","Consulta o serviço oficial para identificar o visto adequado à tua situação.","https://www.gov.uk/check-uk-visa"],
+   ["Consulado-Geral do Brasil em Londres","Informação consular para brasileiros no Reino Unido.","https://www.gov.br/mre/pt-br/consulado-londres"]
+  ]},
+  us:{title:"Estados Unidos: consulta fontes oficiais",links:[
+   ["USCIS — notícias e atualizações","Comunicados e atualizações dos serviços de imigração dos EUA.","https://www.uscis.gov/newsroom"],
+   ["Travel.State.gov — vistos","Informação oficial sobre vistos e procedimentos consulares.","https://travel.state.gov/content/travel/en/us-visas.html"],
+   ["Embaixada e Consulados dos EUA no Brasil","Informações consulares oficiais para quem está no Brasil.","https://br.usembassy.gov/"]
+  ]}
+ };
+ function showNews(key){
+  const panel=document.getElementById("newsPanel"); if(!panel)return;
+  panel.replaceChildren();
+  const data=destinations[key];
+  const h=document.createElement("h3");h.textContent=data.title;h.style.gridColumn="1 / -1";panel.append(h);
+  data.links.forEach(item=>{const a=document.createElement("a");a.className="news-link";a.href=item[2];a.target="_blank";a.rel="noopener noreferrer";const strong=document.createElement("strong");strong.textContent=item[0];const small=document.createElement("small");small.textContent=item[1];const arrow=document.createElement("span");arrow.className="arrow";arrow.textContent="Abrir fonte oficial ↗";a.append(strong,small,arrow);panel.append(a);});
+  document.querySelectorAll(".news-tab").forEach(b=>{const active=b.dataset.news===key;b.classList.toggle("active",active);b.setAttribute("aria-selected",String(active));});
+ }
+ document.querySelectorAll(".news-tab").forEach(b=>b.addEventListener("click",()=>showNews(b.dataset.news)));
+ showNews("pt");
+ const form=document.getElementById("regularizacaoQuiz");
+ if(form)form.addEventListener("submit",function(event){
+  event.preventDefault();
+  const situacao=document.getElementById("quizSituacao").value, objetivo=document.getElementById("quizObjetivo").value, destino=document.getElementById("quizDestino").value;
+  if(!situacao||!objetivo||!destino)return;
+  const result=document.getElementById("quizResultado");
+  const plans={
+   portugal:{name:"Portugal",url:"https://aima.gov.pt/pt",secondary:"https://eportugal.gov.pt/",steps:["Confirma qual o visto ou fundamento de residência adequado ao teu objetivo.","Consulta a AIMA e o portal ePortugal para os requisitos e os passos oficiais.","Reúne documentos apenas de acordo com a lista oficial aplicável ao teu caso."]},
+   uk:{name:"Reino Unido",url:"https://www.gov.uk/check-uk-visa",secondary:"https://www.gov.uk/browse/visas-immigration",steps:["Usa o verificador oficial para identificar se precisas de visto.","Lê os requisitos do tipo de visto adequado ao teu objetivo antes de pagar ou marcar.","Segue as instruções oficiais sobre pedido, documentos e prazos."]},
+   usa:{name:"Estados Unidos",url:"https://travel.state.gov/content/travel/en/us-visas.html",secondary:"https://www.uscis.gov/",steps:["Consulta o portal oficial de vistos para identificar a categoria adequada ao teu objetivo.","Confirma os requisitos e o processo no consulado ou na entidade oficial competente.","Não assumas que um visto de visita permite trabalhar ou residir."]}};
+  const p=plans[destino];const h=document.createElement("h3");h.textContent="O teu ponto de partida: "+p.name;result.replaceChildren(h);
+  const intro=document.createElement("p");intro.textContent="Com base nas tuas respostas, começa por estes passos gerais. A situação atual ("+({brasil:"ainda no Brasil",fora:"já fora do Brasil",outro:"visita ou destino por decidir"}[situacao])+") e o teu objetivo ("+({viver:"viver ou reunir família",trabalhar:"trabalhar",estudar:"estudar",visitar:"visitar",regularizar:"verificar a situação atual"}[objetivo])+") podem alterar os requisitos.";result.append(intro);
+  const ul=document.createElement("ul");p.steps.forEach(t=>{const li=document.createElement("li");li.textContent=t;ul.append(li);});result.append(ul);
+  [[ "Abrir serviço oficial",p.url],["Mais informação oficial",p.secondary]].forEach(item=>{const a=document.createElement("a");a.href=item[1];a.target="_blank";a.rel="noopener noreferrer";a.textContent=item[0]+" ↗";a.style.display="inline-block";a.style.margin="5px 12px 0 0";result.append(a);});
+  result.hidden=false;result.scrollIntoView({behavior:"smooth",block:"nearest"});
+ });
+})();
+</script>
+
 </body>
 </html>
