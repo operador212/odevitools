@@ -573,7 +573,7 @@
   const p=plans[oportunidade];const h=document.createElement("h3");h.textContent=p.title;result.replaceChildren(h);
   const intro=document.createElement("p");intro.textContent="Roteiro inicial para quem "+({brasil:"ainda está no Brasil",fora:"já está fora do Brasil",outro:"está a visitar ou ainda está a decidir"})+" e pretende "+({viver:"viver em Portugal ou reunir-se com família",trabalhar:"trabalhar",estudar:"estudar",visitar:"visitar Portugal",regularizar:"verificar ou regularizar a situação atual"})+". A oportunidade que tens pode alterar os passos e os documentos exigidos.";result.append(intro);
   const ul=document.createElement("ul");p.steps.forEach(t=>{const li=document.createElement("li");li.textContent=t;ul.append(li);});result.append(ul);
-  [[ "Abrir serviço oficial",p.url],["Mais informação oficial",p.secondary]].forEach(item=>{const a=document.createElement("a");a.href=item[1];a.target="_blank";a.rel="noopener noreferrer";a.textContent=item[0]+" ↗";a.style.display="inline-block";a.style.margin="5px 12px 0 0";result.append(a);});
+  [["Abrir guia ODEVI+ sobre viver em Portugal","guia-portugal.html"],["AIMA — imigração e residência","https://aima.gov.pt/pt"],["Portal oficial de vistos","https://vistos.mne.gov.pt/pt/"]].forEach(item=>{const a=document.createElement("a");a.href=item[1];a.target="_blank";a.rel="noopener noreferrer";a.textContent=item[0]+" ↗";a.style.display="inline-block";a.style.margin="5px 12px 0 0";result.append(a);});
   result.hidden=false;result.scrollIntoView({behavior:"smooth",block:"nearest"});
  });
 })();
