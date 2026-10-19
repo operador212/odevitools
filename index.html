@@ -245,12 +245,14 @@
     }
 
     .tool {
+      display:block;color:inherit;text-decoration:none;
       border: 1px solid var(--border);
       background: var(--panel);
       border-radius: 16px;
       padding: 20px;
     }
 
+    .tool:hover {border-color:var(--green);transform:translateY(-2px)}
     .tool-icon {
       font-size: 26px;
       margin-bottom: 10px;
@@ -487,35 +489,9 @@
       </div>
 
       <div class="tool-grid">
-        <article class="tool">
-          <div class="tool-icon">📋</div>
-          <h3>Preparar documentos</h3>
-          <p>
-            Listas de verificação e orientações para
-            organizar os documentos antes de um pedido.
-          </p>
-          <span class="coming">Em preparação</span>
-        </article>
-
-        <article class="tool">
-          <div class="tool-icon">💱</div>
-          <h3>Conversor de moedas</h3>
-          <p>
-            Uma ferramenta para comparar valores
-            entre euros, reais e outras moedas.
-          </p>
-          <span class="coming">Em preparação</span>
-        </article>
-
-        <article class="tool">
-          <div class="tool-icon">💼</div>
-          <h3>Trabalho e currículo</h3>
-          <p>
-            Modelos e recursos para preparar CVs
-            e candidaturas em português e inglês.
-          </p>
-          <span class="coming">Em preparação</span>
-        </article>
+        <a class="tool" href="ferramentas.html#documentos"><div class="tool-icon">📋</div><h3>Preparar documentos</h3><p>Cria uma lista de documentos, assinala o que já tens e imprime ou guarda em PDF.</p><span class="coming">Abrir ferramenta ↗</span></a>
+        <a class="tool" href="ferramentas.html#moedas"><div class="tool-icon">💱</div><h3>Conversor de moedas</h3><p>Converte EUR, BRL, GBP e USD com taxa atualizada online quando disponível.</p><span class="coming">Abrir ferramenta ↗</span></a>
+        <a class="tool" href="ferramentas.html#curriculo"><div class="tool-icon">💼</div><h3>Trabalho e currículo</h3><p>Preenche os teus dados e gera um CV simples, pronto para imprimir ou guardar em PDF.</p><span class="coming">Abrir ferramenta ↗</span></a>
       </div>
     </section>
   </main>
@@ -571,7 +547,7 @@
    nenhuma:{title:"Ainda não tens uma oportunidade definida",steps:["Começa por escolher entre trabalho, estudo, família ou visita; cada objetivo tem regras diferentes.","Pesquisa oportunidades verificáveis e confirma os requisitos legais antes de pagar a intermediários.","Não assumas que entrar como visitante permite trabalhar ou permanecer em Portugal a longo prazo."]}
   };
   const p=plans[oportunidade];const h=document.createElement("h3");h.textContent=p.title;result.replaceChildren(h);
-  const intro=document.createElement("p");intro.textContent="Roteiro inicial para quem "+({brasil:"ainda está no Brasil",fora:"já está fora do Brasil",outro:"está a visitar ou ainda está a decidir"})+" e pretende "+({viver:"viver em Portugal ou reunir-se com família",trabalhar:"trabalhar",estudar:"estudar",visitar:"visitar Portugal",regularizar:"verificar ou regularizar a situação atual"})+". A oportunidade que tens pode alterar os passos e os documentos exigidos.";result.append(intro);
+  const situacoes={brasil:"ainda está no Brasil",fora:"já está fora do Brasil",outro:"está a visitar ou ainda está a decidir"};const objetivos={viver:"viver em Portugal ou reunir-se com família",trabalhar:"trabalhar",estudar:"estudar",visitar:"visitar Portugal",regularizar:"verificar ou regularizar a situação atual"};const intro=document.createElement("p");intro.textContent="Roteiro inicial para quem "+situacoes[situacao]+" e pretende "+objetivos[objetivo]+". A oportunidade que tens pode alterar os passos e os documentos exigidos.";result.append(intro);
   const ul=document.createElement("ul");p.steps.forEach(t=>{const li=document.createElement("li");li.textContent=t;ul.append(li);});result.append(ul);
   [["Abrir guia ODEVI+ sobre viver em Portugal","guia-portugal.html"],["AIMA — imigração e residência","https://aima.gov.pt/pt"],["Portal oficial de vistos","https://vistos.mne.gov.pt/pt/"]].forEach(item=>{const a=document.createElement("a");a.href=item[1];a.target="_blank";a.rel="noopener noreferrer";a.textContent=item[0]+" ↗";a.style.display="inline-block";a.style.margin="5px 12px 0 0";result.append(a);});
   result.hidden=false;result.scrollIntoView({behavior:"smooth",block:"nearest"});
