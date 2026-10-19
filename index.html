@@ -491,7 +491,36 @@
       }
     }
   
-  </style>
+  
+.passport-tool{margin:32px 0;padding:22px;background:#11151d;border:1px solid #68f39a;border-radius:18px;color:#fff}
+.passport-tool .eyebrow{color:#68f39a;font-weight:800;font-size:12px;letter-spacing:.08em}
+.passport-tool h2{margin:8px 0}.passport-intro,.passport-note{color:#b8c0cc;line-height:1.5;margin:8px 0 16px}
+.passport-fields{display:grid;gap:8px}.passport-fields label{font-weight:650;margin-top:8px}
+.passport-fields select,.passport-item select{width:100%;padding:12px;background:#090b10;color:white;border:1px solid #394150;border-radius:8px}
+.passport-tabs{display:flex;gap:8px;margin:22px 0 16px}.passport-tabs button,.passport-actions button{flex:1;padding:12px;border:1px solid #394150;border-radius:9px;background:#090b10;color:#fff;font-weight:700;cursor:pointer}
+.passport-tabs button.active,.passport-actions button{background:#68f39a;color:#07110b;border-color:#68f39a}
+.passport-group{margin:18px 0 8px;color:#68f39a;font-size:15px}
+.passport-item{display:grid;gap:10px;padding:13px;margin:8px 0;background:#171d27;border:1px solid #303846;border-radius:10px;line-height:1.45}
+.passport-summary{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.passport-summary>div{padding:8px 10px;background:#171d27;border-radius:8px}
+.passport-meta{color:#b8c0cc;font-size:13px;margin:8px 0}.passport-actions{display:flex;gap:10px;margin-top:20px}
+.passport-locations{display:grid;gap:10px}.passport-locations .service{display:block;position:relative;padding:14px 38px 14px 14px;border:1px solid #303846;border-radius:10px;background:#171d27;color:#fff;text-decoration:none}.passport-locations .service strong,.passport-locations .service small{display:block}.passport-locations .service small{color:#b8c0cc;margin-top:5px;line-height:1.4}.passport-locations .arrow{position:absolute;right:14px;top:14px;color:#68f39a}
+[hidden]{display:none!important}
+@media(max-width:520px){.passport-tool{padding:16px}.passport-tabs,.passport-actions{flex-direction:column}}
+@media print{
+ @page{size:A4;margin:12mm}
+ body *{visibility:hidden!important}
+ #passaporte,#passaporte *{visibility:visible!important}
+ #passaporte{position:absolute!important;left:0!important;top:0!important;width:100%!important;margin:0!important;padding:0!important;border:0!important;background:#fff!important;color:#111!important}
+ #passaporte .screen-only,#passaporte .passport-fields,#passaporte .passport-tabs,#painelLocaisPass{display:none!important}
+ #passaporte .passport-intro,#passaporte .passport-meta,#passaporte .passport-note{color:#333!important}
+ #passaporte .passport-item{break-inside:avoid;background:#fff!important;color:#111!important;border:1px solid #ccc!important;padding:7px!important}
+ #passaporte .passport-item select{display:none!important}
+ #passaporte .status-print{display:block!important;color:#111!important;font-size:10pt}
+ #passaporte .passport-group,#passaporte .eyebrow{color:#111!important}
+ #passaporte .passport-summary>div{background:#fff!important;border:1px solid #ccc;color:#111!important}
+ #passaporte h2{font-size:18pt} #passaporte h3{font-size:13pt}
+}
+</style>
   
 </head>
 
@@ -611,46 +640,27 @@
     </aside>
 
     
-<section id="passaporte" style="margin:32px 0;padding:22px;background:#11151d;border:1px solid #68f39a;border-radius:18px;color:#fff">
-  <p style="color:#68f39a;font-weight:bold">FERRAMENTA GRATUITA</p>
-  <h2>Preparar o passaporte brasileiro</h2>
-  <p style="color:#b8c0cc">Crie uma lista de preparação adaptada à sua situação antes de iniciar o pedido em Portugal.</p>
-
-  <label for="tipoPass">Qual é a sua situação?</label>
-  <select id="tipoPass" style="display:block;width:100%;padding:12px;margin:10px 0 18px;background:#090b10;color:white;border-radius:8px">
-    <option value="renovacao">Já tenho ou tive passaporte</option>
-    <option value="primeiro">Primeiro passaporte</option>
-    <option value="perdido">Passaporte perdido ou roubado</option>
-  </select>
-
-  <label for="idadePass">Idade da pessoa que vai pedir o passaporte</label>
-  <select id="idadePass" style="display:block;width:100%;padding:12px;margin:10px 0 18px;background:#090b10;color:white;border-radius:8px">
-    <option value="adulto">18 anos ou mais</option>
-    <option value="menor">Menos de 18 anos</option>
-  </select>
-
-  <button class="screen-only" type="button" onclick="criarListaPass()" style="width:100%;padding:14px;background:#68f39a;color:#07110b;border:0;border-radius:9px;font-weight:bold;font-size:16px;cursor:pointer">Criar a minha lista</button>
-
-  <div id="listaPass" style="display:none;margin-top:20px">
-    <h3>O meu plano de preparação</h3>
-    <p class="screen-only" style="color:#b8c0cc;font-size:13px;margin-top:6px">Indica o estado de cada ponto. O relatório vai mostrar o que já tens, o que falta reunir e o que deves confirmar.</p>
-    <p id="resumoPass" class="passport-meta"></p>
-    <div id="resumoEstados" class="passport-summary" aria-live="polite"></div>
-    <div id="itensPass"></div>
-    <div class="screen-only passport-actions">
-      <button type="button" onclick="guardarRelatorioPass()" style="background:#68f39a;color:#07110b;border:0;font-weight:bold">Guardar o meu relatório (.txt)</button>
-      <button type="button" onclick="window.print()">Imprimir / guardar como PDF</button>
-      <button type="button" onclick="criarListaPass()">Atualizar lista</button>
-    </div>
-    <p class="screen-only" style="font-size:12px;color:#b8c0cc;margin-top:10px">O relatório é criado neste dispositivo. Não envia os teus dados para o ODEVI+ nem para o consulado.</p>
+<section id="passaporte" class="passport-tool">
+  <p class="eyebrow">FERRAMENTA GRATUITA</p>
+  <h2>Preparar o meu passaporte</h2>
+  <p class="passport-intro">Escolhe o passaporte e onde vais tratar do pedido. A lista adapta-se automaticamente.</p>
+  <div class="passport-fields">
+    <label for="nacionalidadePass">Que passaporte precisas?</label>
+    <select id="nacionalidadePass" onchange="criarListaPass()"><option value="brasileiro">Passaporte brasileiro</option><option value="portugues">Passaporte português</option></select>
+    <label for="tipoPass">O que precisas de fazer?</label>
+    <select id="tipoPass" onchange="criarListaPass()"><option value="renovacao">Renovar / substituir</option><option value="primeiro">Pedir pela primeira vez</option><option value="perdido">Perdido ou roubado</option></select>
+    <label for="localPass">Em que país vais tratar do pedido?</label>
+    <select id="localPass" onchange="criarListaPass()"><option value="portugal">Portugal</option><option value="brasil">Brasil</option></select>
+    <label for="idadePass">Idade da pessoa requerente</label>
+    <select id="idadePass" onchange="criarListaPass()"><option value="adulto">18 anos ou mais</option><option value="menor">Menos de 18 anos</option></select>
   </div>
-
-  <div class="screen-only">
-    <p style="font-size:12px;color:#b8c0cc;margin-top:20px">O ODEVI+ é independente e não é um serviço governamental. Confirme sempre os documentos, taxas e procedimentos atuais nas fontes oficiais.</p>
-    <p><a href="https://ec-lisboa.itamaraty.gov.br/" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin:8px 0;padding:12px 14px;background:#68f39a;color:#07110b;border-radius:8px;font-weight:bold">Continuar no e-Consular de Lisboa ↗</a></p>
-    <p><a href="https://www.gov.br/mre/pt-br/consulado-lisboa/servicos-consulares/passaporte" target="_blank" rel="noopener noreferrer" style="color:#68f39a">Consultar requisitos oficiais de passaporte ↗</a></p>
-    <p><a href="https://www.gov.br/mre/pt-br/consulado-lisboa/servicos-consulares/solicitacao-de-agendamento-pelo-sistema-e-consular" target="_blank" rel="noopener noreferrer" style="color:#68f39a">Ler instruções oficiais de agendamento ↗</a></p>
+  <div class="passport-tabs" role="tablist" aria-label="Informação do passaporte">
+    <button type="button" id="tabDocs" class="active" onclick="mudarAbaPass('docs')" role="tab" aria-selected="true">Documentos e passos</button>
+    <button type="button" id="tabLocais" onclick="mudarAbaPass('locais')" role="tab" aria-selected="false">Onde tratar</button>
   </div>
+  <div id="painelDocsPass" role="tabpanel"><p id="resumoPass" class="passport-meta"></p><div id="resumoEstados" class="passport-summary" aria-live="polite"></div><div id="itensPass"></div></div>
+  <div id="painelLocaisPass" role="tabpanel" hidden><h3 id="tituloLocaisPass">Locais e serviços oficiais</h3><p id="notaLocaisPass" class="passport-intro"></p><div id="linksLocaisPass" class="passport-locations"></div><p class="passport-note">Os postos, horários e serviços podem mudar. Confirma sempre no portal oficial antes de te deslocares. O ODEVI+ não é um serviço governamental.</p></div>
+  <div class="passport-actions screen-only"><button type="button" onclick="imprimirRelatorioPass()">Guardar / imprimir a minha lista (PDF)</button></div>
 </section>
 
 <script>
@@ -696,143 +706,83 @@ function atualizarResumoPass() {
   resumo.setAttribute("aria-label", total + " pontos: " + contagem.tenho + " já tenho, " + contagem.falta + " falta reunir, " + contagem.confirmar + " a confirmar.");
 }
 
-function criarListaPass() {
-  const tipo = document.getElementById("tipoPass").value;
-  const idade = document.getElementById("idadePass").value;
-  const situacoes = {
-    renovacao: "Passaporte anterior / renovação",
-    primeiro: "Primeiro passaporte",
-    perdido: "Passaporte perdido ou roubado"
-  };
-  const itens = [
-    { texto: "Abrir as instruções oficiais do Consulado-Geral do Brasil em Lisboa e confirmar o procedimento aplicável.", grupo: "Antes de começar" },
-    { texto: "Confirmar a lista atualizada de documentos e os formatos aceites pelo e-Consular.", grupo: "Antes de começar" },
-    { texto: "Preencher o pedido e anexar no e-Consular as cópias dos documentos indicados nas instruções oficiais.", grupo: "Pedido" },
-    { texto: "Enviar o pedido para validação e acompanhar o estado no e-Consular e no e-mail registado.", grupo: "Pedido" },
-    { texto: "Depois da validação, seguir as instruções do sistema para escolher uma data de atendimento, se for solicitado atendimento presencial.", grupo: "Atendimento" },
-    { texto: "Confirmar nas instruções específicas do serviço as taxas, os meios de pagamento e se é necessário apresentar documentos originais no atendimento.", grupo: "Atendimento" }
-  ];
-
-  if (tipo === "renovacao") {
-    itens.push({ texto: "Verificar as instruções para apresentar o passaporte anterior e confirmar o que fazer se estiver expirado ou indisponível.", grupo: "Situação específica" });
-  } else if (tipo === "primeiro") {
-    itens.push({ texto: "Confirmar os documentos específicos exigidos para um primeiro pedido de passaporte.", grupo: "Situação específica" });
-  } else if (tipo === "perdido") {
-    itens.push({ texto: "Ler as instruções oficiais para passaporte perdido ou roubado e confirmar se é necessária participação policial ou declaração específica.", grupo: "Situação específica" });
-  }
-
-  if (idade === "menor") {
-    itens.push({ texto: "Confirmar os documentos de identificação do menor e os requisitos de autorização dos responsáveis.", grupo: "Menores de idade" });
-    itens.push({ texto: "Confirmar quem deve acompanhar o menor no atendimento e quais assinaturas ou autorizações são aceites.", grupo: "Menores de idade" });
-  } else {
-    itens.push({ texto: "Confirmar os requisitos eleitorais e, quando aplicável, militares para a situação pessoal do requerente.", grupo: "Adultos" });
-  }
-
-  const destino = document.getElementById("itensPass");
-  destino.replaceChildren();
-  let grupoAtual = "";
-  itens.forEach((item, i) => {
-    if (item.grupo !== grupoAtual) {
-      grupoAtual = item.grupo;
-      const tituloGrupo = document.createElement("h4");
-      tituloGrupo.className = "passport-group";
-      tituloGrupo.textContent = grupoAtual;
-      destino.append(tituloGrupo);
-    }
-
-    const cartao = document.createElement("div");
-    cartao.className = "passport-item";
-    const texto = document.createElement("span");
-    texto.textContent = item.texto;
-
-    const select = document.createElement("select");
-    select.setAttribute("aria-label", "Estado: " + item.texto);
-    select.dataset.itemTexto = item.texto;
-    select.dataset.grupo = item.grupo;
-    select.dataset.index = String(i);
-    [
-      ["tenho", "Já tenho"],
-      ["falta", "Falta reunir"],
-      ["confirmar", "A confirmar"]
-    ].forEach(([valor, rotulo]) => {
-      const option = document.createElement("option");
-      option.value = valor;
-      option.textContent = rotulo;
-      select.append(option);
-    });
-    select.value = lerEstadoPass(tipo, idade, item.texto);
-    const estadoImpressao = document.createElement("span");
-    estadoImpressao.className = "status-print";
-    estadoImpressao.textContent = "Estado: " + estadoPassLabel[select.value];
-
-    select.addEventListener("change", () => {
-      guardarEstadoPass(tipo, idade, item.texto, select.value);
-      estadoImpressao.textContent = "Estado: " + estadoPassLabel[select.value];
-      atualizarResumoPass();
-    });
-    cartao.append(texto, select, estadoImpressao);
-    destino.append(cartao);
-  });
-
-  document.getElementById("resumoPass").textContent =
-    "Situação: " + situacoes[tipo] + " · Idade: " + (idade === "menor" ? "Menor de 18 anos" : "18 anos ou mais") +
-    " · Relatório criado em: " + new Date().toLocaleDateString("pt-PT");
-  document.getElementById("listaPass").style.display = "block";
-  atualizarResumoPass();
+const locaisPass = {
+ brasileiro: {
+  portugal: [
+   {titulo:"Consulado-Geral do Brasil em Lisboa",texto:"Informações oficiais sobre passaporte e procedimentos consulares.",url:"https://www.gov.br/mre/pt-br/consulado-lisboa/servicos-consulares/passaporte"},
+   {titulo:"e-Consular — Lisboa",texto:"Sistema consular para iniciar o pedido e acompanhar as instruções.",url:"https://ec-lisboa.itamaraty.gov.br/"},
+   {titulo:"Portal Consular do Brasil",texto:"Informações oficiais sobre serviços consulares.",url:"https://www.gov.br/mre/pt-br/assuntos/portal-consular"}
+  ],
+  brasil: [
+   {titulo:"Polícia Federal — Passaporte",texto:"Portal oficial para iniciar o pedido e consultar os passos.",url:"https://www.gov.br/pf/pt-br/assuntos/passaporte"},
+   {titulo:"Documentação necessária",texto:"Lista oficial de documentos e condições do requerente.",url:"https://www.gov.br/pf/pt-br/assuntos/passaporte/documentacao/lista-brasileiro"},
+   {titulo:"Gerar lista individualizada",texto:"Responde às perguntas oficiais para obter uma lista adaptada à tua situação.",url:"https://www.gov.br/pf/pt-br/assuntos/passaporte/documentacao/iniciar"}
+  ]
+ },
+ portugues: {
+  portugal: [
+   {titulo:"Pedir ou renovar — gov.pt",texto:"Requisitos oficiais e locais onde pedir ou renovar em Portugal.",url:"https://www2.gov.pt/pt/servicos/pedir-o-passaporte-eletronico-portugues"},
+   {titulo:"Agendar atendimento — SIGA",texto:"Escolhe o balcão, o dia e a hora disponíveis.",url:"https://siga.marcacaodeatendimento.pt/"},
+   {titulo:"Passaporte eletrónico — Justiça.gov.pt",texto:"Locais de atendimento, incluindo Registos, Lojas de Cidadão e postos específicos.",url:"https://justica.gov.pt/Registos/Identificacao/Passaporte-eletronico"}
+  ],
+  brasil: [
+   {titulo:"Portal das Comunidades Portuguesas",texto:"Localiza o posto consular português competente pela tua área de residência.",url:"https://portaldascomunidades.mne.gov.pt/pt/"},
+   {titulo:"Serviço oficial — passaporte português",texto:"Consulta requisitos gerais e confirma com o consulado competente se recebe pedidos.",url:"https://www2.gov.pt/pt/servicos/pedir-o-passaporte-eletronico-portugues"}
+  ]
+ }
+};
+function obterItensPass(tipo,nacionalidade,local,idade) {
+ const itens=[]; const add=(grupo,texto)=>itens.push({grupo,texto});
+ const brasileiro=nacionalidade==="brasileiro";
+ if(brasileiro && local==="brasil"){
+  add("Antes de começar","Consultar a lista oficial de documentos, incluindo CPF e requisitos eleitorais/militares aplicáveis.");
+  add("Pedido","Preencher o formulário oficial da Polícia Federal e seguir as etapas de pagamento e agendamento.");
+  add("Atendimento","Levar os documentos originais exigidos ao posto escolhido; confirmar previamente o que é necessário.");
+  add("Entrega","Confirmar o prazo e levantar o passaporte no posto indicado.");
+ } else if(brasileiro){
+  add("Antes de começar","Ler as instruções do Consulado-Geral do Brasil em Lisboa e confirmar documentos e formatos aceites.");
+  add("Pedido","Usar o e-Consular para submeter o pedido e os documentos solicitados.");
+  add("Validação e atendimento","Acompanhar o pedido e seguir as instruções do consulado para validação, agendamento e originais.");
+ } else if(local==="portugal"){
+  add("Antes de começar","Confirmar que tens Cartão de Cidadão ou Bilhete de Identidade válido.");
+  add("Agendamento","Consultar o SIGA ou contactar o balcão; confirmar que o local escolhido trata de passaportes.");
+  add("Atendimento","Comparecer pessoalmente e confirmar preço, prazo e forma de entrega no local escolhido.");
+ } else {
+  add("Antes de começar","Localizar o consulado português competente pela tua área de residência no Brasil.");
+  add("Pedido consular","Confirmar diretamente com o consulado se recebe pedidos, os documentos exigidos e como agendar.");
+  add("Atendimento e entrega","Seguir as instruções do posto consular sobre presença, taxas, prazo e entrega.");
+ }
+ if(tipo==="renovacao") add("Renovação / substituição","Confirmar como apresentar o passaporte anterior e o procedimento se estiver caducado, danificado ou indisponível.");
+ if(tipo==="primeiro") add("Primeiro pedido","Confirmar a documentação adicional exigida para um primeiro pedido.");
+ if(tipo==="perdido") add("Perda ou roubo","Consultar as instruções específicas para perda/roubo e confirmar se é necessária participação ou declaração.");
+ if(idade==="menor"){ add("Menores","Confirmar documentos do menor, autorização dos responsáveis, assinaturas e quem deve comparecer."); add("Menores","Verificar as regras específicas de presença e representação junto da entidade emissora."); }
+ if(brasileiro && local==="brasil" && idade==="adulto") add("Adultos","Verificar as exigências eleitorais e militares aplicáveis à tua situação.");
+ add("Verificação final","Rever requisitos, taxas e prazos na fonte oficial antes de marcar ou pagar.");
+ return itens;
 }
-
-function guardarRelatorioPass() {
-  const tipo = document.getElementById("tipoPass").value;
-  const idade = document.getElementById("idadePass").value;
-  const resumo = document.getElementById("resumoPass").textContent;
-  const selects = Array.from(document.querySelectorAll("#itensPass select[data-item-texto]"));
-  if (!selects.length) {
-    criarListaPass();
-    return;
-  }
-  const linhas = [
-    "ODEVI+ — O MEU PLANO DE PREPARAÇÃO DO PASSAPORTE",
-    resumo,
-    "",
-    "RESUMO",
-    "Já tenho: " + selects.filter(s => s.value === "tenho").length,
-    "Falta reunir: " + selects.filter(s => s.value === "falta").length,
-    "A confirmar: " + selects.filter(s => s.value === "confirmar").length,
-    "",
-    "LISTA POR CATEGORIA",
-    ""
-  ];
-  let grupoAtual = "";
-  selects.forEach((select) => {
-    if (select.dataset.grupo !== grupoAtual) {
-      grupoAtual = select.dataset.grupo;
-      linhas.push("", "— " + grupoAtual.toUpperCase() + " —");
-    }
-    linhas.push("[" + estadoPassLabel[select.value].toUpperCase() + "] " + select.dataset.itemTexto);
-  });
-  linhas.push(
-    "",
-    "PRÓXIMOS PASSOS",
-    "- Trata primeiro os pontos marcados como “Falta reunir”.",
-    "- Verifica os pontos marcados como “A confirmar” nas instruções oficiais.",
-    "",
-    "Nota: lista orientativa; não substitui os requisitos oficiais do Consulado-Geral do Brasil em Lisboa.",
-    "e-Consular: https://ec-lisboa.itamaraty.gov.br/",
-    "Instruções oficiais: https://www.gov.br/mre/pt-br/consulado-lisboa/servicos-consulares/passaporte",
-    "",
-    "Este ficheiro foi criado localmente neste dispositivo."
-  );
-  const blob = new Blob(["\ufeff" + linhas.join("\n")], { type: "text/plain;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  const data = new Date().toISOString().slice(0, 10);
-  link.href = url;
-  link.download = "odevi-plano-passaporte-" + data + ".txt";
-  document.body.append(link);
-  link.click();
-  link.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
+function criarListaPass(){
+ const tipo=document.getElementById("tipoPass").value, idade=document.getElementById("idadePass").value, nacionalidade=document.getElementById("nacionalidadePass").value, local=document.getElementById("localPass").value;
+ const nomesTipo={renovacao:"Renovar / substituir",primeiro:"Primeiro pedido",perdido:"Perdido ou roubado"}, nomesNac={brasileiro:"Passaporte brasileiro",portugues:"Passaporte português"}, nomesLocal={portugal:"Portugal",brasil:"Brasil"};
+ document.getElementById("resumoPass").textContent=nomesNac[nacionalidade]+" · "+nomesTipo[tipo]+" · "+nomesLocal[local]+" · "+(idade==="menor"?"Menor de 18 anos":"18 anos ou mais");
+ const destino=document.getElementById("itensPass"); destino.replaceChildren(); let grupo="";
+ obterItensPass(tipo,nacionalidade,local,idade).forEach(item=>{
+  if(item.grupo!==grupo){grupo=item.grupo;const h=document.createElement("h4");h.className="passport-group";h.textContent=grupo;destino.append(h);}
+  const card=document.createElement("div");card.className="passport-item";const txt=document.createElement("span");txt.textContent=item.texto;
+  const sel=document.createElement("select");sel.setAttribute("aria-label","Estado: "+item.texto);sel.dataset.itemTexto=item.texto;sel.dataset.grupo=item.grupo;
+  [["tenho","Já tenho"],["falta","Falta-me"],["confirmar","Preciso de confirmar"]].forEach(([v,l])=>{const o=document.createElement("option");o.value=v;o.textContent=l;sel.append(o);});
+  sel.value=lerEstadoPass(tipo+"-"+nacionalidade+"-"+local,idade,item.texto);
+  const print=document.createElement("span");print.className="status-print";print.textContent="Estado: "+estadoPassLabel[sel.value];
+  sel.addEventListener("change",()=>{guardarEstadoPass(tipo+"-"+nacionalidade+"-"+local,idade,item.texto,sel.value);print.textContent="Estado: "+estadoPassLabel[sel.value];atualizarResumoPass();});
+  card.append(txt,sel,print);destino.append(card);
+ });
+ const links=document.getElementById("linksLocaisPass");links.replaceChildren();
+ locaisPass[nacionalidade][local].forEach(l=>{const a=document.createElement("a");a.className="service";a.href=l.url;a.target="_blank";a.rel="noopener noreferrer";const strong=document.createElement("strong");strong.textContent=l.titulo;const small=document.createElement("small");small.textContent=l.texto;const arrow=document.createElement("span");arrow.className="arrow";arrow.textContent="↗";a.append(arrow,strong,small);links.append(a);});
+ document.getElementById("tituloLocaisPass").textContent="Onde tratar do "+(nacionalidade==="brasileiro"?"passaporte brasileiro":"passaporte português")+" — "+nomesLocal[local];
+ document.getElementById("notaLocaisPass").textContent=(nacionalidade==="brasileiro"&&local==="brasil")?"A Polícia Federal indica os postos disponíveis durante o processo oficial de agendamento.":(nacionalidade==="portugues"&&local==="portugal")?"Em Portugal, os locais incluem serviços de Registo, Lojas de Cidadão e postos específicos; alguns serviços aeroportuários destinam-se a pedidos urgentes.":(local==="brasil"?"A disponibilidade e competência consular dependem da área de residência; confirma com o posto oficial.":"O procedimento depende do consulado competente e da validação do pedido.");
+ atualizarResumoPass();
 }
+function mudarAbaPass(aba){const docs=aba==="docs";document.getElementById("painelDocsPass").hidden=!docs;document.getElementById("painelLocaisPass").hidden=docs;document.getElementById("tabDocs").classList.toggle("active",docs);document.getElementById("tabLocais").classList.toggle("active",!docs);document.getElementById("tabDocs").setAttribute("aria-selected",String(docs));document.getElementById("tabLocais").setAttribute("aria-selected",String(!docs));}
+function imprimirRelatorioPass(){mudarAbaPass("docs");window.print();}
 </script>>
  <section class="tools">
       <div class="section-heading">
