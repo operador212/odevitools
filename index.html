@@ -206,6 +206,17 @@
       font-size: 18px;
     }
 
+    .delivery-section{margin:38px 0;padding:24px;border:1px solid var(--border);border-radius:22px;background:linear-gradient(145deg,rgba(104,243,154,.07),var(--panel))}
+    .delivery-heading{max-width:720px;margin-bottom:20px}
+    .delivery-heading h2{font-size:clamp(24px,4vw,32px);line-height:1.2;margin-bottom:8px}
+    .delivery-heading>p:last-child{color:var(--muted);font-size:14px}
+    .delivery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .delivery-card{display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:18px;border:1px solid var(--border);border-radius:15px;background:#0c1017;min-width:0}
+    .delivery-brand{display:flex;align-items:center;gap:10px}.delivery-brand span{font-size:28px}.delivery-brand h3{font-size:19px}
+    .delivery-card>p{color:var(--muted);font-size:14px;line-height:1.55}.delivery-card>p strong{color:var(--text)}
+    .delivery-cta{display:block;width:100%;margin-top:auto;padding:12px 14px;border-radius:10px;background:var(--green);color:#07110b;text-align:center;font-weight:800;font-size:14px}
+    .delivery-card small{color:var(--muted);font-size:12px;line-height:1.5}
+    .delivery-disclaimer{margin-top:16px;color:var(--muted);font-size:12px;line-height:1.5}
     .notice {
       margin-top: 26px;
       padding: 18px;
@@ -330,6 +341,7 @@
 .radio-card{display:flex;align-items:center;gap:16px;padding:18px;border:1px solid var(--border);border-radius:15px;background:var(--panel)}.radio-icon{font-size:30px}.radio-copy{flex:1}.radio-copy p:not(.eyebrow){margin-top:5px}.radio-button{white-space:nowrap}
 @media(max-width:720px){.quiz-section{grid-template-columns:1fr;padding:18px}.uk-highlight{grid-template-columns:auto minmax(0,1fr)}.uk-highlight>a{grid-column:2;white-space:normal}.news-panel{grid-template-columns:1fr}.radio-card{align-items:flex-start;flex-wrap:wrap}.radio-copy{min-width:calc(100% - 60px)}.radio-button{width:100%}}
 
+@media(max-width:850px){.delivery-grid{grid-template-columns:1fr}}
 </style>
   
 </head>
@@ -351,6 +363,34 @@
   <div class="eyebrow">ODEVI+ · COMUNIDADE LUSÓFONA</div>
   <h1>Serviços para brasileiros e portugueses</h1>
   <p>Encontra orientações e serviços oficiais para tratar de documentos, vistos, reforma e assuntos consulares.</p>
+</section>
+<section id="delivery" class="delivery-section" aria-labelledby="delivery-title">
+  <div class="delivery-heading">
+    <p class="eyebrow">TRABALHO FLEXÍVEL · REINO UNIDO</p>
+    <h2 id="delivery-title">Delivery: inscreve-te para fazer entregas</h2>
+    <p>Queres começar a trabalhar como estafeta? Consulta as plataformas abaixo e usa os meus links de indicação quando te inscreveres.</p>
+  </div>
+  <div class="delivery-grid">
+    <article class="delivery-card">
+      <div class="delivery-brand"><span aria-hidden="true">🚲</span><h3>Uber Eats</h3></div>
+      <p>Indiquei-te para seres parceiro de entregas da Uber. A oferta que recebi indica <strong>£100 extra após 50 entregas em 30 dias</strong>, sujeita às condições e elegibilidade da Uber.</p>
+      <a class="delivery-cta" href="https://www.uber.com/signup/drive/deliver/?invite_code=nyfcwtu" target="_blank" rel="noopener noreferrer">Inscrever-me na Uber ↗</a>
+      <small>Confirma que a oferta aparece no teu registo e lê os termos antes de começares.</small>
+    </article>
+    <article class="delivery-card">
+      <div class="delivery-brand"><span aria-hidden="true">🛵</span><h3>Deliveroo</h3></div>
+      <p>Vem fazer entregas comigo na Deliveroo. Usa o meu código de indicação <strong>MA655950</strong> no processo de candidatura.</p>
+      <a class="delivery-cta" href="https://roo.it/MA655950" target="_blank" rel="noopener noreferrer">Inscrever-me na Deliveroo ↗</a>
+      <small>As campanhas e eventuais recompensas dependem da zona, do veículo e das regras em vigor.</small>
+    </article>
+    <article class="delivery-card">
+      <div class="delivery-brand"><span aria-hidden="true">📦</span><h3>Just Eat</h3></div>
+      <p>Inscreve-te como courier da Just Eat e indica o código de referência <strong>SG4MBL</strong>, seguindo as instruções do formulário.</p>
+      <a class="delivery-cta" href="https://couriers.just-eat.co.uk/application?utm_source=courier%20app&utm_medium=internal&utm_campaign=courier%20app%20button" target="_blank" rel="noopener noreferrer">Inscrever-me na Just Eat ↗</a>
+      <small>A elegibilidade e os incentivos variam; a Just Eat pode pedir outros dados de referência no formulário.</small>
+    </article>
+  </div>
+  <p class="delivery-disclaimer">Transparência: estes são links/códigos de indicação partilhados pelo autor do ODEVI+. A inscrição não garante aceitação, trabalho disponível ou recompensa. Confirma sempre os requisitos oficiais e a oferta apresentada durante a candidatura.</p>
 </section>
 <section class="countries" aria-label="Escolhe a tua comunidade">
   <article class="country portugal">
