@@ -547,9 +547,26 @@
    nenhuma:{title:"Ainda não tens uma oportunidade definida",steps:["Começa por escolher entre trabalho, estudo, família ou visita; cada objetivo tem regras diferentes.","Pesquisa oportunidades verificáveis e confirma os requisitos legais antes de pagar a intermediários.","Não assumas que entrar como visitante permite trabalhar ou permanecer em Portugal a longo prazo."]}
   };
   const p=plans[oportunidade];const h=document.createElement("h3");h.textContent=p.title;result.replaceChildren(h);
-  const situacoes={brasil:"ainda está no Brasil",fora:"já está fora do Brasil",outro:"está a visitar ou ainda está a decidir"};const objetivos={viver:"viver em Portugal ou reunir-se com família",trabalhar:"trabalhar",estudar:"estudar",visitar:"visitar Portugal",regularizar:"verificar ou regularizar a situação atual"};const intro=document.createElement("p");intro.textContent="Roteiro inicial para quem "+situacoes[situacao]+" e pretende "+objetivos[objetivo]+". A oportunidade que tens pode alterar os passos e os documentos exigidos.";result.append(intro);
-  const ul=document.createElement("ul");p.steps.forEach(t=>{const li=document.createElement("li");li.textContent=t;ul.append(li);});result.append(ul);
-  [["Abrir guia ODEVI+ sobre viver em Portugal","guia-portugal.html"],["AIMA — imigração e residência","https://aima.gov.pt/pt"],["Portal oficial de vistos","https://vistos.mne.gov.pt/pt/"]].forEach(item=>{const a=document.createElement("a");a.href=item[1];a.target="_blank";a.rel="noopener noreferrer";a.textContent=item[0]+" ↗";a.style.display="inline-block";a.style.margin="5px 12px 0 0";result.append(a);});
+  const situacoes={brasil:"ainda está no Brasil",fora:"já está fora do Brasil",outro:"está a visitar ou ainda está a decidir"};
+  const objetivos={viver:"viver em Portugal ou reunir-se com família",trabalhar:"trabalhar",estudar:"estudar",visitar:"visitar Portugal",regularizar:"verificar ou regularizar a situação atual"};
+  const intro=document.createElement("p");intro.textContent="Roteiro inicial para quem "+situacoes[situacao]+" e pretende "+objetivos[objetivo]+". Os passos abaixo variam conforme o objetivo, a situação atual e a oportunidade indicada.";result.append(intro);
+  const passosObjetivo={
+   viver:["Define se a tua via poderá ser trabalho, estudo, família ou outra categoria legal; não escolhas o procedimento apenas pelo nome.","Confirma os requisitos atuais de entrada e residência para a tua nacionalidade e situação.","Organiza os comprovativos pedidos na fonte oficial e confirma se deves tratar do pedido no consulado antes de viajar."],
+   trabalhar:["Procura ofertas verificáveis e confirma por escrito a identidade da entidade empregadora e as condições do trabalho.","Verifica qual a autorização ou visto que permite exercer esse trabalho em Portugal; uma oferta, por si só, não garante autorização.","Confirma os documentos e a ordem do procedimento nos portais oficiais antes de pagar taxas ou intermediários."],
+   estudar:["Escolhe uma instituição e um curso e confirma diretamente com a instituição as condições de admissão, duração e custos.","Pede a carta de admissão ou matrícula e confirma os requisitos oficiais aplicáveis ao visto de estudo.","Prepara apenas os comprovativos exigidos para o teu caso e confirma onde e quando apresentar o pedido."],
+   visitar:["Define a duração e o motivo da visita e confirma se precisas de visto ou se existem condições de entrada aplicáveis.","Prepara comprovativos de viagem e estadia que sejam exigidos para a tua situação.","Não assumas que uma entrada como visitante permite trabalhar ou mudar automaticamente para uma autorização de residência."],
+   regularizar:["Identifica exatamente o procedimento já iniciado, o documento recebido e a entidade responsável.","Consulta o estado do processo e as instruções oficiais correspondentes; guarda comprovativos e comunicações.","Se houver prazo, recusa ou situação urgente, procura orientação jurídica qualificada em vez de depender de um roteiro genérico."]
+  };
+  const passoSituacao={
+   brasil:"Como estás no Brasil, começa por confirmar se o teu procedimento deve ser iniciado através do consulado ou portal oficial competente antes da viagem.",
+   fora:"Como já estás fora do Brasil, confirma as regras do país onde te encontras, a tua autorização atual e se podes apresentar o pedido a partir daí.",
+   outro:"Como ainda estás a decidir ou estás em visita, confirma as regras antes de viajar ou ultrapassar o período de permanência autorizado."
+  };
+  const ul=document.createElement("ul");
+  [passoSituacao[situacao],...passosObjetivo[objetivo],...p.steps.slice(0,1)].forEach(t=>{const li=document.createElement("li");li.textContent=t;ul.append(li);});
+  result.append(ul);
+  const nota=document.createElement("p");nota.textContent="Importante: este roteiro é orientativo. Requisitos, prazos e elegibilidade dependem da nacionalidade, do procedimento e das regras em vigor.";result.append(nota);
+  [["Abrir guia ODEVI+ sobre viver em Portugal","guia-portugal.html"],["AIMA — imigração e residência","https://aima.gov.pt/pt"],["Portal oficial de vistos","https://vistos.mne.gov.pt/pt/"],["Portal ePortugal","https://eportugal.gov.pt/"]].forEach(item=>{const a=document.createElement("a");a.href=item[1];a.target="_blank";a.rel="noopener noreferrer";a.textContent=item[0]+" ↗";a.style.display="inline-block";a.style.margin="5px 12px 0 0";result.append(a);});
   result.hidden=false;result.scrollIntoView({behavior:"smooth",block:"nearest"});
  });
 })();
