@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="index,follow">
+<meta name="description" content="Contacta o ODEVI+ para comunicar erros, ligações desatualizadas ou sugestões de melhoria.">
+<link rel="canonical" href="https://odevitools.com/contacto.html">
+<meta name="theme-color" content="#080a10">
+<title>Contacto | ODEVI+</title>
+<style>
+:root{color-scheme:dark;--bg:#080a10;--panel:#11141d;--border:#2a303c;--text:#f5f7fb;--muted:#a7afbd;--green:#68f39a}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 system-ui,-apple-system,sans-serif}a{color:var(--green);text-underline-offset:3px}header,main,footer{max-width:850px;margin:auto;padding:22px}header{border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:16px}.logo{font-size:27px;font-weight:900;color:var(--text);text-decoration:none}.logo span{color:var(--green)}main{padding-top:30px;padding-bottom:45px}h1{font-size:clamp(30px,6vw,44px);line-height:1.15}p{color:var(--muted)}.panel{padding:18px;border:1px solid var(--border);border-radius:14px;background:var(--panel);margin:20px 0}label{display:block;font-weight:700;margin:14px 0 6px}input,textarea,select{width:100%;padding:12px;border:1px solid var(--border);border-radius:9px;background:#090c13;color:var(--text);font:inherit}textarea{min-height:130px;resize:vertical}button,.button{display:inline-block;border:0;border-radius:10px;background:var(--green);color:#07110b;padding:12px 16px;font-weight:800;font-size:15px;text-decoration:none;cursor:pointer;margin-top:14px}.warning{border-left:3px solid var(--green);padding:10px 14px;background:#11141d}footer{border-top:1px solid var(--border);font-size:13px;color:var(--muted)}.footlinks{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:12px}@media(max-width:600px){header,main,footer{padding-left:17px;padding-right:17px}}
+</style>
+</head>
+<body>
+<header><a class="logo" href="index.html">ODEVI<span>+</span></a><a href="index.html">Página inicial</a></header>
+<main>
+<h1>Contacto</h1>
+<p>Encontraste um erro, uma ligação desatualizada ou tens uma sugestão para melhorar o ODEVI+? Podes preparar uma mensagem para a equipa do projeto através do canal público de suporte no GitHub.</p>
+<div class="panel">
+<h2>Enviar uma sugestão</h2>
+<p>Preenche o assunto e a mensagem. O botão abre uma nova página de issue no repositório do projeto com o texto preparado; revê a mensagem e envia-a no GitHub se quiseres continuar.</p>
+<form id="contactForm">
+<label for="subject">Assunto</label>
+<input id="subject" name="subject" maxlength="120" required placeholder="Ex.: ligação desatualizada">
+<label for="message">Mensagem</label>
+<textarea id="message" name="message" maxlength="4000" required placeholder="Descreve a página e a melhoria sugerida."></textarea>
+<button type="submit">Preparar mensagem no GitHub</button>
+</form>
+</div>
+<p class="warning"><strong>Privacidade:</strong> as issues do GitHub são públicas. Não incluas nome completo, morada, email pessoal, números de documentos, dados de imigração, palavras-passe ou outras informações privadas. Para um assunto sensível, não uses este canal público.</p>
+<p>Este formulário não envia os dados automaticamente nem os guarda no ODEVI+. A mensagem só é aberta no GitHub depois de tocares no botão; tens de rever e enviar a publicação por tua iniciativa. Poderá ser necessário iniciar sessão no GitHub.</p>
+</main>
+<footer>© 2026 ODEVI+ · Canal público de contacto
+<nav class="footlinks" aria-label="Links legais"><a href="privacidade.html">Privacidade</a><a href="sobre.html">Sobre</a><a href="index.html">Página inicial</a></nav>
+</footer>
+<script>
+document.getElementById('contactForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+  const subject = document.getElementById('subject').value.trim();
+  const message = document.getElementById('message').value.trim();
+  if (!subject || !message) return;
+  const body = message + '\n\n---\nEnviado a partir do formulário de contacto do ODEVI+ (odevitools.com).';
+  const url = 'https://github.com/operador212/odevitools/issues/new?title=' + encodeURIComponent('[ODEVI+ feedback] ' + subject) + '&body=' + encodeURIComponent(body);
+  window.open(url, '_blank', 'noopener,noreferrer');
+});
+</script>
+</body>
+</html>
