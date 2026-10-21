@@ -3,105 +3,49 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#080a10">
-<meta name="description" content="Assistente fiscal ODEVI para trabalhadores independentes no Reino Unido: organiza rendimentos e despesas, revê registos e prepara um resumo para o declaração anual de rendimentos (Self Assessment).">
-<link rel="canonical" href="https://odevitools.com/tax-assistant.html">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="ODEVI+">
-<meta property="og:title" content="Assistente fiscal para self-employed | ODEVI+">
-<meta property="og:description" content="Organiza receitas e despesas de entregas e outras atividades independentes, com explicações simples em português.">
-<meta property="og:url" content="https://odevitools.com/tax-assistant.html">
-<title>Assistente fiscal para self-employed | ODEVI+</title>
+<meta name="description" content="ODEVI Tax Assistant: prepare os seus registos fiscais para trabalhadores independentes no Reino Unido e em Portugal.">
+<title>ODEVI Tax Assistant | Relatório fiscal</title>
 <style>
-:root{color-scheme:dark;--bg:#080a10;--panel:#11141d;--border:#2a303c;--text:#f5f7fb;--muted:#a7afbd;--green:#68f39a;--amber:#ffd479}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,sans-serif}a{color:var(--green)}.wrap{max-width:1000px;margin:auto;padding:24px 18px 60px}.back{display:inline-block;margin:4px 0 24px}.hero{padding:28px;border:1px solid var(--border);border-radius:22px;background:linear-gradient(145deg,rgba(104,243,154,.1),var(--panel))}.eyebrow{font-size:12px;font-weight:800;letter-spacing:.1em;color:var(--green)}h1{font-size:clamp(30px,6vw,44px);line-height:1.12;letter-spacing:-.04em;margin:8px 0 12px}.hero p,.muted{color:var(--muted)}.pill{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:5px 10px;font-size:12px;color:var(--muted)}.panel{margin-top:20px;padding:22px;border:1px solid var(--border);border-radius:18px;background:var(--panel)}h2{margin:0 0 8px;font-size:23px}label{display:block;margin:12px 0 5px;font-weight:650}input,select{width:100%;min-width:0;padding:12px;border:1px solid var(--border);border-radius:10px;background:#090c13;color:var(--text);font:inherit}button,.button{display:inline-block;border:0;border-radius:10px;background:var(--green);color:#07110b;padding:12px 16px;font-weight:800;font-size:15px;text-decoration:none;cursor:pointer;margin:12px 8px 0 0}button.secondary{background:#252b36;color:var(--text);border:1px solid var(--border)}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--green);outline-offset:2px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.metric{padding:15px;border:1px solid var(--border);border-radius:13px;background:#0b0e15}.metric small{display:block;color:var(--muted)}.metric strong{font-size:25px;display:block;overflow-wrap:anywhere}.hint{font-size:13px;color:var(--muted)}.notice{padding:13px;border:1px solid rgba(255,212,121,.45);border-radius:11px;background:rgba(255,212,121,.06);color:#f7e6bb;font-size:13px;margin-top:14px}.table-wrap{overflow-x:auto;margin-top:14px}table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:10px;border-bottom:1px solid var(--border);vertical-align:top}th{color:var(--muted);font-weight:650}td select{min-width:150px;padding:8px}.status{padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:12px}.status[hidden]{display:none}.footer{margin-top:28px;padding-top:20px;border-top:1px solid var(--border);font-size:12px;color:var(--muted)}.footer a{margin-right:14px}@media(max-width:650px){.hero,.panel{padding:17px}.grid,.grid3{grid-template-columns:1fr}.metric strong{font-size:22px}th,td{padding:8px}}
+:root{color-scheme:dark;--bg:#10141d;--panel:#191f2b;--text:#f4f6fb;--muted:#aeb8ca;--line:#30394a;--blue:#7ba7ff;--green:#62d6a4}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:24px}
+main{max-width:760px;margin:0 auto}.brand{font-weight:800;letter-spacing:.12em;color:var(--blue);font-size:.9rem}.hero,.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:clamp(22px,5vw,36px);margin-top:20px}.eyebrow{color:var(--green);font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.08em}h1{font-size:clamp(2rem,6vw,3.2rem);line-height:1.1;margin:.7rem 0}p{color:var(--muted)}.price{font-size:2.4rem;font-weight:800;margin:10px 0}.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:20px 0}.choice{border:1px solid var(--line);background:#111722;color:var(--text);border-radius:12px;padding:16px;text-align:left;cursor:pointer;font:inherit}.choice[aria-pressed=true]{border:2px solid var(--blue);background:#1a2b49}.features{padding-left:1.2rem}.features li{margin:.6rem 0}.button{display:block;width:100%;border:0;border-radius:10px;background:var(--blue);color:#101827;font-size:1rem;font-weight:800;padding:15px;text-align:center}.button:disabled{background:#3b4659;color:#d0d7e2;cursor:not-allowed}.note{font-size:.86rem;border-top:1px solid var(--line);padding-top:16px;margin-top:20px}.status{border:1px solid #6c5530;background:#2b2417;color:#f5d69a;border-radius:10px;padding:14px;margin-top:14px}.small{font-size:.82rem}a{color:var(--blue)}@media(max-width:520px){body{padding:14px}.choices{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<main class="wrap">
-<a class="back" href="index.html">← Voltar ao ODEVI+</a>
+<main>
+<div class="brand">ODEVI+</div>
 <section class="hero">
-<p class="eyebrow">ODEVI TAX ASSISTANT · VERSÃO BETA</p>
-<h1>Organiza os teus impostos sem complicações.</h1>
-<p>Para entregadores, motoristas e outros trabalhadores independentes no Reino Unido. Importa um extrato CSV, revê as registos e prepara um resumo claro de receitas e despesas.</p>
-<span class="pill">Sem conta · Sem envio de ficheiros para um servidor</span>
-<div class="notice">Esta primeira versão é um organizador de registos, não um agente fiscal com IA nem software de submissão HMRC. Não calcula o imposto final nem determina automaticamente se uma despesa é dedutível. Confirma tudo antes de usar o relatório para a tua declaração.</div>
+<div class="eyebrow">Preparação fiscal simplificada</div>
+<h1>Prepare o teu relatório fiscal com menos confusão.</h1>
+<p>Uma ferramenta de apoio para trabalhadores independentes. Escolhe a jurisdição e prepara os teus registos e estimativas com regras identificadas por ano fiscal.</p>
+<div class="price">£5,99 <span class="small">/ relatório · pagamento único</span></div>
+<p class="small">Pagamento único por relatório. Sem versão gratuita nem subscrição mensal.</p>
 </section>
 <section class="panel">
-<h2>1. Escolhe o período fiscal</h2>
-<p class="muted">No Reino Unido, o ano fiscal normalmente decorre de 6 de abril a 5 de abril. Seleciona o período dos registos que vais analisar.</p>
-<div class="grid">
-<div><label for="taxYear">Período fiscal</label><select id="taxYear"><option value="2025-26">6 abr 2025 – 5 abr 2026</option><option value="2026-27">6 abr 2026 – 5 abr 2027</option><option value="2024-25">6 abr 2024 – 5 abr 2025</option><option value="custom">Outro período / ainda por confirmar</option></select></div>
-<div><label for="currency">Moeda dos valores</label><select id="currency"><option value="GBP">GBP — Libra esterlina (£)</option></select></div>
+<h2>Onde declaras os teus rendimentos?</h2>
+<p>Escolhe a jurisdição para preparar o relatório correspondente.</p>
+<div class="choices" role="group" aria-label="Jurisdição fiscal">
+<button type="button" class="choice" id="uk" aria-pressed="true" onclick="choose('UK')">🇬🇧 <strong>Reino Unido</strong><br><span class="small">HMRC · Self Assessment</span></button>
+<button type="button" class="choice" id="pt" aria-pressed="false" onclick="choose('PT')">🇵🇹 <strong>Portugal</strong><br><span class="small">IRS · Trabalhador independente</span></button>
 </div>
-</section>
-<section class="panel">
-<h2>2. Importa um CSV ou adiciona registos</h2>
-<p>Exporta um ficheiro CSV do banco ou da plataforma de entregas. O ficheiro é processado localmente neste navegador. Formatos diferentes podem exigir que ajustes as colunas.</p>
-<label for="csvFile">Escolher ficheiro CSV</label><input id="csvFile" type="file" accept=".csv,text/csv">
-<div class="grid">
-<div><label for="dateCol">Coluna da data</label><select id="dateCol" disabled><option value="">Importa primeiro um ficheiro CSV</option></select></div>
-<div><label for="descCol">Coluna da descrição</label><select id="descCol" disabled><option value="">Importa primeiro um ficheiro CSV</option></select></div>
-<div><label for="amountCol">Coluna do valor</label><select id="amountCol" disabled><option value="">Importa primeiro um ficheiro CSV</option></select></div>
-<div><label for="typeCol">Coluna do tipo (opcional)</label><select id="typeCol" disabled><option value="">Não utilizar uma coluna separada</option></select></div>
-</div>
-<p class="hint">O assistente tenta detetar as colunas. Se o ficheiro tiver valores positivos e negativos, normalmente usa valores positivos como entradas e negativos como saídas. Confirma a convenção do teu banco antes de continuar.</p>
-<button id="importBtn" disabled>Importar e analisar ficheiro CSV</button>
-<button id="sampleBtn" class="secondary">Carregar dados de exemplo</button>
-<div class="status" id="importStatus" aria-live="polite" hidden></div>
-<div class="grid">
-<div><label for="manualDate">Data (opcional)</label><input id="manualDate" type="date"></div>
-<div><label for="manualDesc">Descrição</label><input id="manualDesc" placeholder="Ex.: Pagamento da plataforma"></div>
-<div><label for="manualAmount">Valor (£)</label><input id="manualAmount" type="number" step="0.01" placeholder="Ex.: 125.50"></div>
-<div><label for="manualKind">Tipo</label><select id="manualKind"><option value="income">Receita</option><option value="expense">Despesa</option><option value="review">Por rever / sem classificação</option></select></div>
-</div>
-<button id="addManual">Adicionar registo</button>
-</section>
-<section class="panel">
-<h2>3. Revê as registos</h2>
-<p class="muted">As sugestões automáticas são apenas pistas baseadas no texto. Confirma a categoria e se cada registo pertence à atividade profissional. Registos pessoais não devem ser tratadas como despesas profissionais.</p>
-<div class="grid3">
-<div class="metric"><small>Receitas registadas</small><strong id="incomeTotal">£0.00</strong></div>
-<div class="metric"><small>Despesas registadas</small><strong id="expenseTotal">£0.00</strong></div>
-<div class="metric"><small>Saldo preliminar</small><strong id="balanceTotal">£0.00</strong></div>
-</div>
-<div class="table-wrap"><table><thead><tr><th>Data</th><th>Descrição</th><th>Valor</th><th>Classificação</th><th>Rever</th></tr></thead><tbody id="transactions"><tr><td colspan="5" class="muted">Ainda não há registos. Importa um CSV ou adiciona uma linha manualmente.</td></tr></tbody></table></div>
-<button id="downloadCsv" disabled>Descarregar registos revistas (.csv)</button>
-<button id="downloadReport" disabled>Descarregar resumo (.txt)</button>
-<button id="clearAll" class="secondary">Limpar dados desta sessão</button>
-<div class="status" id="reviewStatus" aria-live="polite">Importa ou adiciona registos para começar.</div>
-</section>
-<section class="panel">
-<h2>4. Próximos passos</h2>
-<ul>
-<li>Confirma que todos os rendimentos da atividade foram incluídos e que não há duplicados.</li>
-<li>Confirma recibos, faturas e finalidade profissional das despesas.</li>
-<li>Se usas a mota ou o carro tanto pessoalmente como para trabalhar, não declares automaticamente o custo total: verifica as regras e o método aplicável.</li>
-<li>Guarda comprovativos e confirma as orientações atuais da HMRC.</li>
+<h3>O relatório incluirá</h3>
+<ul class="features">
+<li>Resumo das receitas, despesas e lucro indicado pelo utilizador.</li>
+<li>Estimativa fiscal com explicação dos pressupostos e do ano fiscal.</li>
+<li>Lista de informações em falta e movimentos que exigem confirmação.</li>
+<li>Orientações e ligações oficiais para preparar a declaração.</li>
 </ul>
-<div class="official-links"><a href="https://www.gov.uk/self-assessment-tax-returns" target="_blank" rel="noopener noreferrer">HMRC: declaração anual de rendimentos (Self Assessment) ↗</a> · <a href="https://www.gov.uk/expenses-if-youre-self-employed" target="_blank" rel="noopener noreferrer">Despesas de trabalhadores independentes ↗</a> · <a href="https://www.gov.uk/guidance/find-software-thats-compatible-with-making-tax-digital-for-income-tax" target="_blank" rel="noopener noreferrer">Software compatível com MTD ↗</a></div>
-<div class="notice">Não introduzas palavras-passe, dados de cartão, número de Segurança Social britânico (National Insurance) ou dados de login HMRC. Esta versão não envia declarações, não se liga à HMRC e não guarda os ficheiros num servidor. Ao fechares ou atualizares a página, os dados desta sessão podem perder-se.</div>
+<div class="status" role="status"><strong>Pagamento ainda não disponível.</strong><br>Ainda não aceitamos pagamentos. Estamos a configurar o checkout seguro e a validar os cálculos antes de abrir as vendas.</div>
+<button class="button" type="button" disabled aria-disabled="true">Relatório pago — £5,99 (brevemente)</button>
+<p class="note">Não introduzas dados bancários, palavras-passe ou números de identificação fiscal nesta página. O acesso ao relatório será pago e só será ativado depois de o checkout estar configurado. Os cálculos serão concebidos para correr localmente no navegador sempre que possível. Os resultados serão estimativas de apoio, não uma declaração oficial nem aconselhamento fiscal profissional.</p>
 </section>
-<footer class="footer"><p>ODEVI+ é um projeto independente e não é afiliado à HMRC. Este organizador fornece apoio administrativo geral, não aconselhamento fiscal individual. Revê todos os valores e procura um profissional qualificado se a tua situação for complexa.</p><p><a href="privacidade.html">Privacidade</a><a href="sobre.html">Sobre</a><a href="contacto.html">Contacto</a></p></footer>
+<p class="small"><a href="privacidade.html">Privacidade</a> · <a href="contacto.html">Contacto</a> · <a href="index.html">Voltar ao ODEVI</a></p>
 </main>
 <script>
-const $=id=>document.getElementById(id);let headers=[],transactions=[];
-const money=n=>new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP'}).format(Number(n)||0);
-function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function parseCSV(text){const rows=[];let row=[],cell='',quoted=false;for(let i=0;i<text.length;i++){const c=text[i];if(c==='"'&&quoted&&text[i+1]==='"'){cell+='"';i++;}else if(c==='"'){quoted=!quoted;}else if(c===','&&!quoted){row.push(cell);cell='';}else if((c==='\n'||c==='\r')&&!quoted){if(c==='\r'&&text[i+1]==='\n')i++;row.push(cell);if(row.some(v=>v.trim()!==''))rows.push(row);row=[];cell='';}else cell+=c;}row.push(cell);if(row.some(v=>v.trim()!==''))rows.push(row);return rows;}
-function guessCol(h,words){return h.findIndex(v=>words.some(w=>v.toLowerCase().includes(w)));}
-function fillSelect(id,includeNone=false){const s=$(id);s.innerHTML='';if(includeNone){const o=document.createElement('option');o.value='';o.textContent='Não utilizar uma coluna separada';s.append(o);}headers.forEach((h,i)=>{const o=document.createElement('option');o.value=i;o.textContent=h||('Coluna '+(i+1));s.append(o);});s.disabled=false;}
-$('csvFile').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{const text=await file.text();const rows=parseCSV(text);if(rows.length<2)throw new Error('O ficheiro precisa de uma linha de cabeçalho e pelo menos uma linha de dados.');headers=rows[0].map((v,i)=>v.trim()||('Coluna '+(i+1)));window.pendingRows=rows.slice(1);['dateCol','descCol','amountCol'].forEach(id=>fillSelect(id));fillSelect('typeCol',true);$('dateCol').value=Math.max(0,guessCol(headers,['date','data','time']));$('descCol').value=Math.max(0,guessCol(headers,['description','details','merchant','narrative','memo','descrição','detalhe']));$('amountCol').value=Math.max(0,guessCol(headers,['amount','value','valor','paid in','paid out','credit','debit']));$('importBtn').disabled=false;$('importStatus').hidden=false;$('importStatus').textContent='Ficheiro lido localmente. Confirma as colunas antes de importar: '+window.pendingRows.length+' linhas de dados.';}catch(err){$('importStatus').hidden=false;$('importStatus').textContent='Não foi possível ler o ficheiro CSV: '+err.message;}});
-function parseAmount(v){let s=String(v??'').trim().replace(/[£$€\s]/g,'');if(s.startsWith('(')&&s.endsWith(')'))s='-'+s.slice(1,-1);if(s.includes(',')&&!s.includes('.'))s=s.replace(',','.');else s=s.replace(/,/g,'');const n=Number(s);return Number.isFinite(n)?n:NaN;}
-function suggest(desc,amount){const d=desc.toLowerCase();if(/uber|deliveroo|just eat|justeat|amazon flex|courier|delivery payout|payment from platform/.test(d))return 'income';if(/fuel|petrol|diesel|motor|repair|maintenance|phone|mobile|data plan|equipment|parking|insurance|bike|mota/.test(d))return 'review';if(amount<0)return 'review';return 'review';}
-$('importBtn').addEventListener('click',()=>{const rows=window.pendingRows||[];const di=Number($('dateCol').value),si=Number($('descCol').value),ai=Number($('amountCol').value),ti=$('typeCol').value===''?-1:Number($('typeCol').value);let imported=0;for(const r of rows){const raw=parseAmount(r[ai]);if(!Number.isFinite(raw))continue;let amount=raw,kind='review';const desc=String(r[si]||'Transação importada').trim();if(ti>=0){const t=String(r[ti]||'').toLowerCase();if(/credit|income|received|paid in|receita|entrada/.test(t))kind='income';else if(/debit|expense|paid out|despesa|sa[ií]da/.test(t))kind='expense';}else if(raw>0&&rows.some(x=>parseAmount(x[ai])<0))kind='income';else if(raw<0&&rows.some(x=>parseAmount(x[ai])>0))kind='expense';else kind=suggest(desc,raw);transactions.push({date:String(r[di]||''),desc,amount:Math.abs(amount),kind,review:kind==='review',source:'CSV'});if(kind==='expense')transactions[transactions.length-1].amount=Math.abs(raw);imported++;}render();$('importStatus').hidden=false;$('importStatus').textContent=imported+' registos importadas. Revê todas as categorias e confirma se os valores são receitas ou despesas.';});
-$('sampleBtn').addEventListener('click',()=>{transactions.push({date:'2026-04-08',desc:'Pagamento fictício de plataforma de entregas',amount:145.2,kind:'income',review:true,source:'Exemplo'},{date:'2026-04-09',desc:'Combustível — exemplo fictício',amount:22.4,kind:'review',review:true,source:'Exemplo'},{date:'2026-04-10',desc:'Compra pessoal — exemplo fictício',amount:14.9,kind:'review',review:true,source:'Exemplo'});render();$('reviewStatus').textContent='Exemplo fictício carregado. Não representa dados reais nem determina dedutibilidade.';});
-$('addManual').addEventListener('click',()=>{const desc=$('manualDesc').value.trim(),amount=parseAmount($('manualAmount').value);if(!desc||!Number.isFinite(amount)||amount<0){$('reviewStatus').textContent='Indica uma descrição e um valor válido igual ou superior a zero.';return;}const kind=$('manualKind').value;transactions.push({date:$('manualDate').value,desc,amount,kind,review:kind==='review',source:'Manual'});$('manualDesc').value='';$('manualAmount').value='';render();});
-function render(){const body=$('transactions');body.innerHTML='';if(!transactions.length){body.innerHTML='<tr><td colspan="5" class="muted">Ainda não há registos.</td></tr>';}transactions.forEach((t,i)=>{const tr=document.createElement('tr');tr.innerHTML='<td>'+esc(t.date||'—')+'</td><td>'+esc(t.desc)+'<br><span class="hint">'+esc(t.source||'')+'</span></td><td>'+money(t.amount)+'</td><td><select data-kind="'+i+'" aria-label="Classificação da registo '+(i+1)+'"><option value="income">Receita</option><option value="expense">Despesa</option><option value="review">Rever</option></select></td><td><label style="display:flex;align-items:center;gap:6px;font-weight:400;margin:0"><input style="width:auto" type="checkbox" data-review="'+i+'" '+(!t.review?'checked':'')+'> Confirmada</label><button class="secondary" data-delete="'+i+'" style="margin:5px 0 0;padding:6px 9px">Remover</button></td>';body.append(tr);tr.querySelector('[data-kind]').value=t.kind;});body.querySelectorAll('[data-kind]').forEach(el=>el.addEventListener('change',()=>{const i=Number(el.dataset.kind);transactions[i].kind=el.value;transactions[i].review=el.value==='review';render();}));body.querySelectorAll('[data-review]').forEach(el=>el.addEventListener('change',()=>{transactions[Number(el.dataset.review)].review=!el.checked;render();}));body.querySelectorAll('[data-delete]').forEach(el=>el.addEventListener('click',()=>{transactions.splice(Number(el.dataset.delete),1);render();}));const inc=transactions.filter(t=>t.kind==='income').reduce((s,t)=>s+t.amount,0),exp=transactions.filter(t=>t.kind==='expense').reduce((s,t)=>s+t.amount,0),pending=transactions.filter(t=>t.kind==='review'||t.review).length;$('incomeTotal').textContent=money(inc);$('expenseTotal').textContent=money(exp);$('balanceTotal').textContent=money(inc-exp);$('downloadCsv').disabled=!transactions.length;$('downloadReport').disabled=!transactions.length;$('reviewStatus').textContent=transactions.length+' registos · '+pending+' por confirmar/rever. Saldo preliminar antes de ajustamentos: '+money(inc-exp)+'. Isto não é lucro fiscal confirmado nem cálculo do imposto devido.';}
-function download(name,text,type){const blob=new Blob([text],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);}
-$('downloadCsv').addEventListener('click',()=>{const traduzirTipo=k=>k==='income'?'Receita':k==='expense'?'Despesa':'Por rever';const rows=[['Data','Descrição','Valor (£)','Classificação','Confirmado','Origem'],...transactions.map(t=>[t.date,t.desc,t.amount.toFixed(2),traduzirTipo(t.kind),t.review?'Não':'Sim',t.source])];const csv=rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');download('odevi-transacoes-revistas.csv','\ufeff'+csv,'text/csv;charset=utf-8;');});
-$('downloadReport').addEventListener('click',()=>{const inc=transactions.filter(t=>t.kind==='income').reduce((s,t)=>s+t.amount,0),exp=transactions.filter(t=>t.kind==='expense').reduce((s,t)=>s+t.amount,0),pending=transactions.filter(t=>t.kind==='review'||t.review).length;const report='ODEVI — ASSISTENTE FISCAL — RESUMO DE PREPARAÇÃO\nPeríodo selecionado: '+$('taxYear').selectedOptions[0].text+'\nData do relatório: '+new Date().toLocaleDateString('pt-PT')+'\n\nReceitas classificadas: '+money(inc)+'\nDespesas classificadas: '+money(exp)+'\nSaldo preliminar: '+money(inc-exp)+'\nRegistos a confirmar/rever: '+pending+'\nTotal de registos: '+transactions.length+'\n\nIMPORTANTE: Este é um resumo administrativo baseado nos dados introduzidos. Não é uma declaração declaração anual de rendimentos (Self Assessment), não determina despesas dedutíveis nem calcula o imposto devido. Confirma todos os valores e consulta a HMRC ou um profissional qualificado.\n\nRegistos:\n'+transactions.map(t=>[t.date,t.desc,money(t.amount),t.kind==='income'?'Receita':t.kind==='expense'?'Despesa':'Por rever',t.review?'POR CONFIRMAR':'marcado como confirmado'].join(' | ')).join('\n');download('odevi-resumo-preparacao-fiscal.txt',report,'text/plain;charset=utf-8;');});
-$('clearAll').addEventListener('click',()=>{if(confirm('Limpar todas as registos desta sessão?')){transactions=[];render();$('importStatus').hidden=true;$('csvFile').value='';headers=[];window.pendingRows=[];$('reviewStatus').textContent='Dados desta sessão limpos.';}});
-render();
+function choose(country){
+ document.getElementById('uk').setAttribute('aria-pressed',String(country==='UK'));
+ document.getElementById('pt').setAttribute('aria-pressed',String(country==='PT'));
+}
 </script>
 </body>
 </html>
