@@ -21,7 +21,7 @@
 </section>
 <section class="panel">
 <h2>1. Carrega o teu CSV</h2>
-<p>O ficheiro deve ter uma coluna de valor chamada <code>amount</code> ou <code>valor</code>. Valores positivos contam como entradas; valores negativos como saídas. Colunas opcionais: <code>date/data</code>, <code>description/descricao</code> e <code>category/categoria</code>.</p>
+<p>O importador reconhece o formato de extrato Wise com as colunas Type, Product, Started Date, Completed Date, Description, Amount, Fee, Currency, State e Balance. Também tenta reconhecer CSVs genéricos com amount/valor. Não guardamos nem usamos os teus movimentos reais como dados de exemplo; só usamos a estrutura das colunas.</p>
 <label class="drop">Escolhe um ficheiro CSV<input id="file" type="file" accept=".csv,text/csv"></label>
 <div class="actions"><button id="sample" type="button" class="secondary">Descarregar CSV de exemplo</button><button id="clear" type="button" class="secondary">Limpar dados</button></div>
 <p id="status" role="status" aria-live="polite" class="muted">Nenhum ficheiro carregado.</p>
@@ -34,7 +34,7 @@
 <div class="metric"><small>Saldo líquido</small><strong id="net">£0.00</strong></div>
 </div>
 <p id="count" class="muted"></p>
-<div class="tablewrap"><table><thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Valor</th><th>Tipo</th></tr></thead><tbody id="rows"></tbody></table></div>
+<div class="tablewrap"><table><thead><tr><th>Data</th><th>Tipo</th><th>Produto</th><th>Descrição</th><th>Estado</th><th>Valor</th><th>Comissão</th><th>Moeda</th></tr></thead><tbody id="rows"></tbody></table></div>
 <div class="actions"><button id="export" type="button">Descarregar resumo CSV</button></div>
 </section>
 <footer><a href="tax-assistant.html">Voltar ao ODEVI Tax Assistant</a> · <a href="privacidade.html">Privacidade</a> · <a href="contacto.html">Contacto</a></footer>
@@ -51,7 +51,7 @@ function parseCSV(text){
  for(let i=0;i<text.length;i++){const ch=text[i];if(ch==='"'){if(quoted&&text[i+1]==='"'){field+='"';i++}else quoted=!quoted}else if(ch===delim&&!quoted){row.push(field);field=''}else if((ch==='\n'||ch==='\r')&&!quoted){if(ch==='\r'&&text[i+1]==='\n')i++;row.push(field);if(row.some(v=>v.trim()!==''))rows.push(row);row=[];field=''}else field+=ch}
  row.push(field);if(row.some(v=>v.trim()!==''))rows.push(row);return rows;
 }
-function amountValue(v){let s=String(v||'').trim().replace(/[£€$\s]/g,'');if(s.includes(',')&&s.includes('.')){if(s.lastIndexOf(',')>s.lastIndexOf('.'))s=s.replace(/\./g,'').replace(',','.');else s=s.replace(/,/g,'')}else if(s.includes(',')){const p=s.split(',');s=p[p.length-1].length===2?p.slice(0,-1).join('')+'.'+p[p.length-1]:s.replace(/,/g,'')}const n=Number(s);return Number.isFinite(n)?n:NaN}
+function amountValue(v){let s=String(v??'').trim().replace(/[£€$\s]/g,'');if(!s)return NaN;let negative=false;if(/^\(.*\)$/.test(s)){negative=true;s=s.slice(1,-1)}if(s.includes(',')&&s.includes('.')){if(s.lastIndexOf(',')>s.lastIndexOf('.'))s=s.replace(/\./g,'').replace(',','.');else s=s.replace(/,/g,'')}else if(s.includes(',')){const p=s.split(',');s=p[p.length-1].length===2?p.slice(0,-1).join('')+'.'+p[p.length-1]:s.replace(/,/g,'')}const n=Number(s);return Number.isFinite(n)?(negative?-n:n):NaN}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function money(n){return new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP'}).format(n)}
 function csvCell(v){const s=String(v??'');return /[",\r\n;]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
@@ -61,24 +61,27 @@ function loadText(text){
  const headers=matrix[0].map(norm);
  const find=names=>headers.findIndex(h=>names.includes(h));
  const ai=find(['amount','valor','montante','net amount','value']);
- if(ai<0)throw new Error('Não encontrei a coluna de valor. Usa o cabeçalho amount ou valor.');
- const di=find(['date','data','transaction date','booking date']),si=find(['description','descricao','details','merchant','reference']),ci=find(['category','categoria','type','tipo']);
+ if(ai<0)throw new Error('Não encontrei a coluna Amount/amount/valor.');
+ const ti=find(['type','tipo']),pi=find(['product','produto']),sd=find(['started date','start date','date','data','transaction date','booking date']),cd=find(['completed date','completion date']),si=find(['description','descricao','details','merchant','reference']),ci=find(['currency','moeda']),fi=find(['fee','fees','comissao','comissão']),sti=find(['state','status']),bi=find(['balance','saldo']);
  const parsed=[];
- matrix.slice(1).forEach((r,i)=>{const a=amountValue(r[ai]);if(!Number.isFinite(a))return;parsed.push({date:di>=0?(r[di]||''):'',description:si>=0?(r[si]||''):'',category:ci>=0?(r[ci]||''):'',amount:a,type:a>=0?'Entrada':'Saída',line:i+2})});
- if(!parsed.length)throw new Error('Não encontrei valores numéricos válidos na coluna amount/valor.');
+ matrix.slice(1).forEach((r,i)=>{const a=amountValue(r[ai]);if(!Number.isFinite(a))return;const fee=fi>=0?amountValue(r[fi]):NaN;parsed.push({date:(cd>=0&&r[cd]?r[cd]:(sd>=0?(r[sd]||''):'')),description:si>=0?(r[si]||''):'',typeLabel:ti>=0?(r[ti]||''):(a>=0?'Entrada':'Saída'),product:pi>=0?(r[pi]||''):'',state:sti>=0?(r[sti]||''):'',currency:ci>=0?(r[ci]||'GBP').toUpperCase():'GBP',amount:a,fee:Number.isFinite(fee)?fee:0,balance:bi>=0?amountValue(r[bi]):NaN,line:i+2})});
+ if(!parsed.length)throw new Error('Não encontrei valores numéricos válidos na coluna Amount/amount/valor.');
  transactions=parsed;render();
- status.textContent='Ficheiro lido no navegador: '+transactions.length+' transações reconhecidas.';
+ status.textContent='Ficheiro lido no navegador: '+transactions.length+' transações reconhecidas. Dados processados localmente; confirma a moeda, o sinal dos valores e as transações pendentes.';
 }
 function render(){
- const inc=transactions.filter(t=>t.amount>0).reduce((s,t)=>s+t.amount,0),out=transactions.filter(t=>t.amount<0).reduce((s,t)=>s+Math.abs(t.amount),0),net=inc-out;
- document.getElementById('income').textContent=money(inc);document.getElementById('expenses').textContent=money(out);document.getElementById('net').textContent=money(net);
- document.getElementById('count').textContent=transactions.length+' transações reconhecidas. Confirma sempre as linhas com o extrato original.';
- tbody.innerHTML=transactions.map(t=>'<tr><td>'+esc(t.date)+'</td><td>'+esc(t.description)+'</td><td>'+esc(t.category)+'</td><td class="'+(t.amount>=0?'good':'error')+'">'+money(t.amount)+'</td><td>'+t.type+'</td></tr>').join('');
+ const currencies=[...new Set(transactions.map(t=>t.currency||'GBP'))];
+ const fmt=(n,cur)=>{try{return new Intl.NumberFormat('en-GB',{style:'currency',currency:cur}).format(n)}catch{return cur+' '+n.toFixed(2)}};
+ const totals=currencies.map(cur=>{const ts=transactions.filter(t=>(t.currency||'GBP')===cur);return {cur,inc:ts.filter(t=>t.amount>0).reduce((s,t)=>s+t.amount,0),out:ts.filter(t=>t.amount<0).reduce((s,t)=>s+Math.abs(t.amount),0),fee:ts.reduce((s,t)=>s+Math.abs(t.fee||0),0)}});
+ const show=k=>totals.map(t=>fmt(k==='net'?t.inc-t.out:k==='inc'?t.inc:k==='out'?t.out:t.fee,t.cur)).join(' · ')||'—';
+ document.getElementById('income').textContent=show('inc');document.getElementById('expenses').textContent=show('out');document.getElementById('net').textContent=show('net');document.getElementById('fees').textContent=show('fee');
+ document.getElementById('count').textContent=transactions.length+' transações reconhecidas. Totais separados por moeda; comissões mostradas à parte para evitar dupla contagem. Não é cálculo fiscal.';
+ tbody.innerHTML=transactions.map(t=>'<tr><td>'+esc(t.date)+'</td><td>'+esc(t.typeLabel)+'</td><td>'+esc(t.product)+'</td><td>'+esc(t.description)+'</td><td>'+esc(t.state)+'</td><td class="'+(t.amount>=0?'good':'error')+'">'+fmt(t.amount,t.currency)+'</td><td>'+fmt(t.fee,t.currency)+'</td><td>'+esc(t.currency)+'</td></tr>').join('');
  results.hidden=false;
 }
 fileInput.addEventListener('change',async()=>{const f=fileInput.files&&fileInput.files[0];if(!f)return;try{loadText(await f.text())}catch(e){transactions=[];results.hidden=true;status.innerHTML='<span class="error">'+esc(e.message||'Não foi possível ler o ficheiro.')+'</span>'}});
 document.getElementById('sample').addEventListener('click',()=>{const csv='date,description,category,amount\n2026-04-03,Delivery platform payout,Income,125.50\n2026-04-04,Fuel,Vehicle,-18.20\n2026-04-05,Phone bill,Phone,-12.00\n2026-04-06,Delivery platform payout,Income,98.75\n';download('odevi-csv-exemplo.csv',csv,'text/csv;charset=utf-8')});
-document.getElementById('export').addEventListener('click',()=>{const lines=[['date','description','category','amount','type'],...transactions.map(t=>[t.date,t.description,t.category,t.amount.toFixed(2),t.type])];download('odevi-resumo-transacoes.csv',lines.map(r=>r.map(csvCell).join(',')).join('\r\n'),'text/csv;charset=utf-8')});
+document.getElementById('export').addEventListener('click',()=>{const lines=[['date','type','product','description','state','amount','fee','currency'],...transactions.map(t=>[t.date,t.typeLabel,t.product,t.description,t.state,t.amount.toFixed(2),t.fee.toFixed(2),t.currency])];download('odevi-resumo-transacoes.csv',lines.map(r=>r.map(csvCell).join(',')).join('\r\n'),'text/csv;charset=utf-8')});
 document.getElementById('clear').addEventListener('click',()=>{transactions=[];fileInput.value='';results.hidden=true;status.textContent='Dados limpos. Nenhum ficheiro carregado.'});
 function download(name,data,type){const blob=new Blob([data],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url)}
 })();
