@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Protótipo ODEVI para organizar transações CSV localmente e resumir receitas, despesas e saldo.">
+<meta name="theme-color" content="#10141d">
+<title>Organizador de transações | ODEVI+</title>
+<style>
+:root{color-scheme:dark;--bg:#10141d;--panel:#191f2b;--text:#f4f6fb;--muted:#aeb8ca;--line:#30394a;--blue:#7ba7ff;--green:#62d6a4;--warn:#f5d69a}
+*{box-sizing:border-box}body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{max-width:900px;margin:auto}.brand{font-weight:900;letter-spacing:.12em;color:var(--blue)}.panel{margin-top:18px;padding:clamp(18px,4vw,30px);background:var(--panel);border:1px solid var(--line);border-radius:18px}h1{font-size:clamp(2rem,5vw,3rem);line-height:1.1;margin:.6rem 0}h2{font-size:1.2rem}p,.muted{color:var(--muted)}.notice{padding:13px 15px;border:1px solid #6c5530;background:#2b2417;color:var(--warn);border-radius:10px;font-size:.9rem}.drop{display:block;padding:22px;border:1px dashed #59677e;border-radius:12px;text-align:center;background:#111722}.drop input{display:block;width:100%;margin-top:12px;color:var(--muted)}button,.linkbtn{display:inline-block;border:0;border-radius:10px;padding:12px 16px;background:var(--blue);color:#101827;font:inherit;font-weight:800;cursor:pointer;text-decoration:none}.secondary{background:#293345;color:var(--text);border:1px solid var(--line)}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}.metric{padding:16px;border:1px solid var(--line);border-radius:12px;background:#111722;min-width:0}.metric small{display:block;color:var(--muted)}.metric strong{display:block;font-size:clamp(1.2rem,3vw,1.7rem);overflow-wrap:anywhere}.tablewrap{overflow:auto;margin-top:14px}table{width:100%;border-collapse:collapse;font-size:.9rem}th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line);white-space:nowrap}th{color:var(--muted)}.error{color:#ffb4ab}.good{color:var(--green)}a{color:var(--blue)}footer{margin:24px 0;color:var(--muted);font-size:.85rem}@media(max-width:560px){body{padding:12px}.grid{grid-template-columns:1fr}.metric{display:flex;justify-content:space-between;align-items:center;gap:10px}.metric strong{text-align:right}.panel{padding:18px}}
+</style>
+</head>
+<body><main>
+<div class="brand">ODEVI+</div>
+<section class="panel">
+<p class="muted">PROTÓTIPO DE VALIDAÇÃO · SEM PAGAMENTOS</p>
+<h1>Organizador de transações</h1>
+<p>Importa um ficheiro CSV do teu banco ou de uma plataforma de entregas para somar entradas e saídas. O ficheiro é processado neste navegador e não é enviado para um servidor por esta ferramenta.</p>
+<div class="notice"><strong>Importante:</strong> esta versão é apenas um organizador experimental. Não calcula impostos, não substitui aconselhamento contabilístico e não é o relatório pago de £5,99.</div>
+</section>
+<section class="panel">
+<h2>1. Carrega o teu CSV</h2>
+<p>O ficheiro deve ter uma coluna de valor chamada <code>amount</code> ou <code>valor</code>. Valores positivos contam como entradas; valores negativos como saídas. Colunas opcionais: <code>date/data</code>, <code>description/descricao</code> e <code>category/categoria</code>.</p>
+<label class="drop">Escolhe um ficheiro CSV<input id="file" type="file" accept=".csv,text/csv"></label>
+<div class="actions"><button id="sample" type="button" class="secondary">Descarregar CSV de exemplo</button><button id="clear" type="button" class="secondary">Limpar dados</button></div>
+<p id="status" role="status" aria-live="polite" class="muted">Nenhum ficheiro carregado.</p>
+</section>
+<section id="results" class="panel" hidden>
+<h2>2. Resumo das transações</h2>
+<div class="grid">
+<div class="metric"><small>Total de entradas</small><strong id="income">£0.00</strong></div>
+<div class="metric"><small>Total de saídas</small><strong id="expenses">£0.00</strong></div>
+<div class="metric"><small>Saldo líquido</small><strong id="net">£0.00</strong></div>
+</div>
+<p id="count" class="muted"></p>
+<div class="tablewrap"><table><thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Valor</th><th>Tipo</th></tr></thead><tbody id="rows"></tbody></table></div>
+<div class="actions"><button id="export" type="button">Descarregar resumo CSV</button></div>
+</section>
+<footer><a href="tax-assistant.html">Voltar ao ODEVI Tax Assistant</a> · <a href="privacidade.html">Privacidade</a> · <a href="contacto.html">Contacto</a></footer>
+</main>
+<script>
+(function(){
+const fileInput=document.getElementById('file'),status=document.getElementById('status'),results=document.getElementById('results'),tbody=document.getElementById('rows');
+let transactions=[];
+const norm=s=>String(s||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+function parseCSV(text){
+ const first=(text.split(/\r?\n/,1)[0]||'');const candidates=[',',';','\t'];let delim=candidates[0],best=-1;
+ for(const d of candidates){let n=0,q=false;for(let i=0;i<first.length;i++){if(first[i]==='"'&&first[i+1]==='"'){i++;continue}if(first[i]==='"')q=!q;else if(first[i]===d&&!q)n++}if(n>best){best=n;delim=d}}
+ const rows=[];let row=[],field='',quoted=false;
+ for(let i=0;i<text.length;i++){const ch=text[i];if(ch==='"'){if(quoted&&text[i+1]==='"'){field+='"';i++}else quoted=!quoted}else if(ch===delim&&!quoted){row.push(field);field=''}else if((ch==='\n'||ch==='\r')&&!quoted){if(ch==='\r'&&text[i+1]==='\n')i++;row.push(field);if(row.some(v=>v.trim()!==''))rows.push(row);row=[];field=''}else field+=ch}
+ row.push(field);if(row.some(v=>v.trim()!==''))rows.push(row);return rows;
+}
+function amountValue(v){let s=String(v||'').trim().replace(/[£€$\s]/g,'');if(s.includes(',')&&s.includes('.')){if(s.lastIndexOf(',')>s.lastIndexOf('.'))s=s.replace(/\./g,'').replace(',','.');else s=s.replace(/,/g,'')}else if(s.includes(',')){const p=s.split(',');s=p[p.length-1].length===2?p.slice(0,-1).join('')+'.'+p[p.length-1]:s.replace(/,/g,'')}const n=Number(s);return Number.isFinite(n)?n:NaN}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function money(n){return new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP'}).format(n)}
+function csvCell(v){const s=String(v??'');return /[",\r\n;]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
+function loadText(text){
+ const matrix=parseCSV(text.replace(/^\uFEFF/,''));
+ if(matrix.length<2)throw new Error('O CSV precisa de uma linha de cabeçalho e pelo menos uma transação.');
+ const headers=matrix[0].map(norm);
+ const find=names=>headers.findIndex(h=>names.includes(h));
+ const ai=find(['amount','valor','montante','net amount','value']);
+ if(ai<0)throw new Error('Não encontrei a coluna de valor. Usa o cabeçalho amount ou valor.');
+ const di=find(['date','data','transaction date','booking date']),si=find(['description','descricao','details','merchant','reference']),ci=find(['category','categoria','type','tipo']);
+ const parsed=[];
+ matrix.slice(1).forEach((r,i)=>{const a=amountValue(r[ai]);if(!Number.isFinite(a))return;parsed.push({date:di>=0?(r[di]||''):'',description:si>=0?(r[si]||''):'',category:ci>=0?(r[ci]||''):'',amount:a,type:a>=0?'Entrada':'Saída',line:i+2})});
+ if(!parsed.length)throw new Error('Não encontrei valores numéricos válidos na coluna amount/valor.');
+ transactions=parsed;render();
+ status.textContent='Ficheiro lido no navegador: '+transactions.length+' transações reconhecidas.';
+}
+function render(){
+ const inc=transactions.filter(t=>t.amount>0).reduce((s,t)=>s+t.amount,0),out=transactions.filter(t=>t.amount<0).reduce((s,t)=>s+Math.abs(t.amount),0),net=inc-out;
+ document.getElementById('income').textContent=money(inc);document.getElementById('expenses').textContent=money(out);document.getElementById('net').textContent=money(net);
+ document.getElementById('count').textContent=transactions.length+' transações reconhecidas. Confirma sempre as linhas com o extrato original.';
+ tbody.innerHTML=transactions.map(t=>'<tr><td>'+esc(t.date)+'</td><td>'+esc(t.description)+'</td><td>'+esc(t.category)+'</td><td class="'+(t.amount>=0?'good':'error')+'">'+money(t.amount)+'</td><td>'+t.type+'</td></tr>').join('');
+ results.hidden=false;
+}
+fileInput.addEventListener('change',async()=>{const f=fileInput.files&&fileInput.files[0];if(!f)return;try{loadText(await f.text())}catch(e){transactions=[];results.hidden=true;status.innerHTML='<span class="error">'+esc(e.message||'Não foi possível ler o ficheiro.')+'</span>'}});
+document.getElementById('sample').addEventListener('click',()=>{const csv='date,description,category,amount\n2026-04-03,Delivery platform payout,Income,125.50\n2026-04-04,Fuel,Vehicle,-18.20\n2026-04-05,Phone bill,Phone,-12.00\n2026-04-06,Delivery platform payout,Income,98.75\n';download('odevi-csv-exemplo.csv',csv,'text/csv;charset=utf-8')});
+document.getElementById('export').addEventListener('click',()=>{const lines=[['date','description','category','amount','type'],...transactions.map(t=>[t.date,t.description,t.category,t.amount.toFixed(2),t.type])];download('odevi-resumo-transacoes.csv',lines.map(r=>r.map(csvCell).join(',')).join('\r\n'),'text/csv;charset=utf-8')});
+document.getElementById('clear').addEventListener('click',()=>{transactions=[];fileInput.value='';results.hidden=true;status.textContent='Dados limpos. Nenhum ficheiro carregado.'});
+function download(name,data,type){const blob=new Blob([data],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url)}
+})();
+</script>
+</body></html>
