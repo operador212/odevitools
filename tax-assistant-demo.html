@@ -76,7 +76,7 @@ function loadText(text){
  });
  transactions=parsed;render();
  const duplicates=transactions.filter(t=>t.possibleDuplicate).length;
- status.textContent='Ficheiro lido no navegador: '+transactions.length+' transações reconhecidas'+(duplicates?'; '+duplicates+' possível(eis) duplicado(s) sinalizado(s) para confirmação':'')+'. Dados processados localmente; confirma a moeda, o sinal dos valores e as transações pendentes.';
+ status.textContent='Ficheiro lido no navegador: '+transactions.length+' transações reconhecidas. '+(duplicates?duplicates+' possível(eis) duplicado(s) exato(s) sinalizado(s) para confirmação.':'Não foram encontrados duplicados exatos pelos campos data, descrição, valor, moeda e estado.')+' A verificação é conservadora: movimentos semelhantes com datas ou descrições diferentes podem não ser detetados. Dados processados localmente; confirma a moeda, o sinal dos valores e as transações pendentes.';
 }
 const categoryOptions=['Receita de plataforma','Outras receitas','Combustível','Manutenção / reparação','Seguro de veículo','Telefone / internet','Comissões e taxas','Equipamento / materiais','Refeições / viagem','Transferência entre contas','Reembolso / estorno','Levantamento de dinheiro','Despesa pessoal','Outro / por confirmar'];
 function suggestCategory(t){
