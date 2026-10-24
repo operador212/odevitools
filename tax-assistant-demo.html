@@ -22,7 +22,7 @@
 <section class="panel">
 <h2>1. Carrega o teu CSV</h2>
 <p>O importador reconhece o formato de extrato Wise com as colunas Type, Product, Started Date, Completed Date, Description, Amount, Fee, Currency, State e Balance. Também tenta reconhecer CSVs genéricos com amount/valor. Não guardamos nem usamos os teus movimentos reais como dados de exemplo; só usamos a estrutura das colunas.</p>
-<label class="drop">Escolhe um ficheiro CSV<input id="file" type="file" accept=".csv,text/csv"></label>
+<label class="drop">Escolhe um ou vários ficheiros CSV<input id="file" type="file" accept=".csv,text/csv" multiple><small style="display:block;margin-top:8px">Podes selecionar vários extratos de uma só vez. Os movimentos serão reunidos num único resumo.</small></label>
 <div class="actions"><button id="sample" type="button" class="secondary">Descarregar CSV de exemplo</button><button id="clear" type="button" class="secondary">Limpar dados</button></div>
 <p id="status" role="status" aria-live="polite" class="muted">Nenhum ficheiro carregado.</p>
 </section>
@@ -35,7 +35,7 @@
 </div>
 <div class="metric" style="margin-top:12px"><small>Comissões (Fee, apresentadas à parte)</small><strong id="fees">—</strong></div><div class="metric" style="margin-top:12px"><small>Movimentos para rever</small><strong id="reviewCount">—</strong></div><p class="notice" style="margin-top:14px">As categorias automáticas são sugestões. Confirma transferências, reembolsos, movimentos pendentes e despesas de uso misto antes de exportar.</p>
 <p id="count" class="muted"></p>
-<div class="tablewrap"><table><thead><tr><th>Data</th><th>Tipo</th><th>Descrição</th><th>Categoria editável</th><th>Revisão</th><th>Estado</th><th>Valor</th><th>Comissão</th><th>Moeda</th></tr></thead><tbody id="rows"></tbody></table></div>
+<div class="tablewrap"><table><thead><tr><th>Origem</th><th>Data</th><th>Tipo</th><th>Descrição</th><th>Categoria editável</th><th>Revisão</th><th>Estado</th><th>Valor</th><th>Comissão</th><th>Moeda</th></tr></thead><tbody id="rows"></tbody></table></div>
 <div class="actions"><button id="export" type="button">Descarregar resumo CSV</button></div>
 </section>
 <footer><a href="tax-assistant.html">Voltar ao ODEVI Tax Assistant</a> · <a href="privacidade.html">Privacidade</a> · <a href="contacto.html">Contacto</a></footer>
@@ -43,7 +43,7 @@
 <script>
 (function(){
 const fileInput=document.getElementById('file'),status=document.getElementById('status'),results=document.getElementById('results'),tbody=document.getElementById('rows');
-let transactions=[];
+let transactions=[],sourceFiles=[];
 const norm=s=>String(s||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
 function parseCSV(text){
  const first=(text.split(/\r?\n/,1)[0]||'');const candidates=[',',';','\t'];let delim=candidates[0],best=-1;
@@ -56,7 +56,7 @@ function amountValue(v){let s=String(v??'').trim().replace(/[£€$\s]/g,'');if(
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function money(n){return new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP'}).format(n)}
 function csvCell(v){const s=String(v??'');return /[",\r\n;]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
-function loadText(text){
+function parseText(text){
  const matrix=parseCSV(text.replace(/^\uFEFF/,''));
  if(matrix.length<2)throw new Error('O CSV precisa de uma linha de cabeçalho e pelo menos uma transação.');
  const headers=matrix[0].map(norm);
@@ -74,9 +74,7 @@ function loadText(text){
   t.possibleDuplicate=prior>0;
   seen.set(key,prior+1);
  });
- transactions=parsed;render();
- const duplicates=transactions.filter(t=>t.possibleDuplicate).length;
- status.textContent='Ficheiro lido no navegador: '+transactions.length+' transações reconhecidas. '+(duplicates?duplicates+' possível(eis) duplicado(s) exato(s) sinalizado(s) para confirmação.':'Não foram encontrados duplicados exatos pelos campos data, descrição, valor, moeda e estado.')+' A verificação é conservadora: movimentos semelhantes com datas ou descrições diferentes podem não ser detetados. Dados processados localmente; confirma a moeda, o sinal dos valores e as transações pendentes.';
+ return parsed;
 }
 const categoryOptions=['Receita de plataforma','Outras receitas','Combustível','Manutenção / reparação','Seguro de veículo','Telefone / internet','Comissões e taxas','Equipamento / materiais','Refeições / viagem','Transferência entre contas','Reembolso / estorno','Levantamento de dinheiro','Despesa pessoal','Outro / por confirmar'];
 function suggestCategory(t){
@@ -104,14 +102,33 @@ function render(){
  document.getElementById('income').textContent=show('inc');document.getElementById('expenses').textContent=show('out');document.getElementById('net').textContent=show('net');document.getElementById('fees').textContent=show('fee');
  document.getElementById('reviewCount').textContent=transactions.filter(t=>t.review||t.possibleDuplicate).length;
  document.getElementById('count').textContent=transactions.length+' transações reconhecidas. Totais separados por moeda; categorias são sugestões preliminares, não cálculo fiscal.';
- tbody.innerHTML=transactions.map((t,i)=>'<tr><td>'+esc(t.date)+'</td><td>'+esc(t.typeLabel)+'</td><td>'+esc(t.description)+'</td><td><select class="category-select" data-index="'+i+'" aria-label="Categoria da transação '+(i+1)+'">'+categoryOptions.map(x=>'<option value="'+esc(x)+'"'+(x===t.category?' selected':'')+'>'+esc(x)+'</option>').join('')+'</select></td><td><span class="error">Rever</span><br><small>'+esc([t.reviewWhy||'Confirmar',t.possibleDuplicate?'Possível duplicado — confirmar antes de excluir':''].filter(Boolean).join(' · '))+'</small></td><td>'+esc(t.state)+'</td><td class="'+(t.amount>=0?'good':'error')+'">'+fmt(t.amount,t.currency)+'</td><td>'+fmt(t.fee,t.currency)+'</td><td>'+esc(t.currency)+'</td></tr>').join('');
+ tbody.innerHTML=transactions.map((t,i)=>'<tr><td>'+esc(t.sourceFile||'')+'</td><td>'+esc(t.date)+'</td><td>'+esc(t.typeLabel)+'</td><td>'+esc(t.description)+'</td><td><select class="category-select" data-index="'+i+'" aria-label="Categoria da transação '+(i+1)+'">'+categoryOptions.map(x=>'<option value="'+esc(x)+'"'+(x===t.category?' selected':'')+'>'+esc(x)+'</option>').join('')+'</select></td><td><span class="error">Rever</span><br><small>'+esc([t.reviewWhy||'Confirmar',t.possibleDuplicate?'Possível duplicado — confirmar antes de excluir':''].filter(Boolean).join(' · '))+'</small></td><td>'+esc(t.state)+'</td><td class="'+(t.amount>=0?'good':'error')+'">'+fmt(t.amount,t.currency)+'</td><td>'+fmt(t.fee,t.currency)+'</td><td>'+esc(t.currency)+'</td></tr>').join('');
  results.hidden=false;
 }
-fileInput.addEventListener('change',async()=>{const f=fileInput.files&&fileInput.files[0];if(!f)return;try{loadText(await f.text())}catch(e){transactions=[];results.hidden=true;status.innerHTML='<span class="error">'+esc(e.message||'Não foi possível ler o ficheiro.')+'</span>'}});
+fileInput.addEventListener('change',async()=>{
+ const files=Array.from(fileInput.files||[]);if(!files.length)return;
+ const combined=[];const errors=[];sourceFiles=[];
+ for(const f of files){
+  try{
+   const parsed=parseText(await f.text());
+   parsed.forEach(t=>{t.sourceFile=f.name;combined.push(t)});
+   sourceFiles.push(f.name);
+  }catch(e){errors.push(f.name+': '+(e.message||'não foi possível ler o ficheiro'))}
+ }
+ if(!combined.length){transactions=[];results.hidden=true;status.innerHTML='<span class="error">'+esc(errors.join(' · ')||'Não foi possível ler os ficheiros.')+'</span>';return}
+ const seen=new Map();
+ combined.forEach(t=>{
+  const key=[norm(t.date),norm(t.description),Number(t.amount).toFixed(2),norm(t.currency),norm(t.state)].join('|');
+  const prior=seen.get(key)||0;t.possibleDuplicate=prior>0;seen.set(key,prior+1);
+ });
+ transactions=combined;render();
+ const duplicates=transactions.filter(t=>t.possibleDuplicate).length;
+ status.textContent=sourceFiles.length+' ficheiro(s) carregado(s): '+sourceFiles.join(', ')+'. '+transactions.length+' transações reconhecidas no total. '+(duplicates?duplicates+' possível(eis) duplicado(s) exato(s) sinalizado(s) para confirmação.':'Não foram encontrados duplicados exatos pelos campos data, descrição, valor, moeda e estado.')+(errors.length?' Ficheiros com erro: '+errors.join(' · '):'')+' Dados processados localmente; confirma a moeda, o sinal dos valores e as transações pendentes.';
+});
 document.getElementById('sample').addEventListener('click',()=>{const csv='date,description,category,amount\n2026-04-03,Delivery platform payout,Income,125.50\n2026-04-04,Fuel,Vehicle,-18.20\n2026-04-05,Phone bill,Phone,-12.00\n2026-04-06,Delivery platform payout,Income,98.75\n';download('odevi-csv-exemplo.csv',csv,'text/csv;charset=utf-8')});
 tbody.addEventListener('change',e=>{const el=e.target;if(!el.classList.contains('category-select'))return;const t=transactions[Number(el.dataset.index)];if(!t)return;t.category=el.value;t.review=true;t.reviewWhy='Categoria selecionada pelo utilizador — validar antes de usar';render()});
-document.getElementById('export').addEventListener('click',()=>{const lines=[['date','type','product','description','state','amount','fee','currency','category','review_required','review_note','possible_duplicate'],...transactions.map(t=>[t.date,t.typeLabel,t.product,t.description,t.state,t.amount.toFixed(2),t.fee.toFixed(2),t.currency,t.category,(t.review||t.possibleDuplicate)?'YES':'NO',[t.reviewWhy||'',t.possibleDuplicate?'Possível duplicado — confirmar manualmente':''].filter(Boolean).join(' | '),t.possibleDuplicate?'YES':'NO'])];download('odevi-resumo-transacoes.csv',lines.map(r=>r.map(csvCell).join(',')).join('\r\n'),'text/csv;charset=utf-8')});
-document.getElementById('clear').addEventListener('click',()=>{transactions=[];fileInput.value='';results.hidden=true;status.textContent='Dados limpos. Nenhum ficheiro carregado.'});
+document.getElementById('export').addEventListener('click',()=>{const lines=[['source_file','date','type','product','description','state','amount','fee','currency','category','review_required','review_note','possible_duplicate'],...transactions.map(t=>[t.sourceFile||'',t.date,t.typeLabel,t.product,t.description,t.state,t.amount.toFixed(2),t.fee.toFixed(2),t.currency,t.category,(t.review||t.possibleDuplicate)?'YES':'NO',[t.reviewWhy||'',t.possibleDuplicate?'Possível duplicado — confirmar manualmente':''].filter(Boolean).join(' | '),t.possibleDuplicate?'YES':'NO'])];download('odevi-resumo-transacoes.csv',lines.map(r=>r.map(csvCell).join(',')).join('\r\n'),'text/csv;charset=utf-8')});
+document.getElementById('clear').addEventListener('click',()=>{transactions=[];sourceFiles=[];fileInput.value='';results.hidden=true;status.textContent='Dados limpos. Nenhum ficheiro carregado.'});
 function download(name,data,type){const blob=new Blob([data],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url)}
 })();
 </script>
