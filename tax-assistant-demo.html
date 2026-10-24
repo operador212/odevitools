@@ -67,8 +67,16 @@ function loadText(text){
  const parsed=[];
  matrix.slice(1).forEach((r,i)=>{const a=amountValue(r[ai]);if(!Number.isFinite(a))return;const fee=fi>=0?amountValue(r[fi]):NaN;parsed.push({date:(cd>=0&&r[cd]?r[cd]:(sd>=0?(r[sd]||''):'')),description:si>=0?(r[si]||''):'',typeLabel:ti>=0?(r[ti]||''):(a>=0?'Entrada':'Saída'),product:pi>=0?(r[pi]||''):'',state:sti>=0?(r[sti]||''):'',currency:ci>=0?(r[ci]||'GBP').toUpperCase():'GBP',amount:a,fee:Number.isFinite(fee)?fee:0,balance:bi>=0?amountValue(r[bi]):NaN,line:i+2})});
  if(!parsed.length)throw new Error('Não encontrei valores numéricos válidos na coluna Amount/amount/valor.');
+ const seen=new Map();
+ parsed.forEach(t=>{
+  const key=[norm(t.date),norm(t.description),Number(t.amount).toFixed(2),norm(t.currency),norm(t.state)].join('|');
+  const prior=seen.get(key)||0;
+  t.possibleDuplicate=prior>0;
+  seen.set(key,prior+1);
+ });
  transactions=parsed;render();
- status.textContent='Ficheiro lido no navegador: '+transactions.length+' transações reconhecidas. Dados processados localmente; confirma a moeda, o sinal dos valores e as transações pendentes.';
+ const duplicates=transactions.filter(t=>t.possibleDuplicate).length;
+ status.textContent='Ficheiro lido no navegador: '+transactions.length+' transações reconhecidas'+(duplicates?'; '+duplicates+' possível(eis) duplicado(s) sinalizado(s) para confirmação':'')+'. Dados processados localmente; confirma a moeda, o sinal dos valores e as transações pendentes.';
 }
 const categoryOptions=['Receita de plataforma','Outras receitas','Combustível','Manutenção / reparação','Seguro de veículo','Telefone / internet','Comissões e taxas','Equipamento / materiais','Refeições / viagem','Transferência entre contas','Reembolso / estorno','Levantamento de dinheiro','Despesa pessoal','Outro / por confirmar'];
 function suggestCategory(t){
@@ -94,7 +102,7 @@ function render(){
  const totals=currencies.map(cur=>{const ts=transactions.filter(t=>(t.currency||'GBP')===cur);return {cur,inc:ts.filter(t=>t.amount>0).reduce((s,t)=>s+t.amount,0),out:ts.filter(t=>t.amount<0).reduce((s,t)=>s+Math.abs(t.amount),0),fee:ts.reduce((s,t)=>s+Math.abs(t.fee||0),0)}});
  const show=k=>totals.map(t=>fmt(k==='net'?t.inc-t.out:k==='inc'?t.inc:k==='out'?t.out:t.fee,t.cur)).join(' · ')||'—';
  document.getElementById('income').textContent=show('inc');document.getElementById('expenses').textContent=show('out');document.getElementById('net').textContent=show('net');document.getElementById('fees').textContent=show('fee');
- document.getElementById('reviewCount').textContent=transactions.filter(t=>t.review).length;
+ document.getElementById('reviewCount').textContent=transactions.filter(t=>t.review||t.possibleDuplicate).length;
  document.getElementById('count').textContent=transactions.length+' transações reconhecidas. Totais separados por moeda; categorias são sugestões preliminares, não cálculo fiscal.';
  tbody.innerHTML=transactions.map((t,i)=>'<tr><td>'+esc(t.date)+'</td><td>'+esc(t.typeLabel)+'</td><td>'+esc(t.description)+'</td><td><select class="category-select" data-index="'+i+'" aria-label="Categoria da transação '+(i+1)+'">'+categoryOptions.map(x=>'<option value="'+esc(x)+'"'+(x===t.category?' selected':'')+'>'+esc(x)+'</option>').join('')+'</select></td><td><span class="error">Rever</span><br><small>'+esc(t.reviewWhy||'Confirmar')+'</small></td><td>'+esc(t.state)+'</td><td class="'+(t.amount>=0?'good':'error')+'">'+fmt(t.amount,t.currency)+'</td><td>'+fmt(t.fee,t.currency)+'</td><td>'+esc(t.currency)+'</td></tr>').join('');
  results.hidden=false;
@@ -102,7 +110,7 @@ function render(){
 fileInput.addEventListener('change',async()=>{const f=fileInput.files&&fileInput.files[0];if(!f)return;try{loadText(await f.text())}catch(e){transactions=[];results.hidden=true;status.innerHTML='<span class="error">'+esc(e.message||'Não foi possível ler o ficheiro.')+'</span>'}});
 document.getElementById('sample').addEventListener('click',()=>{const csv='date,description,category,amount\n2026-04-03,Delivery platform payout,Income,125.50\n2026-04-04,Fuel,Vehicle,-18.20\n2026-04-05,Phone bill,Phone,-12.00\n2026-04-06,Delivery platform payout,Income,98.75\n';download('odevi-csv-exemplo.csv',csv,'text/csv;charset=utf-8')});
 tbody.addEventListener('change',e=>{const el=e.target;if(!el.classList.contains('category-select'))return;const t=transactions[Number(el.dataset.index)];if(!t)return;t.category=el.value;t.review=true;t.reviewWhy='Categoria selecionada pelo utilizador — validar antes de usar';render()});
-document.getElementById('export').addEventListener('click',()=>{const lines=[['date','type','product','description','state','amount','fee','currency','category','review_required','review_note'],...transactions.map(t=>[t.date,t.typeLabel,t.product,t.description,t.state,t.amount.toFixed(2),t.fee.toFixed(2),t.currency,t.category,t.review?'YES':'NO',t.reviewWhy||''])];download('odevi-resumo-transacoes.csv',lines.map(r=>r.map(csvCell).join(',')).join('\r\n'),'text/csv;charset=utf-8')});
+document.getElementById('export').addEventListener('click',()=>{const lines=[['date','type','product','description','state','amount','fee','currency','category','review_required','review_note','possible_duplicate'],...transactions.map(t=>[t.date,t.typeLabel,t.product,t.description,t.state,t.amount.toFixed(2),t.fee.toFixed(2),t.currency,t.category,(t.review||t.possibleDuplicate)?'YES':'NO',[t.reviewWhy||'',t.possibleDuplicate?'Possível duplicado — confirmar manualmente':''].filter(Boolean).join(' | '),t.possibleDuplicate?'YES':'NO'])];download('odevi-resumo-transacoes.csv',lines.map(r=>r.map(csvCell).join(',')).join('\r\n'),'text/csv;charset=utf-8')});
 document.getElementById('clear').addEventListener('click',()=>{transactions=[];fileInput.value='';results.hidden=true;status.textContent='Dados limpos. Nenhum ficheiro carregado.'});
 function download(name,data,type){const blob=new Blob([data],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url)}
 })();
