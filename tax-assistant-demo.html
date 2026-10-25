@@ -24,7 +24,7 @@
 <p>O importador reconhece o formato de extrato Wise com as colunas Type, Product, Started Date, Completed Date, Description, Amount, Fee, Currency, State e Balance. Também tenta reconhecer CSVs genéricos com amount/valor. Não guardamos nem usamos os teus movimentos reais como dados de exemplo; só usamos a estrutura das colunas.</p>
 <label class="drop">Escolhe extratos CSV e relatórios PDF<input id="file" type="file" accept=".csv,.pdf,text/csv,application/pdf" multiple><small style="display:block;margin-top:8px">Podes selecionar vários ficheiros CSV e PDF. Os CSV entram no resumo de movimentos; os PDFs reconhecidos ficam numa secção separada para não somar bruto e líquido duas vezes.</small></label>
 <div class="actions"><button id="sample" type="button" class="secondary">Descarregar CSV de exemplo</button><button id="clear" type="button" class="secondary">Limpar dados</button></div>
-<p id="status" role="status" aria-live="polite" class="muted">Nenhum ficheiro carregado.</p><div id="pdfResults" hidden><h3>Documentos PDF reconhecidos</h3><p class="muted">Valores extraídos dos documentos; não são adicionados aos totais bancários automaticamente.</p><div class="tablewrap"><table><thead><tr><th>Documento</th><th>Plataforma</th><th>Período</th><th>Bruto identificado</th><th>Taxas/descontos</th><th>Gorjetas</th><th>Líquido indicado</th><th>Estado</th></tr></thead><tbody id="pdfRows"></tbody></table></div></div>
+<p id="status" role="status" aria-live="polite" class="muted">Nenhum ficheiro carregado.</p><div id="pdfResults" hidden><h3>Documentos PDF reconhecidos</h3><p class="muted">Valores extraídos dos documentos; não são adicionados aos totais bancários automaticamente.</p><div class="tablewrap"><table><thead><tr><th>Documento</th><th>Plataforma</th><th>Período</th><th>Movimentos PDF</th><th>Bruto identificado</th><th>Taxas/descontos</th><th>Gorjetas</th><th>Líquido indicado</th><th>Estado</th></tr></thead><tbody id="pdfRows"></tbody></table></div></div>
 </section>
 <section id="results" class="panel" hidden>
 <h2>2. Resumo das transações</h2>
@@ -60,52 +60,63 @@ function extractMoney(text,patterns){
  for(const pattern of patterns){const m=pattern.exec(text);if(m){const n=amountValue(m[1]);if(Number.isFinite(n))return n}}
  return null;
 }
-function parsePdfText(text,fileName){
- const n=norm(text);
- const uber=/uber eats|uber b\.v\.|uber bv|uber eats uk limited/.test(n);
- const deliveroo=/deliveroo|roofoods limited/.test(n);
- if(!uber&&!deliveroo)throw new Error('PDF não reconhecido como relatório Uber/Deliveroo. Extratos bancários em PDF ainda não são suportados; usa CSV para esses extratos.');
- const dateToken='(?:\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4}|\d{4}-\d{2}-\d{2}|\d{1,2}\s+[A-Za-zÀ-ÿ]+\s+\d{2,4})';
- let period='';
- const periodPatterns=[
-  new RegExp('(?:invoice period|statement period|reporting period|period|per[ií]odo fiscal|per[ií]odo da fatura)\\s*:?\\s*('+dateToken+'\\s*(?:-|–|to|a)\\s*'+dateToken+')','i'),
-  new RegExp('('+dateToken+'\\s*(?:-|–|to|a)\\s*'+dateToken+')','i')
- ];
- for(const p of periodPatterns){const m=text.match(p);if(m){period=m[1].trim();break}}
- const money='£\\s*([0-9,]+\\.[0-9]{2})';
- let gross=null,fees=null,tips=null,net=null,other=null;
- if(deliveroo){
-  gross=extractMoney(text,[new RegExp('Deliveries[\\s\\S]{0,100}?'+money,'i')]);
-  fees=extractMoney(text,[new RegExp('Transaction fee[\\s\\S]{0,60}?\\(?-?'+money,'i')]);
-  tips=extractMoney(text,[new RegExp('Tips[\\s\\S]{0,60}?'+money,'i')]);
-  net=extractMoney(text,[new RegExp('Total fee payable\\s*:?[\\s\\S]{0,20}?'+money,'i')]);
- }else{
-  gross=extractMoney(text,[
-   new RegExp('(?:gross delivery services amount|gross amount|total gross|delivery services|services supplied)[\\s\\S]{0,100}?'+money,'i'),
-   new RegExp('gross[\\s\\S]{0,60}?'+money,'i')
-  ]);
-  fees=extractMoney(text,[
-   new RegExp('(?:early payment discount|payment discount|discount)[\\s\\S]{0,60}?(?:-\\s*£|£\\s*-?)\\s*([0-9,]+\\.[0-9]{2})','i'),
-   new RegExp('transaction fee[\\s\\S]{0,60}?'+money,'i')
-  ]);
-  tips=extractMoney(text,[new RegExp('Tips[\\s\\S]{0,60}?'+money,'i'),new RegExp('Gorjetas[\\s\\S]{0,60}?'+money,'i')]);
-  net=extractMoney(text,[
-   new RegExp('(?:total net|net amount|amount payable|total paid|total amount|total)[\\s\\S]{0,80}?'+money,'i')
-  ]);
+function extractPdfPeriod(text){
+ const date='(?:\\d{1,2}[\\/.-]\\d{1,2}[\\/.-]\\d{2,4}|\\d{4}-\\d{2}-\\d{2}|\\d{1,2}\\s+[A-Za-zÀ-ÿ]+\\s+\\d{2,4})';
+ const patterns=[new RegExp('(?:invoice period|statement period|reporting period|period|per[ií]odo fiscal|per[ií]odo da fatura|from|de)\\\\s*:?\\\\s*('+date+'\\\\s*(?:-|–|to|a|até)\\\\s*'+date+')','i'),new RegExp('('+date+'\\\\s*(?:-|–|to|a|até)\\\\s*'+date+')','i')];
+ for(const p of patterns){const m=text.match(p);if(m)return m[1].trim()}
+ return 'Não identificado';
+}
+function parseGenericBankPdf(text){
+ const lines=text.split(/\\n+/).map(x=>x.trim()).filter(Boolean);
+ const dateRe=/^(\\d{1,2}[\\/.-]\\d{1,2}[\\/.-]\\d{2,4}|\\d{4}-\\d{2}-\\d{2}|\\d{1,2}\\s+[A-Za-zÀ-ÿ]{3,9}\\s+\\d{2,4})\\b/;
+ const moneyRe=/(\\(?-?\\s*(?:£|€|\\$|GBP|EUR|USD)?\\s*\\d[\\d,]*[.]\\d{2}\\)?)/g;
+ const out=[];
+ for(const line of lines){
+  const dm=line.match(dateRe);if(!dm)continue;
+  const matches=[...line.matchAll(moneyRe)];if(!matches.length)continue;
+  const last=matches[matches.length-1], raw=last[1].replace(/[£€$,\\s]|GBP|EUR|USD/gi,'');
+  let amount=Number(raw.replace(/[()]/g,''));if(!Number.isFinite(amount))continue;
+  if(/^-/.test(raw)||/^\\(/.test(raw))amount=-Math.abs(amount);
+  const description=line.slice(dm[0].length,last.index).replace(/[|\\t]+/g,' ').trim();
+  if(!description)continue;
+  out.push({date:dm[0],description,amount,currency:/€|EUR/i.test(last[1])?'EUR':/\\$|USD/i.test(last[1])?'USD':'GBP',review:true,reviewNote:'Extração automática de PDF: confirmar valor e sinal contra o documento original.'});
  }
- const flags=[];
- if(gross===null)flags.push('Valor bruto não identificado');
- if(net===null)flags.push('Total líquido não identificado');
- if(!period)flags.push('Período não identificado');
- if(/not an official invoice|não é uma fatura oficial|informational purposes only/i.test(text))flags.push('Documento informativo; confirmar com a plataforma/contabilista');
- return {fileName,platform:deliveroo?'Deliveroo':'Uber Eats',period:period||'Não identificado',gross,fees,tips,net,other,flags,status:flags.length?'Rever':'Extraído — confirmar'};
+ return out;
+}
+function parsePdfText(text,fileName){
+ const n=norm(text), uber=/uber eats|uber b\\.v\\.|uber bv|uber eats uk limited/.test(n), deliveroo=/deliveroo|roofoods limited/.test(n);
+ const period=extractPdfPeriod(text);
+ if(!uber&&!deliveroo){
+  const movements=parseGenericBankPdf(text);
+  if(!movements.length)throw new Error('PDF lido, mas não encontrei linhas de transação com data e valor reconhecíveis. Pode ser um PDF digitalizado, ter um formato não suportado ou exigir OCR. Usa CSV ou exporta o PDF com texto selecionável.');
+  return {fileName,platform:/revolut/.test(n)?'Revolut — extrato bancário':/wise|transferwise/.test(n)?'Wise — extrato bancário':/barclays/.test(n)?'Barclays — extrato bancário':/monzo/.test(n)?'Monzo — extrato bancário':/starling/.test(n)?'Starling — extrato bancário':'Extrato bancário / PDF genérico',period,gross:null,fees:null,tips:null,net:null,other:null,transactions:movements,flags:['Movimentos extraídos por heurística; rever cada linha antes de usar para fins fiscais.','Os movimentos PDF ficam separados dos CSV para evitar duplicação.'],status:'Extraído parcialmente — revisão obrigatória'};
+ }
+ let gross=null,fees=null,tips=null,net=null;
+ if(deliveroo){
+  gross=extractMoney(text,[/Deliveries[\\s\\S]{0,100}?£\\s*([0-9,]+\\.[0-9]{2})/i]);
+  fees=extractMoney(text,[/Transaction fee[\\s\\S]{0,60}?\\(?-?£\\s*([0-9,]+\\.[0-9]{2})/i]);
+  tips=extractMoney(text,[/Tips[\\s\\S]{0,60}?£\\s*([0-9,]+\\.[0-9]{2})/i]);
+  net=extractMoney(text,[/Total fee payable\\s*:?[\\s\\S]{0,20}?£\\s*([0-9,]+\\.[0-9]{2})/i]);
+ }else{
+  gross=extractMoney(text,[/Gross delivery services amount[\\s\\S]{0,100}?£\\s*([0-9,]+\\.[0-9]{2})/i,/Gross amount[\\s\\S]{0,60}?£\\s*([0-9,]+\\.[0-9]{2})/i,/gross[\\s\\S]{0,60}?£\\s*([0-9,]+\\.[0-9]{2})/i]);
+  fees=extractMoney(text,[/Early payment discount[\\s\\S]{0,60}?(?:-\\s*£|£\\s*-?)\\s*([0-9,]+\\.[0-9]{2})/i,/Transaction fee[\\s\\S]{0,60}?£\\s*([0-9,]+\\.[0-9]{2})/i]);
+  tips=extractMoney(text,[/Tips[\\s\\S]{0,60}?£\\s*([0-9,]+\\.[0-9]{2})/i,/Gorjetas[\\s\\S]{0,60}?£\\s*([0-9,]+\\.[0-9]{2})/i]);
+  net=extractMoney(text,[/Total net[\\s\\S]{0,60}?£\\s*([0-9,]+\\.[0-9]{2})/i,/Amount payable[\\s\\S]{0,60}?£\\s*([0-9,]+\\.[0-9]{2})/i,/Total[\\s\\S]{0,160}?£\\s*([0-9,]+\\.[0-9]{2})/i]);
+ }
+ const flags=[];if(gross===null)flags.push('Valor bruto não identificado');if(net===null)flags.push('Total líquido não identificado');if(period==='Não identificado')flags.push('Período não identificado');if(/not an official invoice|não é uma fatura oficial|informational purposes only/i.test(text))flags.push('Documento informativo; confirmar com a plataforma/contabilista');
+ return {fileName,platform:deliveroo?'Deliveroo':'Uber Eats',period,gross,fees,tips,net,other:null,transactions:[],flags,status:flags.length?'Rever':'Extraído — confirmar'};
 }
 async function readPdf(file){
  if(!window.pdfjsLib)throw new Error('O leitor PDF ainda não carregou. Verifica a ligação à biblioteca PDF.js e tenta novamente.');
  const bytes=await file.arrayBuffer();
  const pdf=await window.pdfjsLib.getDocument({data:bytes}).promise;
  let text='';
- for(let p=1;p<=pdf.numPages;p++){const page=await pdf.getPage(p);const content=await page.getTextContent();text+='\\n'+content.items.map(x=>x.str).join(' ')}
+ for(let p=1;p<=pdf.numPages;p++){
+  const page=await pdf.getPage(p),content=await page.getTextContent(),rows=new Map();
+  for(const item of content.items){const y=Math.round(item.transform?.[5]||0);if(!rows.has(y))rows.set(y,[]);rows.get(y).push({x:item.transform?.[4]||0,str:item.str||''})}
+  const pageLines=[...rows.entries()].sort((a,b)=>b[0]-a[0]).map(([,items])=>items.sort((a,b)=>a.x-b.x).map(x=>x.str).join(' ').trim()).filter(Boolean);
+  text+='\\n'+pageLines.join('\\n');
+ }
  return parsePdfText(text,file.name);
 }
 function parseText(text){
@@ -173,7 +184,7 @@ fileInput.addEventListener('change',async()=>{
  }
  pdfDocuments=docs;
  const pdfRows=document.getElementById('pdfRows');
- pdfRows.innerHTML=docs.map(d=>'<tr><td>'+esc(d.fileName)+'</td><td>'+esc(d.platform)+'</td><td>'+esc(d.period)+'</td><td>'+(d.gross===null?'—':money(d.gross))+'</td><td>'+(d.fees===null?'—':money(d.fees))+'</td><td>'+(d.tips===null?'—':money(d.tips))+'</td><td>'+(d.net===null?'—':money(d.net))+'</td><td>'+esc(d.status+(d.flags.length?' · '+d.flags.join('; '):''))+'</td></tr>').join('');
+ pdfRows.innerHTML=docs.map(d=>'<tr><td>'+esc(d.fileName)+'</td><td>'+esc(d.platform)+'</td><td>'+esc(d.period)+'</td><td>'+(d.transactions?d.transactions.length:0)+'</td><td>'+(d.gross===null?'—':money(d.gross))+'</td><td>'+(d.fees===null?'—':money(d.fees))+'</td><td>'+(d.tips===null?'—':money(d.tips))+'</td><td>'+(d.net===null?'—':money(d.net))+'</td><td>'+esc(d.status+(d.flags.length?' · '+d.flags.join('; '):''))+'</td></tr>').join('');
  document.getElementById('pdfResults').hidden=!docs.length;
  if(!combined.length){
   transactions=[];results.hidden=true;
