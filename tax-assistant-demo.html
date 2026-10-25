@@ -71,14 +71,18 @@ function extractPdfPeriod(text){
 function parseGenericBankPdf(text){
  const lines=text.split(/\n+/).map(x=>x.trim()).filter(Boolean);
  const dateRe=/^(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4}|\d{4}-\d{2}-\d{2}|\d{1,2}\s+[A-Za-zÀ-ÿ]{3,9}\s+\d{2,4})\b/;
- const moneyRe=/(\(?-?\s*(?:£|€|\$|GBP|EUR|USD)?\s*\d[\d,]*[.]\d{2}\)?)/g;
+ const moneyRe=/(\(?-?\s*(?:£|€|\$|GBP|EUR|USD)?\s*\d[\d.,]*\)?)/g;
  const out=[];
  for(const line of lines){
   const dm=line.match(dateRe);if(!dm)continue;
-  const matches=[...line.matchAll(moneyRe)];if(!matches.length)continue;
-  const last=matches[matches.length-1], token=last[1], raw=token.replace(/[£€$,\s]|GBP|EUR|USD/gi,'');
-  let amount=Number(raw.replace(/[()]/g,''));if(!Number.isFinite(amount))continue;
-  if(/^-/.test(raw)||/^\(/.test(token))amount=-Math.abs(amount);
+  const matches=[...line.matchAll(moneyRe)].filter(m=>/\d/.test(m[1]) && /[.,]\d{2}\)?$/.test(m[1].trim()));if(!matches.length)continue;
+  // Prefer the amount under "Paid Out" or "Paid In" in common bank statement rows.
+  const last=matches[0], token=last[1], clean=token.replace(/[£€$,\s]|GBP|EUR|USD/gi,'').replace(/[()]/g,'');
+  let raw=clean;
+  if(/,\d{2}$/.test(raw)&&! /\.\d{2}$/.test(raw))raw=raw.replace(/\./g,'').replace(',','.');
+  else raw=raw.replace(/,(?=\d{3}(?:\D|$))/g,'');
+  let amount=Number(raw);if(!Number.isFinite(amount))continue;
+  if(/^-/.test(token.trim())||/^\(/.test(token.trim()))amount=-Math.abs(amount);
   const description=line.slice(dm[0].length,last.index).replace(/[|\t]+/g,' ').trim();
   if(!description)continue;
   out.push({date:dm[0],description,amount,currency:/€|EUR/i.test(token)?'EUR':/\$|USD/i.test(token)?'USD':'GBP',review:true,reviewNote:'Extração automática de PDF: confirmar valor e sinal contra o documento original.'});
