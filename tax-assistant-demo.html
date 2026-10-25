@@ -153,7 +153,7 @@ fileInput.addEventListener('change',async()=>{
  const combined=[],docs=[],errors=[];sourceFiles=[];
  for(const f of files){
   try{
-   if(/\\.pdf$/i.test(f.name)){
+   if(/\.pdf$/i.test(f.name)){
     docs.push(await readPdf(f));
    }else{
     const parsed=parseText(await f.text());
