@@ -62,60 +62,59 @@ function extractMoney(text,patterns){
 }
 function extractPdfPeriod(text){
  const date='(?:\\d{1,2}[\\/.-]\\d{1,2}[\\/.-]\\d{2,4}|\\d{4}-\\d{2}-\\d{2}|\\d{1,2}\\s+[A-Za-zÀ-ÿ]+\\s+\\d{2,4})';
- const patterns=[new RegExp('(?:invoice period|statement period|reporting period|period|per[ií]odo fiscal|per[ií]odo da fatura|from|de)\\\\s*:?\\\\s*('+date+'\\\\s*(?:-|–|to|a|até)\\\\s*'+date+')','i'),new RegExp('('+date+'\\\\s*(?:-|–|to|a|até)\\\\s*'+date+')','i')];
- for(const p of patterns){const m=text.match(p);if(m)return m[1].trim()}
- return 'Não identificado';
+ const range=new RegExp('('+date+'\\s*(?:-|–|to|a|até)\\s*'+date+')','i');
+ const labeled=new RegExp('(?:invoice period|statement period|reporting period|period|per[ií]odo fiscal|per[ií]odo da fatura|from|de)\\s*:?\\s*'+range.source,'i');
+ const m=text.match(labeled)||text.match(range);return m?(m[1]||m[0]).trim():'Não identificado';
 }
 function parseGenericBankPdf(text){
- const lines=text.split(/\\n+/).map(x=>x.trim()).filter(Boolean);
- const dateRe=/^(\\d{1,2}[\\/.-]\\d{1,2}[\\/.-]\\d{2,4}|\\d{4}-\\d{2}-\\d{2}|\\d{1,2}\\s+[A-Za-zÀ-ÿ]{3,9}\\s+\\d{2,4})\\b/;
- const moneyRe=/(\\(?-?\\s*(?:£|€|\\$|GBP|EUR|USD)?\\s*\\d[\\d,]*[.]\\d{2}\\)?)/g;
+ const lines=text.split(/\n+/).map(x=>x.trim()).filter(Boolean);
+ const dateRe=/^(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4}|\d{4}-\d{2}-\d{2}|\d{1,2}\s+[A-Za-zÀ-ÿ]{3,9}\s+\d{2,4})\b/;
+ const moneyRe=/(\(?-?\s*(?:£|€|\$|GBP|EUR|USD)?\s*\d[\d,]*[.]\d{2}\)?)/g;
  const out=[];
  for(const line of lines){
   const dm=line.match(dateRe);if(!dm)continue;
   const matches=[...line.matchAll(moneyRe)];if(!matches.length)continue;
-  const last=matches[matches.length-1], raw=last[1].replace(/[£€$,\\s]|GBP|EUR|USD/gi,'');
+  const last=matches[matches.length-1], token=last[1], raw=token.replace(/[£€$,\s]|GBP|EUR|USD/gi,'');
   let amount=Number(raw.replace(/[()]/g,''));if(!Number.isFinite(amount))continue;
-  if(/^-/.test(raw)||/^\\(/.test(raw))amount=-Math.abs(amount);
-  const description=line.slice(dm[0].length,last.index).replace(/[|\\t]+/g,' ').trim();
+  if(/^-/.test(raw)||/^\(/.test(token))amount=-Math.abs(amount);
+  const description=line.slice(dm[0].length,last.index).replace(/[|\t]+/g,' ').trim();
   if(!description)continue;
-  out.push({date:dm[0],description,amount,currency:/€|EUR/i.test(last[1])?'EUR':/\\$|USD/i.test(last[1])?'USD':'GBP',review:true,reviewNote:'Extração automática de PDF: confirmar valor e sinal contra o documento original.'});
+  out.push({date:dm[0],description,amount,currency:/€|EUR/i.test(token)?'EUR':/\$|USD/i.test(token)?'USD':'GBP',review:true,reviewNote:'Extração automática de PDF: confirmar valor e sinal contra o documento original.'});
  }
  return out;
 }
 function parsePdfText(text,fileName){
- const n=norm(text), uber=/uber eats|uber b\\.v\\.|uber bv|uber eats uk limited/.test(n), deliveroo=/deliveroo|roofoods limited/.test(n);
+ const n=norm(text),uber=/uber eats|uber b\.v\.|uber bv|uber eats uk limited/.test(n),deliveroo=/deliveroo|roofoods limited/.test(n);
  const period=extractPdfPeriod(text);
  if(!uber&&!deliveroo){
   const movements=parseGenericBankPdf(text);
-  if(!movements.length)throw new Error('PDF lido, mas não encontrei linhas de transação com data e valor reconhecíveis. Pode ser um PDF digitalizado, ter um formato não suportado ou exigir OCR. Usa CSV ou exporta o PDF com texto selecionável.');
-  return {fileName,platform:/revolut/.test(n)?'Revolut — extrato bancário':/wise|transferwise/.test(n)?'Wise — extrato bancário':/barclays/.test(n)?'Barclays — extrato bancário':/monzo/.test(n)?'Monzo — extrato bancário':/starling/.test(n)?'Starling — extrato bancário':'Extrato bancário / PDF genérico',period,gross:null,fees:null,tips:null,net:null,other:null,transactions:movements,flags:['Movimentos extraídos por heurística; rever cada linha antes de usar para fins fiscais.','Os movimentos PDF ficam separados dos CSV para evitar duplicação.'],status:'Extraído parcialmente — revisão obrigatória'};
+  if(!movements.length)throw new Error('Não encontrei linhas com data, descrição e valor reconhecíveis. O PDF pode ser digitalizado ou usar um formato diferente; exporta-o como CSV ou será necessário OCR.');
+  return {fileName,platform:/revolut/.test(n)?'Revolut — extrato bancário':/wise|transferwise/.test(n)?'Wise — extrato bancário':/barclays/.test(n)?'Barclays — extrato bancário':/monzo/.test(n)?'Monzo — extrato bancário':/starling/.test(n)?'Starling — extrato bancário':'Extrato bancário / PDF genérico',period,gross:null,fees:null,tips:null,net:null,transactions:movements,flags:['Extração automática por padrão de linha; rever cada movimento no PDF original.','Movimentos PDF separados dos CSV para evitar duplicação.'],status:'Extração parcial — revisão obrigatória'};
  }
  let gross=null,fees=null,tips=null,net=null;
  if(deliveroo){
-  gross=extractMoney(text,[/Deliveries[\\s\\S]{0,100}?£\\s*([0-9,]+\\.[0-9]{2})/i]);
-  fees=extractMoney(text,[/Transaction fee[\\s\\S]{0,60}?\\(?-?£\\s*([0-9,]+\\.[0-9]{2})/i]);
-  tips=extractMoney(text,[/Tips[\\s\\S]{0,60}?£\\s*([0-9,]+\\.[0-9]{2})/i]);
-  net=extractMoney(text,[/Total fee payable\\s*:?[\\s\\S]{0,20}?£\\s*([0-9,]+\\.[0-9]{2})/i]);
+  gross=extractMoney(text,[/Deliveries[\s\S]{0,100}?£\s*([0-9,]+\.[0-9]{2})/i]);
+  fees=extractMoney(text,[/Transaction fee[\s\S]{0,60}?\(?-?£\s*([0-9,]+\.[0-9]{2})/i]);
+  tips=extractMoney(text,[/Tips[\s\S]{0,60}?£\s*([0-9,]+\.[0-9]{2})/i]);
+  net=extractMoney(text,[/Total fee payable\s*:[\s\S]{0,20}?£\s*([0-9,]+\.[0-9]{2})/i]);
  }else{
-  gross=extractMoney(text,[/Gross delivery services amount[\\s\\S]{0,100}?£\\s*([0-9,]+\\.[0-9]{2})/i,/Gross amount[\\s\\S]{0,60}?£\\s*([0-9,]+\\.[0-9]{2})/i,/gross[\\s\\S]{0,60}?£\\s*([0-9,]+\\.[0-9]{2})/i]);
-  fees=extractMoney(text,[/Early payment discount[\\s\\S]{0,60}?(?:-\\s*£|£\\s*-?)\\s*([0-9,]+\\.[0-9]{2})/i,/Transaction fee[\\s\\S]{0,60}?£\\s*([0-9,]+\\.[0-9]{2})/i]);
-  tips=extractMoney(text,[/Tips[\\s\\S]{0,60}?£\\s*([0-9,]+\\.[0-9]{2})/i,/Gorjetas[\\s\\S]{0,60}?£\\s*([0-9,]+\\.[0-9]{2})/i]);
-  net=extractMoney(text,[/Total net[\\s\\S]{0,60}?£\\s*([0-9,]+\\.[0-9]{2})/i,/Amount payable[\\s\\S]{0,60}?£\\s*([0-9,]+\\.[0-9]{2})/i,/Total[\\s\\S]{0,160}?£\\s*([0-9,]+\\.[0-9]{2})/i]);
+  gross=extractMoney(text,[/Gross delivery services amount[\s\S]{0,100}?£\s*([0-9,]+\.[0-9]{2})/i,/Gross amount[\s\S]{0,60}?£\s*([0-9,]+\.[0-9]{2})/i,/gross[\s\S]{0,60}?£\s*([0-9,]+\.[0-9]{2})/i]);
+  fees=extractMoney(text,[/Early payment discount[\s\S]{0,60}?(?:-\s*£|£\s*-?)\s*([0-9,]+\.[0-9]{2})/i,/Transaction fee[\s\S]{0,60}?£\s*([0-9,]+\.[0-9]{2})/i]);
+  tips=extractMoney(text,[/Tips[\s\S]{0,60}?£\s*([0-9,]+\.[0-9]{2})/i,/Gorjetas[\s\S]{0,60}?£\s*([0-9,]+\.[0-9]{2})/i]);
+  net=extractMoney(text,[/Total net[\s\S]{0,60}?£\s*([0-9,]+\.[0-9]{2})/i,/Amount payable[\s\S]{0,60}?£\s*([0-9,]+\.[0-9]{2})/i,/Total[\s\S]{0,160}?£\s*([0-9,]+\.[0-9]{2})/i]);
  }
  const flags=[];if(gross===null)flags.push('Valor bruto não identificado');if(net===null)flags.push('Total líquido não identificado');if(period==='Não identificado')flags.push('Período não identificado');if(/not an official invoice|não é uma fatura oficial|informational purposes only/i.test(text))flags.push('Documento informativo; confirmar com a plataforma/contabilista');
  return {fileName,platform:deliveroo?'Deliveroo':'Uber Eats',period,gross,fees,tips,net,other:null,transactions:[],flags,status:flags.length?'Rever':'Extraído — confirmar'};
 }
 async function readPdf(file){
- if(!window.pdfjsLib)throw new Error('O leitor PDF ainda não carregou. Verifica a ligação à biblioteca PDF.js e tenta novamente.');
- const bytes=await file.arrayBuffer();
- const pdf=await window.pdfjsLib.getDocument({data:bytes}).promise;
+ if(!window.pdfjsLib)throw new Error('O leitor PDF não carregou. Verifica a ligação à biblioteca PDF.js e tenta novamente.');
+ const bytes=await file.arrayBuffer(),pdf=await window.pdfjsLib.getDocument({data:bytes}).promise;
  let text='';
  for(let p=1;p<=pdf.numPages;p++){
   const page=await pdf.getPage(p),content=await page.getTextContent(),rows=new Map();
   for(const item of content.items){const y=Math.round(item.transform?.[5]||0);if(!rows.has(y))rows.set(y,[]);rows.get(y).push({x:item.transform?.[4]||0,str:item.str||''})}
   const pageLines=[...rows.entries()].sort((a,b)=>b[0]-a[0]).map(([,items])=>items.sort((a,b)=>a.x-b.x).map(x=>x.str).join(' ').trim()).filter(Boolean);
-  text+='\\n'+pageLines.join('\\n');
+  text+='\n'+pageLines.join('\n');
  }
  return parsePdfText(text,file.name);
 }
