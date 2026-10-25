@@ -62,9 +62,11 @@ function extractMoney(text,patterns){
 }
 function extractPdfPeriod(text){
  const date='(?:\\d{1,2}[\\/.-]\\d{1,2}[\\/.-]\\d{2,4}|\\d{4}-\\d{2}-\\d{2}|\\d{1,2}\\s+[A-Za-zÀ-ÿ]+\\s+\\d{2,4})';
- const range=new RegExp('('+date+'\\s*(?:-|–|to|a|até)\\s*'+date+')','i');
- const labeled=new RegExp('(?:invoice period|statement period|reporting period|period|per[ií]odo fiscal|per[ií]odo da fatura|from|de)\\s*:?\\s*'+range.source,'i');
- const m=text.match(labeled)||text.match(range);return m?(m[1]||m[0]).trim():'Não identificado';
+ const range=new RegExp('('+date+'\\s*(?:-|–|\\/|to|a|até)\\s*'+date+')','i');
+ const labeled=new RegExp('(?:invoice period|statement period|reporting period|tax period|period|per[ií]odo fiscal|per[ií]odo|resumo fiscal do per[ií]odo|from|de)\\s*:?\\s*'+range.source,'i');
+ const m=text.match(labeled)||text.match(range);if(m)return (m[1]||m[0]).trim();
+ const embedded=text.match(/(?:resumo fiscal do per[ií]odo|tax summary for the period|periodo fiscal)[\\s\\S]{0,50}?(\\d{4}-\\d{2}-\\d{2}\\s*\\/\\s*\\d{4}-\\d{2}-\\d{2})/i);
+ return embedded?embedded[1].trim():'Não identificado';
 }
 function parseGenericBankPdf(text){
  const lines=text.split(/\n+/).map(x=>x.trim()).filter(Boolean);
@@ -93,15 +95,27 @@ function parsePdfText(text,fileName){
  }
  let gross=null,fees=null,tips=null,net=null;
  if(deliveroo){
-  gross=extractMoney(text,[/Deliveries[\s\S]{0,100}?£\s*([0-9,]+\.[0-9]{2})/i]);
-  fees=extractMoney(text,[/Transaction fee[\s\S]{0,60}?\(?-?£\s*([0-9,]+\.[0-9]{2})/i]);
-  tips=extractMoney(text,[/Tips[\s\S]{0,60}?£\s*([0-9,]+\.[0-9]{2})/i]);
-  net=extractMoney(text,[/Total fee payable\s*:[\s\S]{0,20}?£\s*([0-9,]+\.[0-9]{2})/i]);
+  gross=extractMoney(text,[/Deliveries[\\s\\S]{0,100}?£\\s*([0-9,]+\\.[0-9]{2})/i,/Entregas[\\s\\S]{0,100}?£\\s*([0-9,.]+)/i]);
+  fees=extractMoney(text,[/Transaction fee[\\s\\S]{0,60}?\\(?-?£\\s*([0-9,]+\\.[0-9]{2})/i]);
+  tips=extractMoney(text,[/Tips[\\s\\S]{0,60}?£\\s*([0-9,]+\\.[0-9]{2})/i]);
+  net=extractMoney(text,[/Total fee payable\\s*:[\\s\\S]{0,20}?£\\s*([0-9,]+\\.[0-9]{2})/i]);
  }else{
-  gross=extractMoney(text,[/Gross delivery services amount[\s\S]{0,100}?£\s*([0-9,]+\.[0-9]{2})/i,/Gross amount[\s\S]{0,60}?£\s*([0-9,]+\.[0-9]{2})/i,/gross[\s\S]{0,60}?£\s*([0-9,]+\.[0-9]{2})/i]);
-  fees=extractMoney(text,[/Early payment discount[\s\S]{0,60}?(?:-\s*£|£\s*-?)\s*([0-9,]+\.[0-9]{2})/i,/Transaction fee[\s\S]{0,60}?£\s*([0-9,]+\.[0-9]{2})/i]);
-  tips=extractMoney(text,[/Tips[\s\S]{0,60}?£\s*([0-9,]+\.[0-9]{2})/i,/Gorjetas[\s\S]{0,60}?£\s*([0-9,]+\.[0-9]{2})/i]);
-  net=extractMoney(text,[/Total net[\s\S]{0,60}?£\s*([0-9,]+\.[0-9]{2})/i,/Amount payable[\s\S]{0,60}?£\s*([0-9,]+\.[0-9]{2})/i,/Total[\s\S]{0,160}?£\s*([0-9,]+\.[0-9]{2})/i]);
+  gross=extractMoney(text,[
+   /Valor bruto dos servi[çc]os de entrega[\\s\\S]{0,180}?(?:£\\s*)?([0-9][0-9,.]*)/i,
+   /Gross delivery services amount[\\s\\S]{0,180}?(?:£\\s*)?([0-9][0-9,.]*)/i,
+   /Gross amount[\\s\\S]{0,100}?(?:£\\s*)?([0-9][0-9,.]*)/i
+  ]);
+  fees=extractMoney(text,[
+   /Desconto de pagamento antecipado[\\s\\S]{0,100}?(?:-\\s*£|£\\s*-?)\\s*([0-9][0-9,.]*)/i,
+   /Early payment discount[\\s\\S]{0,100}?(?:-\\s*£|£\\s*-?)\\s*([0-9][0-9,.]*)/i,
+   /Transaction fee[\\s\\S]{0,100}?(?:£\\s*)?([0-9][0-9,.]*)/i
+  ]);
+  tips=extractMoney(text,[/Gorjetas[\\s\\S]{0,80}?(?:£\\s*)?([0-9][0-9,.]*)/i,/Tips[\\s\\S]{0,80}?(?:£\\s*)?([0-9][0-9,.]*)/i]);
+  net=extractMoney(text,[
+   /(?:^|\\n)\\s*Total\\s+(?:£\\s*)?([0-9][0-9,.]*)/im,
+   /Total net[\\s\\S]{0,100}?(?:£\\s*)?([0-9][0-9,.]*)/i,
+   /Amount payable[\\s\\S]{0,100}?(?:£\\s*)?([0-9][0-9,.]*)/i
+  ]);
  }
  const flags=[];if(gross===null)flags.push('Valor bruto não identificado');if(net===null)flags.push('Total líquido não identificado');if(period==='Não identificado')flags.push('Período não identificado');if(/not an official invoice|não é uma fatura oficial|informational purposes only/i.test(text))flags.push('Documento informativo; confirmar com a plataforma/contabilista');
  return {fileName,platform:deliveroo?'Deliveroo':'Uber Eats',period,gross,fees,tips,net,other:null,transactions:[],flags,status:flags.length?'Rever':'Extraído — confirmar'};
