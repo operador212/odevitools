@@ -69,23 +69,44 @@ function extractPdfPeriod(text){
  return embedded?embedded[1].trim():'Não identificado';
 }
 function parseGenericBankPdf(text){
- const lines=text.split(/\n+/).map(x=>x.trim()).filter(Boolean);
- const dateRe=/^(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4}|\d{4}-\d{2}-\d{2}|\d{1,2}\s+[A-Za-zÀ-ÿ]{3,9}\s+\d{2,4})\b/;
+ const lines=text.split(/\n+/).map(x=>x.replace(/\s+/g,' ').trim()).filter(Boolean);
+ const dateRe=/^(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4}|\d{4}-\d{2}-\d{2}|\d{1,2}\s+[A-Za-zÀ-ÿ]{3,9}\s+\d{2,4}|\d{1,2}\s+de\s+[A-Za-zÀ-ÿ]{3,9}\s+de\s+\d{4})\b/i;
  const moneyRe=/(\(?-?\s*(?:£|€|\$|GBP|EUR|USD)?\s*\d[\d.,]*\)?)/g;
  const out=[];
- for(const line of lines){
-  const dm=line.match(dateRe);if(!dm)continue;
-  const matches=[...line.matchAll(moneyRe)].filter(m=>/\d/.test(m[1]) && /[.,]\d{2}\)?$/.test(m[1].trim()));if(!matches.length)continue;
-  // Prefer the amount under "Paid Out" or "Paid In" in common bank statement rows.
-  const last=matches[0], token=last[1], clean=token.replace(/[£€$,\s]|GBP|EUR|USD/gi,'').replace(/[()]/g,'');
-  let raw=clean;
-  if(/,\d{2}$/.test(raw)&&! /\.\d{2}$/.test(raw))raw=raw.replace(/\./g,'').replace(',','.');
+ const parseAmount=(token)=>{
+  let raw=token.replace(/[£€$\s]|GBP|EUR|USD/gi,'').replace(/[()]/g,'');
+  if(/,\d{2}$/.test(raw))raw=raw.replace(/\./g,'').replace(',','.');
   else raw=raw.replace(/,(?=\d{3}(?:\D|$))/g,'');
-  let amount=Number(raw);if(!Number.isFinite(amount))continue;
-  if(/^-/.test(token.trim())||/^\(/.test(token.trim()))amount=-Math.abs(amount);
-  const description=line.slice(dm[0].length,last.index).replace(/[|\t]+/g,' ').trim();
-  if(!description)continue;
-  out.push({date:dm[0],description,amount,currency:/€|EUR/i.test(token)?'EUR':/\$|USD/i.test(token)?'USD':'GBP',review:true,reviewNote:'Extração automática de PDF: confirmar valor e sinal contra o documento original.'});
+  let n=Number(raw); if(!Number.isFinite(n))return null;
+  if(/^-/.test(token.trim())||/^\(/.test(token.trim()))n=-Math.abs(n);
+  return n;
+ };
+ const add=(date,description,token)=>{
+  const amount=parseAmount(token); if(amount===null||!description)return;
+  out.push({date,description,amount,currency:/€|EUR/i.test(token)?'EUR':/\$|USD/i.test(token)?'USD':'GBP',review:true,reviewNote:'Extração automática de PDF: confirmar valor e sinal contra o documento original.'});
+ };
+ for(let i=0;i<lines.length;i++){
+  const line=lines[i],dm=line.match(dateRe);if(!dm)continue;
+  // First try a transaction row with date, description and amount on one line.
+  const matches=[...line.matchAll(moneyRe)].filter(m=>/[.,]\d{2}\)?$/.test(m[1].trim()));
+  if(matches.length){
+   const m=matches[0],desc=line.slice(dm[0].length,m.index).trim();
+   if(desc){add(dm[0],desc,m[1]);continue;}
+  }
+  // PDF.js can emit table columns on separate lines; inspect a short window after the date.
+  const window=lines.slice(i+1,Math.min(lines.length,i+7));
+  const moneyLine=window.find(x=>/(?:€|£|\$|EUR|GBP|USD)\s*\d[\d.,]*|\d[\d.,]*\s*(?:€|£|\$|EUR|GBP|USD)/i.test(x)&&/[.,]\d{2}/.test(x));
+  if(moneyLine){
+   const m=moneyLine.match(moneyRe)?.find(x=>/[.,]\d{2}\)?$/.test(x[0].trim()));
+   const descParts=window.slice(0,window.indexOf(moneyLine)).filter(x=>! /^(transactions|completed date|description|paid out|paid in|balance|\d+)$/i.test(x));
+   if(m) add(dm[0],descParts.join(' ').trim()||'Movimento bancário (descrição extraída parcialmente)',m[0]);
+  }
+ }
+ // Specific support for Revolut EUR statement rows whose amount is printed as "€ 40,00".
+ if(!out.length){
+  const flat=text.replace(/[\t ]+/g,' ');
+  const re=/(\d{1,2}\s+[A-Za-zÀ-ÿ]{3,9}\s+\d{4})[\s\S]{0,180}?To\s+([^\n€£$]{2,80}?)[\s\n]*€\s*([\d.]+,\d{2})/gi;
+  for(const m of flat.matchAll(re))add(m[1],('To '+m[2]).trim(),'€ '+m[3]);
  }
  return out;
 }
