@@ -62,30 +62,42 @@ function extractMoney(text,patterns){
 }
 function parsePdfText(text,fileName){
  const n=norm(text);
- const uber=/uber eats|uber b\.v\.|uber bv|uber eats uk limited/.test(n);
+ const uber=/uber eats|uber b\\.v\\.|uber bv|uber eats uk limited/.test(n);
  const deliveroo=/deliveroo|roofoods limited/.test(n);
- if(!uber&&!deliveroo)throw new Error('Este PDF parece ser um extrato bancário ou outro documento, não um relatório Uber/Deliveroo suportado. Para já, usa CSV para extratos bancários; o PDF não foi somado.');
+ if(!uber&&!deliveroo)throw new Error('PDF não reconhecido como relatório Uber/Deliveroo. Extratos bancários em PDF ainda não são suportados; usa CSV para esses extratos.');
+ const dateToken='(?:\\d{1,2}[\\/.-]\\d{1,2}[\\/.-]\\d{2,4}|\\d{4}-\\d{2}-\\d{2}|\\d{1,2}\\s+[A-Za-zÀ-ÿ]+\\s+\\d{2,4})';
  let period='';
- const pm=text.match(/(?:invoice period|period|per[ií]odo fiscal)\s*:?\s*([^\n\r]+)/i);
- if(pm)period=pm[1].trim();
- else {const dates=[...text.matchAll(/\b(?:\d{4}-\d{2}-\d{2}|\d{1,2}\s+[A-Za-zÀ-ÿ]+\s+\d{4}|\d{1,2}\s+[A-Za-zÀ-ÿ]+\s+\d{2})\b/g)].map(m=>m[0]);if(dates.length>=2)period=dates.slice(0,2).join(' – ')}
+ const periodPatterns=[
+  new RegExp('(?:invoice period|statement period|reporting period|period|per[ií]odo fiscal|per[ií]odo da fatura)\\\\s*:?\\\\s*('+dateToken+'\\\\s*(?:-|–|to|a)\\\\s*'+dateToken+')','i'),
+  new RegExp('('+dateToken+'\\\\s*(?:-|–|to|a)\\\\s*'+dateToken+')','i')
+ ];
+ for(const p of periodPatterns){const m=text.match(p);if(m){period=m[1].trim();break}}
+ const money='£\\\\s*([0-9,]+\\\\.[0-9]{2})';
  let gross=null,fees=null,tips=null,net=null,other=null;
  if(deliveroo){
-  gross=extractMoney(text,[/Deliveries[\s\S]{0,80}?£\s*([0-9,]+\.[0-9]{2})/i]);
-  fees=extractMoney(text,[/Transaction fee[\s\S]{0,50}?\(?-?£\s*([0-9,]+\.[0-9]{2})/i]);
-  tips=extractMoney(text,[/Tips[\s\S]{0,50}?£\s*([0-9,]+\.[0-9]{2})/i]);
-  net=extractMoney(text,[/Total fee payable\s*:?\s*£\s*([0-9,]+\.[0-9]{2})/i,/Invoice Total[\s\S]{0,120}?Total[\s\S]{0,80}?£\s*([0-9,]+\.[0-9]{2})/i]);
+  gross=extractMoney(text,[new RegExp('Deliveries[\\\\s\\\\S]{0,100}?'+money,'i')]);
+  fees=extractMoney(text,[new RegExp('Transaction fee[\\\\s\\\\S]{0,60}?\\\\(?-?'+money,'i')]);
+  tips=extractMoney(text,[new RegExp('Tips[\\\\s\\\\S]{0,60}?'+money,'i')]);
+  net=extractMoney(text,[new RegExp('Total fee payable\\\\s*:?[\\\\s\\\\S]{0,20}?'+money,'i')]);
  }else{
-  gross=extractMoney(text,[/Gross delivery services amount[\s\S]{0,80}?£\s*([0-9,]+\.[0-9]{2})/i,/Valor bruto dos serviços de entrega[\s\S]{0,80}?£\s*([0-9,]+\.[0-9]{2})/i]);
-  fees=extractMoney(text,[/Early payment discount[\s\S]{0,60}?-£\s*([0-9,]+\.[0-9]{2})/i,/Desconto de pagamento antecipado[\s\S]{0,60}?-£\s*([0-9,]+\.[0-9]{2})/i]);
-  tips=extractMoney(text,[/Tips[\s\S]{0,50}?£\s*([0-9,]+\.[0-9]{2})/i,/Gorjetas[\s\S]{0,50}?£\s*([0-9,]+\.[0-9]{2})/i]);
-  net=extractMoney(text,[/Total[\s\S]{0,160}?£\s*([0-9,]+\.[0-9]{2})/i]);
+  gross=extractMoney(text,[
+   new RegExp('(?:gross delivery services amount|gross amount|total gross|delivery services|services supplied)[\\\\s\\\\S]{0,100}?'+money,'i'),
+   new RegExp('gross[\\\\s\\\\S]{0,60}?'+money,'i')
+  ]);
+  fees=extractMoney(text,[
+   new RegExp('(?:early payment discount|payment discount|discount)[\\\\s\\\\S]{0,60}?(?:-\\\\s*£|£\\\\s*-?)\\\\s*([0-9,]+\\\\.[0-9]{2})','i'),
+   new RegExp('transaction fee[\\\\s\\\\S]{0,60}?'+money,'i')
+  ]);
+  tips=extractMoney(text,[new RegExp('Tips[\\\\s\\\\S]{0,60}?'+money,'i'),new RegExp('Gorjetas[\\\\s\\\\S]{0,60}?'+money,'i')]);
+  net=extractMoney(text,[
+   new RegExp('(?:total net|net amount|amount payable|total paid|total amount|total)[\\\\s\\\\S]{0,80}?'+money,'i')
+  ]);
  }
- let flags=[];
+ const flags=[];
  if(gross===null)flags.push('Valor bruto não identificado');
  if(net===null)flags.push('Total líquido não identificado');
  if(!period)flags.push('Período não identificado');
- if(/não é uma fatura oficial|not an official invoice/i.test(text))flags.push('Documento informativo, não é fatura oficial');
+ if(/not an official invoice|não é uma fatura oficial|informational purposes only/i.test(text))flags.push('Documento informativo; confirmar com a plataforma/contabilista');
  return {fileName,platform:deliveroo?'Deliveroo':'Uber Eats',period:period||'Não identificado',gross,fees,tips,net,other,flags,status:flags.length?'Rever':'Extraído — confirmar'};
 }
 async function readPdf(file){
