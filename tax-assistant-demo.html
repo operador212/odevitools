@@ -62,35 +62,35 @@ function extractMoney(text,patterns){
 }
 function parsePdfText(text,fileName){
  const n=norm(text);
- const uber=/uber eats|uber b\\.v\\.|uber bv|uber eats uk limited/.test(n);
+ const uber=/uber eats|uber b\.v\.|uber bv|uber eats uk limited/.test(n);
  const deliveroo=/deliveroo|roofoods limited/.test(n);
  if(!uber&&!deliveroo)throw new Error('PDF não reconhecido como relatório Uber/Deliveroo. Extratos bancários em PDF ainda não são suportados; usa CSV para esses extratos.');
- const dateToken='(?:\\d{1,2}[\\/.-]\\d{1,2}[\\/.-]\\d{2,4}|\\d{4}-\\d{2}-\\d{2}|\\d{1,2}\\s+[A-Za-zÀ-ÿ]+\\s+\\d{2,4})';
+ const dateToken='(?:\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4}|\d{4}-\d{2}-\d{2}|\d{1,2}\s+[A-Za-zÀ-ÿ]+\s+\d{2,4})';
  let period='';
  const periodPatterns=[
-  new RegExp('(?:invoice period|statement period|reporting period|period|per[ií]odo fiscal|per[ií]odo da fatura)\\\\s*:?\\\\s*('+dateToken+'\\\\s*(?:-|–|to|a)\\\\s*'+dateToken+')','i'),
-  new RegExp('('+dateToken+'\\\\s*(?:-|–|to|a)\\\\s*'+dateToken+')','i')
+  new RegExp('(?:invoice period|statement period|reporting period|period|per[ií]odo fiscal|per[ií]odo da fatura)\\s*:?\\s*('+dateToken+'\\s*(?:-|–|to|a)\\s*'+dateToken+')','i'),
+  new RegExp('('+dateToken+'\\s*(?:-|–|to|a)\\s*'+dateToken+')','i')
  ];
  for(const p of periodPatterns){const m=text.match(p);if(m){period=m[1].trim();break}}
- const money='£\\\\s*([0-9,]+\\\\.[0-9]{2})';
+ const money='£\\s*([0-9,]+\\.[0-9]{2})';
  let gross=null,fees=null,tips=null,net=null,other=null;
  if(deliveroo){
-  gross=extractMoney(text,[new RegExp('Deliveries[\\\\s\\\\S]{0,100}?'+money,'i')]);
-  fees=extractMoney(text,[new RegExp('Transaction fee[\\\\s\\\\S]{0,60}?\\\\(?-?'+money,'i')]);
-  tips=extractMoney(text,[new RegExp('Tips[\\\\s\\\\S]{0,60}?'+money,'i')]);
-  net=extractMoney(text,[new RegExp('Total fee payable\\\\s*:?[\\\\s\\\\S]{0,20}?'+money,'i')]);
+  gross=extractMoney(text,[new RegExp('Deliveries[\\s\\S]{0,100}?'+money,'i')]);
+  fees=extractMoney(text,[new RegExp('Transaction fee[\\s\\S]{0,60}?\\(?-?'+money,'i')]);
+  tips=extractMoney(text,[new RegExp('Tips[\\s\\S]{0,60}?'+money,'i')]);
+  net=extractMoney(text,[new RegExp('Total fee payable\\s*:?[\\s\\S]{0,20}?'+money,'i')]);
  }else{
   gross=extractMoney(text,[
-   new RegExp('(?:gross delivery services amount|gross amount|total gross|delivery services|services supplied)[\\\\s\\\\S]{0,100}?'+money,'i'),
-   new RegExp('gross[\\\\s\\\\S]{0,60}?'+money,'i')
+   new RegExp('(?:gross delivery services amount|gross amount|total gross|delivery services|services supplied)[\\s\\S]{0,100}?'+money,'i'),
+   new RegExp('gross[\\s\\S]{0,60}?'+money,'i')
   ]);
   fees=extractMoney(text,[
-   new RegExp('(?:early payment discount|payment discount|discount)[\\\\s\\\\S]{0,60}?(?:-\\\\s*£|£\\\\s*-?)\\\\s*([0-9,]+\\\\.[0-9]{2})','i'),
-   new RegExp('transaction fee[\\\\s\\\\S]{0,60}?'+money,'i')
+   new RegExp('(?:early payment discount|payment discount|discount)[\\s\\S]{0,60}?(?:-\\s*£|£\\s*-?)\\s*([0-9,]+\\.[0-9]{2})','i'),
+   new RegExp('transaction fee[\\s\\S]{0,60}?'+money,'i')
   ]);
-  tips=extractMoney(text,[new RegExp('Tips[\\\\s\\\\S]{0,60}?'+money,'i'),new RegExp('Gorjetas[\\\\s\\\\S]{0,60}?'+money,'i')]);
+  tips=extractMoney(text,[new RegExp('Tips[\\s\\S]{0,60}?'+money,'i'),new RegExp('Gorjetas[\\s\\S]{0,60}?'+money,'i')]);
   net=extractMoney(text,[
-   new RegExp('(?:total net|net amount|amount payable|total paid|total amount|total)[\\\\s\\\\S]{0,80}?'+money,'i')
+   new RegExp('(?:total net|net amount|amount payable|total paid|total amount|total)[\\s\\S]{0,80}?'+money,'i')
   ]);
  }
  const flags=[];
