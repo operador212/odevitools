@@ -30,10 +30,6 @@ class TransactionClassifierTests(unittest.TestCase):
         self.assertEqual(result.category, "unknown")
         self.assertTrue(result.needs_review)
 
-
-if __name__ == "__main__":
-    unittest.main()
-
     def test_own_account_transfer_is_separate_from_income(self):
         result = classify_transaction("TRANSFER BETWEEN ACCOUNTS", 500)
         self.assertEqual(result.category, "own_account_transfer")
@@ -47,3 +43,7 @@ if __name__ == "__main__":
         result = classify_transaction("CARD REFUND", 19.99)
         self.assertEqual(result.category, "refund_or_reversal")
         self.assertTrue(result.needs_review)
+
+
+if __name__ == "__main__":
+    unittest.main()
