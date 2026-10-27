@@ -35,19 +35,118 @@ main{max-width:760px;margin:0 auto}.brand{font-weight:800;letter-spacing:.12em;c
 <li>Lista de informações em falta e movimentos que exigem confirmação.</li>
 <li>Orientações e ligações oficiais para preparar a declaração.</li>
 </ul>
-<div class="status" role="status"><strong>Pagamento ainda não disponível.</strong><br>Ainda não aceitamos pagamentos. Estamos a configurar o checkout seguro e a validar os cálculos antes de abrir as vendas.</div>
-<p><a class="button" href="tax-assistant-demo.html" style="margin-top:12px;text-decoration:none">Testar organizador CSV (protótipo) ↗</a></p>
-<p class="small">O protótipo é apenas para validar a organização das transações; não calcula impostos nem substitui o relatório pago planeado.</p>
-<button class="button" type="button" disabled aria-disabled="true">Relatório pago — £5,99 (brevemente)</button>
-<p class="note">Não introduzas dados bancários, palavras-passe ou números de identificação fiscal nesta página. O acesso ao relatório será pago e só será ativado depois de o checkout estar configurado. Os cálculos serão concebidos para correr localmente no navegador sempre que possível. Os resultados serão estimativas de apoio, não uma declaração oficial nem aconselhamento fiscal profissional.</p>
+<div id="checkoutStatus" class="status" role="status" aria-live="polite"><strong>Relatório automático — £5,99.</strong><br>Escolhe o país e inicia o pagamento seguro. Depois do pagamento, poderás carregar até 10 extratos CSV (máximo de 5 MB por ficheiro).</div>
+<button id="checkoutButton" class="button" type="button">Continuar para pagamento — £5,99</button>
+<p class="small">O pagamento é processado pelo Stripe. Nesta versão, o relatório aceita extratos bancários CSV; PDFs, faturas e recibos ainda não são suportados neste fluxo.</p>
+<section id="uploadPanel" hidden style="margin-top:18px;border:1px solid var(--line);border-radius:12px;padding:18px">
+<h3>Enviar os teus extratos CSV</h3>
+<p class="small">Pagamento confirmado. Seleciona os ficheiros CSV exportados do banco. Os ficheiros são processados em memória e não são guardados pelo endpoint atual. Não envies palavras-passe nem documentos de identificação.</p>
+<label class="small" for="csvFiles">Extratos CSV (até 10 ficheiros, 5 MB cada)</label>
+<input id="csvFiles" type="file" accept=".csv,text/csv" multiple style="display:block;width:100%;margin:12px 0;color:var(--muted)">
+<button id="processButton" class="button" type="button">Gerar relatório</button>
+<div id="processStatus" class="status" role="status" aria-live="polite" hidden></div>
+<div id="reportPanel" hidden style="margin-top:18px">
+<h3>Relatório gerado</h3>
+<p class="small">Resumo automático de movimentos bancários. Rendimentos candidatos não são rendimento tributável confirmado e despesas candidatas não são despesas fiscalmente dedutíveis confirmadas.</p>
+<div id="reportSummary"></div>
+<button id="downloadReport" class="button" type="button" style="margin-top:12px">Descarregar relatório JSON</button>
+<details style="margin-top:12px"><summary>Ver dados detalhados</summary><pre id="reportJson" style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:.8rem"></pre></details>
+</div>
+</section>
+<p><a class="button" href="tax-assistant-demo.html" style="margin-top:12px;text-decoration:none;background:#293345;color:var(--text)">Testar organizador CSV local ↗</a></p>
+<p class="note">Este relatório é um resumo preparatório, não uma declaração fiscal nem aconselhamento profissional. A versão atual não calcula imposto, IVA, National Insurance ou Segurança Social. Guarda o ficheiro descarregado: o relatório não é guardado nem enviado por email nesta versão.</p>
 </section>
 <p class="small"><a href="privacidade.html">Privacidade</a> · <a href="contacto.html">Contacto</a> · <a href="index.html">Voltar ao ODEVI</a></p>
 </main>
 <script>
+const ODEVI_API_BASE = 'https://odevi-backend.onrender.com';
+let selectedJurisdiction = 'UK';
+let activeSessionId = '';
+let latestReport = null;
 function choose(country){
+ selectedJurisdiction = country;
  document.getElementById('uk').setAttribute('aria-pressed',String(country==='UK'));
  document.getElementById('pt').setAttribute('aria-pressed',String(country==='PT'));
 }
+function showStatus(message, isError=false){
+ const el=document.getElementById('checkoutStatus');
+ el.textContent=message;
+ el.style.borderColor=isError?'#8b3e3e':'#6c5530';
+}
+function showProcessStatus(message,isError=false){
+ const el=document.getElementById('processStatus');
+ el.hidden=false;el.textContent=message;
+ el.style.borderColor=isError?'#8b3e3e':'#6c5530';
+}
+async function startCheckout(){
+ const button=document.getElementById('checkoutButton');
+ button.disabled=true;button.textContent='A abrir o pagamento…';
+ showStatus('A criar uma sessão de pagamento segura…');
+ try{
+  const response=await fetch(ODEVI_API_BASE+'/tax/checkout',{
+   method:'POST',headers:{'Content-Type':'application/json'},
+   body:JSON.stringify({jurisdiction:selectedJurisdiction})
+  });
+  const data=await response.json();
+  if(!response.ok)throw new Error(data.detail||'Não foi possível iniciar o pagamento.');
+  if(!data.checkout_url)throw new Error('O checkout não devolveu uma ligação válida.');
+  window.location.href=data.checkout_url;
+ }catch(error){
+  showStatus((error.message||'Erro de ligação ao serviço.')+' Confirma se o backend está disponível e configurado.',true);
+  button.disabled=false;button.textContent='Tentar novamente — £5,99';
+ }
+}
+async function processFiles(){
+ const input=document.getElementById('csvFiles'),button=document.getElementById('processButton');
+ const files=Array.from(input.files||[]);
+ if(!activeSessionId){showProcessStatus('Não encontrei uma sessão de pagamento. Volta a confirmar o pagamento.',true);return}
+ if(!files.length){showProcessStatus('Seleciona pelo menos um ficheiro CSV.',true);return}
+ if(files.length>10){showProcessStatus('Podes enviar no máximo 10 ficheiros por relatório.',true);return}
+ if(files.some(f=>f.size>5*1024*1024)){showProcessStatus('Cada ficheiro deve ter no máximo 5 MB.',true);return}
+ const form=new FormData();files.forEach(file=>form.append('files',file));
+ button.disabled=true;button.textContent='A analisar os extratos…';showProcessStatus('A analisar os ficheiros. Não feches esta página.');
+ try{
+  const response=await fetch(ODEVI_API_BASE+'/tax/process-csv?session_id='+encodeURIComponent(activeSessionId),{method:'POST',body:form});
+  const data=await response.json();
+  if(!response.ok)throw new Error(data.detail||'Não foi possível processar os ficheiros.');
+  latestReport=data;
+  document.getElementById('reportJson').textContent=JSON.stringify(data,null,2);
+  const summary=data.income_candidates_not_tax_confirmed||{},expenses=data.expense_candidates_not_deductibility_confirmed||{};
+  const fmtMap=map=>Object.entries(map).map(([k,v])=>'<li>'+escapeHtml(k)+': '+escapeHtml(v)+'</li>').join('')||'<li>Não identificado</li>';
+  document.getElementById('reportSummary').innerHTML=
+   '<p><strong>Extratos:</strong> '+escapeHtml(data.source_statements_count)+' · <strong>Movimentos importados:</strong> '+escapeHtml(data.transactions_imported)+' · <strong>Duplicados exatos removidos:</strong> '+escapeHtml(data.exact_duplicates_removed)+'</p>'+
+   '<h4>Rendimentos candidatos — não confirmados para efeitos fiscais</h4><ul>'+fmtMap(summary)+'</ul>'+
+   '<h4>Despesas candidatas — dedutibilidade não confirmada</h4><ul>'+fmtMap(expenses)+'</ul>'+
+   '<p><strong>Movimentos a rever:</strong> '+escapeHtml(data.review_items_count)+' · <strong>Linhas ignoradas:</strong> '+escapeHtml(data.skipped_rows)+'</p>';
+  document.getElementById('reportPanel').hidden=false;
+  showProcessStatus('Relatório gerado. Descarrega-o antes de fechares esta página.');
+ }catch(error){showProcessStatus(error.message||'Erro ao processar os ficheiros.',true)}
+ finally{button.disabled=false;button.textContent='Gerar relatório'}
+}
+function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function restorePaymentSession(){
+ const params=new URLSearchParams(window.location.search);
+ const sessionId=params.get('session_id');
+ if(params.get('payment')==='cancelled'){showStatus('Pagamento cancelado. Não foi cobrado nenhum relatório por esta sessão.');return}
+ if(params.get('payment')==='success'&&sessionId){
+  activeSessionId=sessionId;
+  document.getElementById('uploadPanel').hidden=false;
+  document.getElementById('checkoutButton').hidden=true;
+  showStatus('A confirmar o pagamento com o Stripe…');
+  fetch(ODEVI_API_BASE+'/tax/payment-status/'+encodeURIComponent(sessionId))
+   .then(async r=>{const d=await r.json();if(!r.ok||!d.paid)throw new Error(d.detail||'Pagamento ainda não confirmado.');return d})
+   .then(d=>{selectedJurisdiction=d.jurisdiction||selectedJurisdiction;showStatus('Pagamento confirmado. Agora envia os teus extratos CSV para gerar o relatório.');})
+   .catch(e=>{document.getElementById('uploadPanel').hidden=true;showStatus(e.message||'Não foi possível confirmar o pagamento.',true);});
+ }
+}
+document.getElementById('checkoutButton').addEventListener('click',startCheckout);
+document.getElementById('processButton').addEventListener('click',processFiles);
+document.getElementById('downloadReport').addEventListener('click',()=>{
+ if(!latestReport)return;
+ const blob=new Blob([JSON.stringify(latestReport,null,2)],{type:'application/json;charset=utf-8'});
+ const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='odevi-relatorio-fiscal-preparatorio.json';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+});
+restorePaymentSession();
 </script>
 </body>
 </html>
