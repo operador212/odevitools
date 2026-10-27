@@ -54,6 +54,30 @@ class TaxReportBuilderTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             build_tax_report([])
 
+    def test_review_items_include_reason_and_unknowns_are_not_income(self):
+        result = build_tax_report([{
+            "jurisdiction": "UK",
+            "transactions": [
+                tx("2026-02-01", "Unidentified transfer", "500.00", "unknown", "Unidentified", "GBP", True),
+            ],
+        }])
+        self.assertEqual(result["review_items_count"], 1)
+        self.assertEqual(result["review_items"][0]["reason"], "test_rule")
+        self.assertEqual(result["income_candidates_not_tax_confirmed"], {})
+        self.assertEqual(result["expense_candidates_not_deductibility_confirmed"], {})
+
+    def test_same_amount_with_different_descriptions_is_not_deduplicated(self):
+        result = build_tax_report([{
+            "jurisdiction": "UK",
+            "transactions": [
+                tx("2026-04-01", "UBER EATS PAYOUT", "100.00", "platform_income", "Uber Eats"),
+                tx("2026-04-01", "DELIVEROO PAYOUT", "100.00", "platform_income", "Deliveroo"),
+            ],
+        }])
+        self.assertEqual(result["transactions_after_exact_deduplication"], 2)
+        self.assertEqual(result["exact_duplicates_removed"], 0)
+        self.assertEqual(result["income_candidates_not_tax_confirmed"]["GBP:platform_income"], "200.00")
+
     def test_different_currencies_are_kept_separate(self):
         result = build_tax_report([
             {
