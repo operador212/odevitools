@@ -34,6 +34,18 @@ class BankCsvImporterTests(unittest.TestCase):
         result = parse_bank_csv(csv_text, "UK")
         self.assertEqual(result["transactions"][0]["currency"], "EUR")
 
+    def test_mixed_currencies_are_not_added_together(self):
+        csv_text = """Date,Description,Amount,Currency
+01/06/2026,UBER EATS PAYOUT,100.00,GBP
+02/06/2026,DELIVEROO PAYOUT,100.00,EUR
+"""
+        result = parse_bank_csv(csv_text, "UK")
+        self.assertTrue(result["mixed_currencies"])
+        self.assertEqual(result["totals_by_counterparty"]["GBP:Uber Eats"], "100.00")
+        self.assertEqual(result["totals_by_counterparty"]["EUR:Deliveroo"], "100.00")
+        self.assertEqual(result["net_movement_by_month"]["GBP:2026-06"], "100.00")
+        self.assertEqual(result["net_movement_by_month"]["EUR:2026-06"], "100.00")
+
     def test_portugal_defaults_to_eur_when_currency_is_not_in_export(self):
         csv_text = """Data;Descricao;Valor
 01/06/2026;Transferencia bancaria;120,50
