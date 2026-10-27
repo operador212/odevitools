@@ -35,8 +35,8 @@ class BankCsvImporterTests(unittest.TestCase):
         self.assertEqual(result["transactions"][0]["currency"], "EUR")
 
     def test_portugal_defaults_to_eur_when_currency_is_not_in_export(self):
-        csv_text = """Data,Descricao,Valor
-01/06/2026,Transferencia bancaria,120,50
+        csv_text = """Data;Descricao;Valor
+01/06/2026;Transferencia bancaria;120,50
 """
         result = parse_bank_csv(csv_text, "PT")
         self.assertEqual(result["transactions"][0]["currency"], "EUR")
