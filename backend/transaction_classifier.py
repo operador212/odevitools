@@ -24,31 +24,31 @@ class Classification:
 
 # Broad aliases for common descriptors; never classify from "delivery" alone.
 COUNTERPARTY_RULES = [
-    ("Uber Eats", re.compile(r"\\b(UBER\\s*EATS|UBEREATS|UBER *BV)\\b", re.I)),
-    ("Deliveroo", re.compile(r"\\b(DELIVEROO|ROOFOODS)\\b", re.I)),
-    ("Just Eat", re.compile(r"\\b(JUST\\s*EAT|JUSTEAT|TAKEAWAY\\.COM)\\b", re.I)),
-    ("Amazon Flex", re.compile(r"\\b(AMAZON\\s*FLEX|AMZN\\s*FLEX)\\b", re.I)),
-    ("Stuart", re.compile(r"\\b(STUART\\s*DELIVERY|STUART)\\b", re.I)),
-    ("Gophr", re.compile(r"\\b(GOPHR)\\b", re.I)),
-    ("Evri", re.compile(r"\\b(EVRI|HERMES\\s*PARCEL)\\b", re.I)),
-    ("DPD", re.compile(r"\\b(DPD\\s*(UK|LOCAL)?)\\b", re.I)),
-    ("Royal Mail", re.compile(r"\\b(ROYAL\\s*MAIL|PARCELFORCE)\\b", re.I)),
+    ("Uber Eats", re.compile(r"\b(UBER\s*EATS|UBEREATS|UBER *BV)\b", re.I)),
+    ("Deliveroo", re.compile(r"\b(DELIVEROO|ROOFOODS)\b", re.I)),
+    ("Just Eat", re.compile(r"\b(JUST\s*EAT|JUSTEAT|TAKEAWAY\.COM)\b", re.I)),
+    ("Amazon Flex", re.compile(r"\b(AMAZON\s*FLEX|AMZN\s*FLEX)\b", re.I)),
+    ("Stuart", re.compile(r"\b(STUART\s*DELIVERY|STUART)\b", re.I)),
+    ("Gophr", re.compile(r"\b(GOPHR)\b", re.I)),
+    ("Evri", re.compile(r"\b(EVRI|HERMES\s*PARCEL)\b", re.I)),
+    ("DPD", re.compile(r"\b(DPD\s*(UK|LOCAL)?)\b", re.I)),
+    ("Royal Mail", re.compile(r"\b(ROYAL\s*MAIL|PARCELFORCE)\b", re.I)),
 ]
 
 PERSONAL_TRANSFER = re.compile(
-    r"\\b(OWN\\s*ACCOUNT|INTERNAL\\s*TRANSFER|TRANSFER\\s*BETWEEN\\s*ACCOUNTS)\\b",
+    r"\b(OWN\s*ACCOUNT|INTERNAL\s*TRANSFER|TRANSFER\s*BETWEEN\s*ACCOUNTS)\b",
     re.I,
 )
-REFUND = re.compile(r"\\b(REFUND|REVERSAL|CHARGEBACK)\\b", re.I)
+REFUND = re.compile(r"\b(REFUND|REVERSAL|CHARGEBACK)\b", re.I)
 PAYMENT_PROCESSOR = re.compile(
-    r"\\b(STRIPE|PAYPAL|SUMUP|WORLDPAY|ADYEN|WISE)\\b", re.I
+    r"\b(STRIPE|PAYPAL|SUMUP|WORLDPAY|ADYEN|WISE)\b", re.I
 )
 GENERIC_INCOME = re.compile(
-    r"\\b(FASTER\\s*PAYMENT|BACS\\s*CREDIT|BANK\\s*TRANSFER|CREDIT\\s*TRANSFER)\\b",
+    r"\b(FASTER\s*PAYMENT|BACS\s*CREDIT|BANK\s*TRANSFER|CREDIT\s*TRANSFER)\b",
     re.I,
 )
 GENERIC_EXPENSE = re.compile(
-    r"\\b(FUEL|PETROL|DIESEL|CHARGING|MOTOR\\s*INSURANCE|INSURANCE|REPAIR|MAINTENANCE)\\b",
+    r"\b(FUEL|PETROL|DIESEL|CHARGING|MOTOR\s*INSURANCE|INSURANCE|REPAIR|MAINTENANCE)\b",
     re.I,
 )
 
