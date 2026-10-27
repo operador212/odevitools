@@ -33,3 +33,17 @@ class TransactionClassifierTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+    def test_own_account_transfer_is_separate_from_income(self):
+        result = classify_transaction("TRANSFER BETWEEN ACCOUNTS", 500)
+        self.assertEqual(result.category, "own_account_transfer")
+
+    def test_fuel_is_only_an_expense_candidate(self):
+        result = classify_transaction("PETROL STATION", -45.10)
+        self.assertEqual(result.category, "business_expense_candidate")
+        self.assertTrue(result.needs_review)
+
+    def test_refund_is_flagged_for_reconciliation(self):
+        result = classify_transaction("CARD REFUND", 19.99)
+        self.assertEqual(result.category, "refund_or_reversal")
+        self.assertTrue(result.needs_review)
