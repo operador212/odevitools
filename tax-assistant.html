@@ -136,7 +136,7 @@ function restorePaymentSession(){
   fetch(ODEVI_API_BASE+'/tax/payment-status/'+encodeURIComponent(sessionId))
    .then(async r=>{const d=await r.json();if(!r.ok||!d.paid)throw new Error(d.detail||'Pagamento ainda não confirmado.');return d})
    .then(d=>{selectedJurisdiction=d.jurisdiction||selectedJurisdiction;showStatus('Pagamento confirmado. Agora envia os teus extratos CSV para gerar o relatório.');})
-   .catch(e=>{document.getElementById('uploadPanel').hidden=true;showStatus(e.message||'Não foi possível confirmar o pagamento.',true);});
+   .catch(e=>{document.getElementById('uploadPanel').hidden=true;document.getElementById('checkoutButton').hidden=false;showStatus(e.message||'Não foi possível confirmar o pagamento. Podes tentar novamente.',true);});
  }
 }
 document.getElementById('checkoutButton').addEventListener('click',startCheckout);
