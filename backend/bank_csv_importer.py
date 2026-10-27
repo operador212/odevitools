@@ -25,6 +25,7 @@ DESCRIPTION_HEADERS = {
 AMOUNT_HEADERS = {"amount", "value", "transaction amount", "valor", "montante"}
 CREDIT_HEADERS = {"credit", "paid in", "money in", "deposit", "credito", "crédito", "entrada"}
 DEBIT_HEADERS = {"debit", "paid out", "money out", "withdrawal", "debito", "débito", "saida", "saída"}
+CURRENCY_HEADERS = {"currency", "currency code", "ccy", "moeda", "divisa"}
 
 
 def _norm(value: Any) -> str:
@@ -100,6 +101,7 @@ def parse_bank_csv(csv_text: str, jurisdiction: str = "UK") -> dict[str, Any]:
     amount_col = _find_header(headers, AMOUNT_HEADERS)
     credit_col = _find_header(headers, CREDIT_HEADERS)
     debit_col = _find_header(headers, DEBIT_HEADERS)
+    currency_col = _find_header(headers, CURRENCY_HEADERS)
 
     if not date_col or not desc_col or not (amount_col or credit_col or debit_col):
         raise ValueError(
@@ -126,12 +128,20 @@ def parse_bank_csv(csv_text: str, jurisdiction: str = "UK") -> dict[str, Any]:
             skipped_rows += 1
             continue
 
+        raw_currency = str(row.get(currency_col, "") or "").strip().upper() if currency_col else ""
+        currency_aliases = {"£": "GBP", "GBP": "GBP", "POUND": "GBP", "POUNDS": "GBP",
+                            "€": "EUR", "EUR": "EUR", "EURO": "EUR", "EUROS": "EUR",
+                            "$": "USD", "USD": "USD"}
+        currency = currency_aliases.get(raw_currency, raw_currency)
+        if not currency:
+            currency = "GBP" if jurisdiction.upper() == "UK" else "EUR"
+
         classification = classify_transaction(description, float(amount))
         transactions.append({
             "date": date,
             "description": description,
             "amount": str(amount.quantize(Decimal("0.01"))),
-            "currency": "GBP" if jurisdiction.upper() == "UK" else "UNKNOWN",
+            "currency": currency,
             "category": classification.category,
             "counterparty": classification.counterparty,
             "confidence": classification.confidence,
@@ -160,6 +170,7 @@ def parse_bank_csv(csv_text: str, jurisdiction: str = "UK") -> dict[str, Any]:
         "transactions": transactions,
         "limitations": [
             "CSV importer prototype; test with each bank's export format before production.",
+            "Currency comes from a currency column when present; otherwise UK defaults to GBP and PT to EUR. Multi-currency statements need a currency column.",
             "Amounts are bank movements, not automatically taxable income or deductible expenses.",
             "PDF/OCR, duplicate reconciliation, report generation and tax calculations are not implemented.",
         ],
