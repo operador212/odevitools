@@ -25,9 +25,10 @@ python -m unittest discover -v
 - The report is an accounting-preparation summary, not a tax return or tax calculation.
 - Bank credits are not automatically taxable income and bank debits are not automatically deductible expenses.
 - Duplicate detection currently removes exact matching date/description/amount/currency signatures only.
-- The frontend checkout/upload flow is not connected yet.
-- The report is returned as JSON in the HTTP response; it is not saved, rendered as a PDF, or emailed.
-- A durable database, one-time fulfilment/idempotency, private report retrieval, retention/deletion controls, and end-to-end tests are required before production.
+- `tax-assistant.html` now connects to the backend checkout, payment verification and multi-CSV processing endpoints using `https://odevi-backend.onrender.com` as the API base.
+- Current browser flow is payment first, then CSV upload. Upload-before-payment requires secure temporary storage and a job record, which are not implemented.
+- The report is shown in the browser as a summary and downloadable JSON; it is not saved on the server, rendered as a PDF, or emailed.
+- A durable database, one-time fulfilment/idempotency (the same paid session can currently be reused), private report retrieval, retention/deletion controls, and end-to-end browser/API tests are required before production.
 - Keep Stripe in test mode until the complete workflow and privacy/security review have passed.
 
 ### Required environment variables
