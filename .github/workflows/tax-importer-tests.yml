@@ -1,0 +1,24 @@
+name: Tax importer tests
+
+on:
+  push:
+    branches:
+      - main
+      - feature/odevi-tax-stripe-test
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  bank-csv-importer:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run bank CSV importer unit tests
+        working-directory: backend
+        run: python -m unittest -v test_bank_csv_importer.py

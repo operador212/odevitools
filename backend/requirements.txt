@@ -1,4 +1,4 @@
 fastapi
 uvicorn[standard]
-yt-dlp[default]>=2025.05.22 
-bgutil-ytdlp-pot-provider
+stripe>=12.0.0
+python-multipart>=0.0.20
