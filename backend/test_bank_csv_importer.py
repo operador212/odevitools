@@ -27,6 +27,20 @@ class BankCsvImporterTests(unittest.TestCase):
         self.assertEqual(result["transactions"][1]["amount"], "-25.50")
         self.assertEqual(result["jurisdiction"], "PT")
 
+    def test_currency_column_overrides_jurisdiction_default(self):
+        csv_text = """Date,Description,Amount,Currency
+01/06/2026,UBER EATS PAYOUT,120.50,EUR
+"""
+        result = parse_bank_csv(csv_text, "UK")
+        self.assertEqual(result["transactions"][0]["currency"], "EUR")
+
+    def test_portugal_defaults_to_eur_when_currency_is_not_in_export(self):
+        csv_text = """Data,Descricao,Valor
+01/06/2026,Transferencia bancaria,120,50
+"""
+        result = parse_bank_csv(csv_text, "PT")
+        self.assertEqual(result["transactions"][0]["currency"], "EUR")
+
     def test_invalid_headers_fail_clearly(self):
         with self.assertRaises(ValueError):
             parse_bank_csv("foo,bar\na,b\n", "UK")
