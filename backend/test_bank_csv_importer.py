@@ -15,6 +15,7 @@ class BankCsvImporterTests(unittest.TestCase):
         self.assertEqual(result["totals_by_counterparty"]["Uber Eats"], "120.50")
         self.assertEqual(result["totals_by_counterparty"]["Deliveroo"], "80.00")
         self.assertEqual(result["net_movement_by_month"]["2026-04"], "180.50")
+        self.assertEqual(result["transactions"][0]["category"], "platform_income")
 
     def test_supports_credit_and_debit_columns(self):
         csv_text = """Data,Descricao,Credit,Debit
@@ -52,6 +53,22 @@ class BankCsvImporterTests(unittest.TestCase):
 """
         result = parse_bank_csv(csv_text, "PT")
         self.assertEqual(result["transactions"][0]["currency"], "EUR")
+
+    def test_malformed_rows_are_skipped_and_counted(self):
+        csv_text = """Date,Description,Amount
+01/06/2026,UBER EATS PAYOUT,50.00
+not-a-date,Deliveroo payout,30.00
+02/06/2026,,20.00
+"""
+        result = parse_bank_csv(csv_text, "UK")
+        self.assertEqual(result["transactions_count"], 1)
+        self.assertEqual(result["skipped_rows"], 2)
+
+    def test_empty_file_and_unknown_jurisdiction_fail_clearly(self):
+        with self.assertRaises(ValueError):
+            parse_bank_csv("", "UK")
+        with self.assertRaises(ValueError):
+            parse_bank_csv("Date,Description,Amount\n01/06/2026,Payment,10.00\n", "ES")
 
     def test_invalid_headers_fail_clearly(self):
         with self.assertRaises(ValueError):
