@@ -75,5 +75,23 @@ not-a-date,Deliveroo payout,30.00
             parse_bank_csv("foo,bar\na,b\n", "UK")
 
 
+    def test_amount_column_blank_falls_back_to_credit_and_debit(self):
+        csv_text = """Date,Description,Amount,Credit,Debit
+01/06/2026,UBER EATS PAYOUT,,"120.50",
+02/06/2026,Petrol,,-,"25.00"
+"""
+        result = parse_bank_csv(csv_text, "UK")
+        self.assertEqual(result["transactions_count"], 2)
+        self.assertEqual(result["transactions"][0]["amount"], "120.50")
+        self.assertEqual(result["transactions"][1]["amount"], "-25.00")
+
+    def test_portuguese_accented_date_header_is_supported(self):
+        csv_text = """Data da operação;Descrição;Valor
+01/06/2026;UBER EATS PAYOUT;120,50
+"""
+        result = parse_bank_csv(csv_text, "PT")
+        self.assertEqual(result["transactions_count"], 1)
+        self.assertEqual(result["transactions"][0]["amount"], "120.50")
+
 if __name__ == "__main__":
     unittest.main()
