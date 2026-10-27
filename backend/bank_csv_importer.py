@@ -149,28 +149,34 @@ def parse_bank_csv(csv_text: str, jurisdiction: str = "UK") -> dict[str, Any]:
             "matched_rule": classification.matched_rule,
         })
 
+    currencies = sorted({tx["currency"] for tx in transactions})
+    mixed_currencies = len(currencies) > 1
     totals_by_category: dict[str, Decimal] = defaultdict(Decimal)
     totals_by_counterparty: dict[str, Decimal] = defaultdict(Decimal)
     totals_by_month: dict[str, Decimal] = defaultdict(Decimal)
     for tx in transactions:
         amount = Decimal(tx["amount"])
-        totals_by_category[tx["category"]] += amount
-        totals_by_month[tx["date"][:7]] += amount
+        currency_prefix = f'{tx["currency"]}:' if mixed_currencies else ""
+        totals_by_category[currency_prefix + tx["category"]] += amount
+        totals_by_month[currency_prefix + tx["date"][:7]] += amount
         if tx["counterparty"]:
-            totals_by_counterparty[tx["counterparty"]] += amount
+            totals_by_counterparty[currency_prefix + tx["counterparty"]] += amount
 
     money = lambda d: str(d.quantize(Decimal("0.01")))
     return {
         "jurisdiction": jurisdiction.upper(),
         "transactions_count": len(transactions),
         "skipped_rows": skipped_rows,
+        "currencies": currencies,
+        "mixed_currencies": mixed_currencies,
         "totals_by_category": {k: money(v) for k, v in sorted(totals_by_category.items())},
         "totals_by_counterparty": {k: money(v) for k, v in sorted(totals_by_counterparty.items())},
         "net_movement_by_month": {k: money(v) for k, v in sorted(totals_by_month.items())},
         "transactions": transactions,
         "limitations": [
             "CSV importer prototype; test with each bank's export format before production.",
-            "Currency comes from a currency column when present; otherwise UK defaults to GBP and PT to EUR. Multi-currency statements need a currency column.",
+            "Currency comes from a currency column when present; otherwise UK defaults to GBP and PT to EUR.",
+            "When multiple currencies occur, summary keys are prefixed with the currency to prevent adding unlike currencies together.",
             "Amounts are bank movements, not automatically taxable income or deductible expenses.",
             "PDF/OCR, duplicate reconciliation, report generation and tax calculations are not implemented.",
         ],
