@@ -643,6 +643,13 @@
   document.querySelectorAll(".news-tab").forEach(b=>{const active=b.dataset.news===key;b.classList.toggle("active",active);b.setAttribute("aria-selected",String(active));});
  }
  document.querySelectorAll(".news-tab").forEach(b=>b.addEventListener("click",()=>showNews(b.dataset.news)));
+ document.querySelectorAll(".destination-link").forEach(a=>a.addEventListener("click",function(){
+  if(typeof window.gtag==="function"){
+   const card=this.closest(".diaspora-card");
+   const destination=card?.querySelector(".diaspora-country span:last-child")?.textContent?.trim()||"unknown";
+   window.gtag("event","destination_click",{destination:destination,section:"fugir_para_onde",link_url:this.href});
+  }
+ }));
  showNews("pt");
  const form=document.getElementById("regularizacaoQuiz");
  if(form)form.addEventListener("submit",function(event){
