@@ -330,6 +330,11 @@
 .diaspora-rank{font-size:12px;color:var(--muted,#b8c0cc)}
 .diaspora-footer{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:14px;color:var(--muted,#b8c0cc);font-size:12px;line-height:1.5}
 .diaspora-footer a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.diaspora-destinations .diaspora-card{display:flex;flex-direction:column;align-items:flex-start;gap:9px}
+.diaspora-destinations .diaspora-rank{font-size:13px;color:var(--green,#68f39a);font-weight:700}
+.destination-copy{font-size:13px;color:var(--muted,#b8c0cc);line-height:1.55}
+.destination-link{display:inline-block;margin-top:auto;padding-top:7px;color:var(--green,#68f39a);font-size:13px;font-weight:800;text-decoration:underline;text-underline-offset:3px}
+.destination-uk{border-color:rgba(104,243,154,.5)}
 @media(max-width:600px){.diaspora-section{padding:18px 0}.diaspora-grid{grid-template-columns:1fr;gap:10px}.diaspora-card{display:grid;grid-template-columns:1fr auto;align-items:center;gap:5px 12px;padding:15px}.diaspora-country{grid-column:1}.diaspora-number{grid-column:2;grid-row:1 / span 2;margin:0;font-size:25px}.diaspora-rank{grid-column:1}.diaspora-footer{align-items:flex-start;flex-direction:column}}
 
 
@@ -482,30 +487,45 @@
     
 <section id="brasileiros-mundo" class="diaspora-section" aria-labelledby="diaspora-title">
   <div class="diaspora-heading">
-    <p class="eyebrow">BRASILEIROS PELO MUNDO</p>
-    <h2 id="diaspora-title">Onde os brasileiros estão</h2>
-    <p>Os três países com as maiores comunidades brasileiras no exterior, com base no levantamento do Itamaraty referente a 2023.</p>
+    <p class="eyebrow">A TUA PRÓXIMA ROTA?</p>
+    <h2 id="diaspora-title">Fugir para onde? 🌍</h2>
+    <p>Estás a pensar sair do Brasil ou recomeçar noutro país? Explora 4 destinos que vale a pena pesquisar — e deixa o Reino Unido como opção para quem está preparado para regras de imigração mais exigentes.</p>
   </div>
-  <div class="diaspora-grid">
-    <article class="diaspora-card">
-      <div class="diaspora-country"><span class="diaspora-flag" aria-hidden="true">🇺🇸</span><span>Estados Unidos</span></div>
-      <p class="diaspora-number">2,06 <span>milhões</span></p>
-      <span class="diaspora-rank">1.º lugar</span>
-    </article>
+  <div class="diaspora-grid diaspora-destinations">
     <article class="diaspora-card">
       <div class="diaspora-country"><span class="diaspora-flag" aria-hidden="true">🇵🇹</span><span>Portugal</span></div>
-      <p class="diaspora-number">628 <span>mil</span></p>
-      <span class="diaspora-rank">2.º lugar</span>
+      <p class="diaspora-rank">Língua comum e comunidade brasileira numerosa.</p>
+      <p class="destination-copy">Pode ser mais fácil adaptar-se ao idioma, mas viver e trabalhar legalmente exige cumprir a via de visto ou residência adequada.</p>
+      <a class="destination-link" href="https://aima.gov.pt/pt" target="_blank" rel="noopener noreferrer">Ver regras oficiais ↗</a>
     </article>
     <article class="diaspora-card">
-      <div class="diaspora-country"><span class="diaspora-flag" aria-hidden="true">🇵🇾</span><span>Paraguai</span></div>
-      <p class="diaspora-number">270 <span>mil</span></p>
-      <span class="diaspora-rank">3.º lugar</span>
+      <div class="diaspora-country"><span class="diaspora-flag" aria-hidden="true">🇪🇸</span><span>Espanha</span></div>
+      <p class="diaspora-rank">Comunidade brasileira crescente e proximidade com Portugal.</p>
+      <p class="destination-copy">Pesquisa as vias de trabalho, estudo, família ou residência aplicáveis ao teu caso antes de planear a mudança.</p>
+      <a class="destination-link" href="https://www.exteriores.gob.es/Consulados/saopaulo/pt/ServiciosConsulares/Paginas/index.aspx" target="_blank" rel="noopener noreferrer">Ver serviços consulares ↗</a>
+    </article>
+    <article class="diaspora-card">
+      <div class="diaspora-country"><span class="diaspora-flag" aria-hidden="true">🇮🇹</span><span>Itália</span></div>
+      <p class="diaspora-rank">Comunidade brasileira estabelecida e possível via por ascendência para quem é elegível.</p>
+      <p class="destination-copy">A entrada sem visto para turismo não autoriza trabalhar. Para residência ou emprego, verifica o visto específico e as condições atuais.</p>
+      <a class="destination-link" href="https://vistoperitalia.esteri.it/" target="_blank" rel="noopener noreferrer">Consultar tipos de visto ↗</a>
+    </article>
+    <article class="diaspora-card">
+      <div class="diaspora-country"><span class="diaspora-flag" aria-hidden="true">🇨🇻</span><span>Cabo Verde</span></div>
+      <p class="diaspora-rank">País lusófono para quem procura uma alternativa fora da Europa.</p>
+      <p class="destination-copy">Confirma as condições de entrada e o visto de residência ou trabalho; as regras para turismo são diferentes das regras para viver no país.</p>
+      <a class="destination-link" href="https://www.gov.cv/pedir-visto" target="_blank" rel="noopener noreferrer">Ver regras oficiais ↗</a>
+    </article>
+    <article class="diaspora-card destination-uk">
+      <div class="diaspora-country"><span class="diaspora-flag" aria-hidden="true">🇬🇧</span><span>Reino Unido</span></div>
+      <p class="diaspora-rank">Muitas oportunidades de trabalho, mas regras de imigração mais exigentes.</p>
+      <p class="destination-copy">Para trabalhar, normalmente precisas de uma rota migratória adequada; algumas exigem empregador autorizado, oferta de trabalho e requisitos específicos.</p>
+      <a class="destination-link" href="https://www.gov.uk/check-uk-visa" target="_blank" rel="noopener noreferrer">Verificar visto no GOV.UK ↗</a>
     </article>
   </div>
   <div class="diaspora-footer">
-    <span>Estimativas referentes a 2023 · Itamaraty</span>
-    <a href="https://www.gov.br/mre/pt-br/consulado-montevideu/servicos-consulares/informacoes-e-lins-uteis/brasileiros-no-mundo" target="_blank" rel="noopener noreferrer">Consultar fonte oficial <span aria-hidden="true">↗</span></a>
+    <span>Não existe mudança automática só com o passaporte brasileiro. Confirma sempre as regras oficiais antes de pagar, viajar ou aceitar trabalho.</span>
+    <a href="https://www.gov.br/mre/pt-br/assuntos/portal-consular/brasileiros-no-exterior-estimativas-ano-a-ano" target="_blank" rel="noopener noreferrer">Dados oficiais sobre brasileiros no exterior ↗</a>
   </div>
 </section>
 <section class="community-extras" aria-label="Comunidade e notícias">
