@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [main]
   push:
-    branches: [feature/odevi-tax-stripe-test]
+    branches: [feature/odevi-tax-stripe-test, fix/odevi-tax-csv-stripe-hardening]
 
 jobs:
   test:
