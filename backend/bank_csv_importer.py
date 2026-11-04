@@ -30,7 +30,10 @@ CURRENCY_HEADERS = {"currency", "currency code", "ccy", "moeda", "divisa"}
 
 
 def _norm(value: Any) -> str:
-    return re.sub(r"\s+", " ", str(value or "").strip().lower())
+    """Normalize headers across accents, casing and repeated whitespace."""
+    raw = unicodedata.normalize("NFKD", str(value or "").strip().casefold())
+    without_accents = "".join(char for char in raw if not unicodedata.combining(char))
+    return re.sub(r"\s+", " ", without_accents)
 
 
 def _parse_amount(value: Any) -> Decimal | None:
