@@ -65,7 +65,7 @@ function extractPdfPeriod(text){
  const range=new RegExp('('+date+'\\s*(?:-|–|\\/|to|a|até)\\s*'+date+')','i');
  const labeled=new RegExp('(?:invoice period|statement period|reporting period|tax period|period|per[ií]odo fiscal|per[ií]odo|resumo fiscal do per[ií]odo|from|de)\\s*:?\\s*'+range.source,'i');
  const m=text.match(labeled)||text.match(range);if(m)return (m[1]||m[0]).trim();
- const embedded=text.match(/(?:resumo fiscal do per[ií]odo|tax summary for the period|periodo fiscal)[\\s\\S]{0,50}?(\\d{4}-\\d{2}-\\d{2}\\s*\\/\\s*\\d{4}-\\d{2}-\\d{2})/i);
+  const embedded=text.match(/(?:resumo fiscal do per[ií]odo|tax summary for the period|periodo fiscal)[\s\S]{0,50}?(\d{4}-\d{2}-\d{2}\s*\/\s*\d{4}-\d{2}-\d{2})/i);
  return embedded?embedded[1].trim():'Não identificado';
 }
 function parseGenericBankPdf(text){
