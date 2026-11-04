@@ -83,9 +83,14 @@ async function startCheckout(){
  button.disabled=true;button.textContent='A abrir o pagamento…';
  showStatus('A criar uma sessão de pagamento segura…');
  try{
+  let reportId=sessionStorage.getItem('odevi_tax_report_id');
+  if(!reportId){
+   reportId=crypto.randomUUID();
+   sessionStorage.setItem('odevi_tax_report_id',reportId);
+  }
   const response=await fetch(ODEVI_API_BASE+'/tax/checkout',{
    method:'POST',headers:{'Content-Type':'application/json'},
-   body:JSON.stringify({jurisdiction:selectedJurisdiction})
+   body:JSON.stringify({jurisdiction:selectedJurisdiction,report_id:reportId})
   });
   const data=await response.json();
   if(!response.ok)throw new Error(data.detail||'Não foi possível iniciar o pagamento.');
@@ -127,7 +132,7 @@ function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':
 function restorePaymentSession(){
  const params=new URLSearchParams(window.location.search);
  const sessionId=params.get('session_id');
- if(params.get('payment')==='cancelled'){showStatus('Pagamento cancelado. Não foi cobrado nenhum relatório por esta sessão.');return}
+ if(params.get('payment')==='cancelled'){sessionStorage.removeItem('odevi_tax_report_id');showStatus('Pagamento cancelado. Podes iniciar uma nova tentativa quando quiseres.');return}
  if(params.get('payment')==='success'&&sessionId){
   activeSessionId=sessionId;
   document.getElementById('uploadPanel').hidden=false;
@@ -135,7 +140,7 @@ function restorePaymentSession(){
   showStatus('A confirmar o pagamento com o Stripe…');
   fetch(ODEVI_API_BASE+'/tax/payment-status/'+encodeURIComponent(sessionId))
    .then(async r=>{const d=await r.json();if(!r.ok||!d.paid)throw new Error(d.detail||'Pagamento ainda não confirmado.');return d})
-   .then(d=>{selectedJurisdiction=d.jurisdiction||selectedJurisdiction;showStatus('Pagamento confirmado. Agora envia os teus extratos CSV para gerar o relatório.');})
+   .then(d=>{selectedJurisdiction=d.jurisdiction||selectedJurisdiction;sessionStorage.removeItem('odevi_tax_report_id');showStatus('Pagamento confirmado. Agora envia os teus extratos CSV para gerar o relatório.');})
    .catch(e=>{document.getElementById('uploadPanel').hidden=true;document.getElementById('checkoutButton').hidden=false;showStatus(e.message||'Não foi possível confirmar o pagamento. Podes tentar novamente.',true);});
  }
 }
