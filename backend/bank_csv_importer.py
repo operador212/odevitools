@@ -8,6 +8,7 @@ from __future__ import annotations
 import csv
 import io
 import re
+import unicodedata
 from collections import defaultdict
 from datetime import datetime
 from decimal import Decimal, InvalidOperation
@@ -113,14 +114,14 @@ def parse_bank_csv(csv_text: str, jurisdiction: str = "UK") -> dict[str, Any]:
     for row in reader:
         description = str(row.get(desc_col, "") or "").strip()
         date = _parse_date(row.get(date_col))
-        if amount_col:
-            amount = _parse_amount(row.get(amount_col))
-        else:
+        amount = _parse_amount(row.get(amount_col)) if amount_col else None
+        # Some bank exports include an Amount column but leave it blank while
+        # populating Credit and Debit. Fall back per row, not just per file.
+        if amount is None and (credit_col or debit_col):
             credit = _parse_amount(row.get(credit_col)) if credit_col else None
             debit = _parse_amount(row.get(debit_col)) if debit_col else None
-            amount = (credit or Decimal("0")) - abs(debit or Decimal("0"))
-            if credit is None and debit is None:
-                amount = None
+            if credit is not None or debit is not None:
+                amount = (credit or Decimal("0")) - abs(debit or Decimal("0"))
 
         if not description and not date and amount is None:
             continue
