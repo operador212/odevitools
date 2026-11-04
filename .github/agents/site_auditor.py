@@ -25,7 +25,8 @@ class Auditor(HTMLParser):
                 continue
             if not parts.path:
                 continue
-            relative_path = parts.path.lstrip("/")\n            target = (ROOT / relative_path).resolve() if parts.path.startswith("/") else (self.source.parent / relative_path).resolve()
+            relative_path = parts.path.lstrip("/")
+            target = (ROOT / relative_path).resolve() if parts.path.startswith("/") else (self.source.parent / relative_path).resolve()
             if not target.is_relative_to(ROOT.resolve()):
                 issues.append(f"{self.source.relative_to(ROOT)}: path escapes repository: {value}")
                 continue
