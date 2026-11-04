@@ -39,7 +39,7 @@ jobs:
           python -m unittest discover -v
       - name: Install browser runner
         run: |
-          python -m pip install playwright
+          python -m pip install playwright reportlab
           python -m playwright install --with-deps chromium
       - name: Run public browser journeys
         run: python .github/agents/browser_qa.py
