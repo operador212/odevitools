@@ -46,7 +46,7 @@ jobs:
 
   production-smoke:
     name: Production availability check
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -58,4 +58,5 @@ jobs:
         run: |
           code=$(curl --silent --show-error --location --max-time 30 -o /tmp/odevi-backend.txt -w '%{http_code}' https://odevi-backend.onrender.com/)
           echo "Backend HTTP status: $code"
-          test "$code" -ge 200 && test "$code" -lt 500
+          test "$code" -eq 200
+          grep -q '"service":"ODEVI+"' /tmp/odevi-backend.txt
