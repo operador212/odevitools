@@ -191,6 +191,7 @@ def create_tax_checkout(request: TaxCheckoutRequest):
             cancel_url=(
                 "https://odevitools.com/tax-assistant.html?payment=cancelled"
             ),
+            idempotency_key=f"odevi-tax-{report_id}",
         )
     except stripe.error.StripeError:
         raise HTTPException(
