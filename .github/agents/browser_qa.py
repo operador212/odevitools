@@ -17,7 +17,9 @@ with sync_playwright() as p:
     browser = p.chromium.launch()
     for width, height, label in [(390, 844, "mobile"), (1365, 900, "desktop")]:
         page = browser.new_page(viewport={"width": width, "height": height})
-        page.on("pageerror", lambda error: findings.append(f"JavaScript error ({label}): {error}"))
+        page.on("pageerror", lambda error, current=page: findings.append(
+            f"JavaScript error ({label}, {current.url}): {error} | stack: {getattr(error, 'stack', '')}"
+        ))
         for path in PAGES:
             try:
                 response = page.goto(BASE + path, wait_until="domcontentloaded", timeout=45000)
