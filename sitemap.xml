@@ -27,4 +27,8 @@
   <url>
     <loc>https://odevitools.com/contacto.html</loc>
   </url>
-  <url>\n    <loc>https://odevitools.com/tax-assistant.html</loc>\n  </url>\n</urlset>
+  <url>\n    <loc>https://odevitools.com/tax-assistant.html</loc>\n  </url>\n  <url><loc>https://odevitools.com/guia-paraguai.html</loc></url>
+  <url><loc>https://odevitools.com/guia-espanha.html</loc></url>
+  <url><loc>https://odevitools.com/guia-cabo-verde.html</loc></url>
+  <url><loc>https://odevitools.com/guia-reino-unido.html</loc></url>
+</urlset>
