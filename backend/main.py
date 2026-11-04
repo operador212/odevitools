@@ -30,6 +30,22 @@ class TaxCheckoutRequest(BaseModel):
     report_id: str | None = None
 
 
+def validate_tax_checkout_session(session):
+    """Reject sessions that are not the exact paid ODEVI one-time product."""
+    metadata = session.metadata or {}
+    if metadata.get("product") != "odevi_tax_report":
+        raise HTTPException(status_code=400, detail="Sessão não pertence ao ODEVI Tax Report.")
+    if getattr(session, "mode", None) != "payment":
+        raise HTTPException(status_code=400, detail="Tipo de pagamento inválido.")
+    if getattr(session, "currency", None) != "gbp" or getattr(session, "amount_total", None) != 599:
+        raise HTTPException(status_code=400, detail="Valor ou moeda do pagamento inválidos.")
+    if metadata.get("jurisdiction", "").upper() not in {"UK", "PT"}:
+        raise HTTPException(status_code=400, detail="Jurisdição inválida na sessão de pagamento.")
+    if not metadata.get("report_id"):
+        raise HTTPException(status_code=400, detail="Identificador do relatório em falta.")
+    return metadata
+
+
 def require_stripe_config():
     if not stripe.api_key:
         raise HTTPException(
@@ -120,17 +136,13 @@ def tax_payment_status(session_id: str):
             detail="Sessão de pagamento não encontrada.",
         )
 
-    if session.metadata.get("product") != "odevi_tax_report":
-        raise HTTPException(
-            status_code=400,
-            detail="Sessão não pertence ao ODEVI Tax Report.",
-        )
+    metadata = validate_tax_checkout_session(session)
 
     return {
-        "paid": session.payment_status == "paid",
+        "paid": session.payment_status == "paid" and session.status == "complete",
         "payment_status": session.payment_status,
-        "report_id": session.metadata.get("report_id"),
-        "jurisdiction": session.metadata.get("jurisdiction"),
+        "report_id": metadata.get("report_id"),
+        "jurisdiction": metadata.get("jurisdiction"),
         # Delivery remains disabled until secure storage and report fulfilment exist.
         "report_ready": False,
     }
@@ -207,15 +219,11 @@ async def process_paid_csv_report(
     except stripe.error.StripeError:
         raise HTTPException(status_code=404, detail="Sessão de pagamento não encontrada.")
 
-    metadata = session.metadata or {}
-    if metadata.get("product") != "odevi_tax_report":
-        raise HTTPException(status_code=400, detail="Sessão não pertence ao ODEVI Tax Report.")
-    if session.payment_status != "paid":
+    metadata = validate_tax_checkout_session(session)
+    if session.payment_status != "paid" or session.status != "complete":
         raise HTTPException(status_code=402, detail="O pagamento ainda não foi confirmado.")
 
-    jurisdiction = str(metadata.get("jurisdiction", "")).upper()
-    if jurisdiction not in {"UK", "PT"}:
-        raise HTTPException(status_code=400, detail="Jurisdição inválida na sessão de pagamento.")
+    jurisdiction = str(metadata["jurisdiction"]).upper()
 
     parsed_statements = []
     for upload in files:
