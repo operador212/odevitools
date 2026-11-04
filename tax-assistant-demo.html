@@ -112,13 +112,13 @@ function parseGenericBankPdf(text){
 }
 function parsePdfText(text,fileName){
  const n=norm(text),uber=/uber/.test(n),deliveroo=/deliveroo|roofoods limited/.test(n);
- const periodMatch=text.match(/(?:resumo fiscal\\s*[-–:]?\\s*)?(\\d{1,2}\\s*[-–]\\s*\\d{1,2}\\s+[A-Za-zÀ-ÿ]+\\s+\\d{4})/i);
+ const periodMatch=text.match(/(?:resumo fiscal\s*[-–:]?\s*)?(\d{1,2}\s*[-–]\s*\d{1,2}\s+[A-Za-zÀ-ÿ]+\s+\d{4})/i);
  const period=periodMatch?periodMatch[1].trim():extractPdfPeriod(text);
  if(uber && /ganhos totais|total earnings|valor l[ií]quido de repasse|net payout/i.test(n)){
-  const gross=extractMoney(text,[/(?:Ganhos totais|Total earnings)[\\s\\S]{0,120}?(?:£\\s*)?([0-9][0-9.,]*)/i]);
-  const fees=extractMoney(text,[/(?:Total de despesas|Total expenses)[\\s\\S]{0,120}?(?:£\\s*)?\\(?([0-9][0-9.,]*)\\)?/i]);
-  const tips=extractMoney(text,[/(?:Valores extras|Extra amounts|Other earnings)[\\s\\S]{0,120}?(?:£\\s*)?([0-9][0-9.,]*)/i]);
-  const net=extractMoney(text,[/(?:Valor l[ií]quido de repasse|Net payout|Net transfer)[\\s\\S]{0,120}?(?:£\\s*)?([0-9][0-9.,]*)/i]);
+  const gross=extractMoney(text,[/(?:Ganhos totais|Total earnings)[\s\S]{0,120}?(?:£\s*)?([0-9][0-9.,]*)/i]);
+  const fees=extractMoney(text,[/(?:Total de despesas|Total expenses)[\s\S]{0,120}?(?:£\s*)?\(?([0-9][0-9.,]*)\)?/i]);
+  const tips=extractMoney(text,[/(?:Valores extras|Extra amounts|Other earnings)[\s\S]{0,120}?(?:£\s*)?([0-9][0-9.,]*)/i]);
+  const net=extractMoney(text,[/(?:Valor l[ií]quido de repasse|Net payout|Net transfer)[\s\S]{0,120}?(?:£\s*)?([0-9][0-9.,]*)/i]);
   const flags=[];
   if(gross===null)flags.push('Ganhos totais não identificados');
   if(fees===null)flags.push('Despesas totais não identificadas');
@@ -133,15 +133,15 @@ function parsePdfText(text,fileName){
  }
  let gross=null,fees=null,tips=null,net=null;
  if(deliveroo){
-  gross=extractMoney(text,[/Deliveries[\\s\\S]{0,100}?£\\s*([0-9,]+\\.[0-9]{2})/i,/Entregas[\\s\\S]{0,100}?£\\s*([0-9,.]+)/i]);
-  fees=extractMoney(text,[/Transaction fee[\\s\\S]{0,60}?\\(?-?£\\s*([0-9,]+\\.[0-9]{2})/i]);
-  tips=extractMoney(text,[/Tips[\\s\\S]{0,60}?£\\s*([0-9,]+\\.[0-9]{2})/i]);
-  net=extractMoney(text,[/Total fee payable\\s*:[\\s\\S]{0,20}?£\\s*([0-9,]+\\.[0-9]{2})/i]);
+  gross=extractMoney(text,[/Deliveries[\s\S]{0,100}?£\s*([0-9,]+\.[0-9]{2})/i,/Entregas[\s\S]{0,100}?£\s*([0-9,.]+)/i]);
+  fees=extractMoney(text,[/Transaction fee[\s\S]{0,60}?\(?-?£\s*([0-9,]+\.[0-9]{2})/i]);
+  tips=extractMoney(text,[/Tips[\s\S]{0,60}?£\s*([0-9,]+\.[0-9]{2})/i]);
+  net=extractMoney(text,[/Total fee payable\s*:[\s\S]{0,20}?£\s*([0-9,]+\.[0-9]{2})/i]);
  }else{
-  gross=extractMoney(text,[/Gross delivery services amount[\\s\\S]{0,180}?(?:£\\s*)?([0-9][0-9,.]*)/i,/Gross amount[\\s\\S]{0,100}?(?:£\\s*)?([0-9][0-9,.]*)/i]);
-  fees=extractMoney(text,[/Early payment discount[\\s\\S]{0,100}?(?:-\\s*£|£\\s*-?)\\s*([0-9][0-9,.]*)/i,/Transaction fee[\\s\\S]{0,100}?(?:£\\s*)?([0-9][0-9,.]*)/i]);
-  tips=extractMoney(text,[/Tips[\\s\\S]{0,80}?(?:£\\s*)?([0-9][0-9,.]*)/i]);
-  net=extractMoney(text,[/Amount payable[\\s\\S]{0,100}?(?:£\\s*)?([0-9][0-9,.]*)/i,/Total net[\\s\\S]{0,100}?(?:£\\s*)?([0-9][0-9,.]*)/i]);
+  gross=extractMoney(text,[/Gross delivery services amount[\s\S]{0,180}?(?:£\s*)?([0-9][0-9,.]*)/i,/Gross amount[\s\S]{0,100}?(?:£\s*)?([0-9][0-9,.]*)/i]);
+  fees=extractMoney(text,[/Early payment discount[\s\S]{0,100}?(?:-\s*£|£\s*-?)\s*([0-9][0-9,.]*)/i,/Transaction fee[\s\S]{0,100}?(?:£\s*)?([0-9][0-9,.]*)/i]);
+  tips=extractMoney(text,[/Tips[\s\S]{0,80}?(?:£\s*)?([0-9][0-9,.]*)/i]);
+  net=extractMoney(text,[/Amount payable[\s\S]{0,100}?(?:£\s*)?([0-9][0-9,.]*)/i,/Total net[\s\S]{0,100}?(?:£\s*)?([0-9][0-9,.]*)/i]);
  }
  const flags=[];if(gross===null)flags.push('Valor bruto não identificado');if(net===null)flags.push('Total líquido não identificado');if(period==='Não identificado')flags.push('Período não identificado');
  return {fileName,platform:deliveroo?'Deliveroo':'Uber Eats',period,gross,fees,tips,net,other:null,transactions:[],flags,status:flags.length?'Rever':'Extraído — confirmar'};
