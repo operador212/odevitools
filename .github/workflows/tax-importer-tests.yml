@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - feature/odevi-tax-stripe-test
+      - fix/odevi-tax-csv-stripe-hardening
   pull_request:
     branches:
       - main
