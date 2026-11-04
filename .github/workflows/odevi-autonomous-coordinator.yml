@@ -1,0 +1,59 @@
+name: ODEVI Autonomous Coordinator
+
+on:
+  push:
+    branches: [main, "agents/**"]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "37 */4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: odevi-autonomous-coordinator-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  coordinate:
+    name: Coordinate quality agents
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run static auditor
+        run: python .github/agents/site_auditor.py
+      - name: Run backend regression tests
+        working-directory: backend
+        run: |
+          python -m pip install -r requirements.txt
+          python -m unittest discover -v
+      - name: Install browser runner
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Run public browser journeys
+        run: python .github/agents/browser_qa.py
+      - name: Aggregate agent evidence
+        if: always()
+        run: python .github/agents/coordinator.py
+      - name: Upload coordination evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: odevi-agent-coordination
+          path: |
+            odevi-agent-coordination.json
+            odevi-agent-coordination.md
+            odevi-browser-report.md
+            odevi-audit-report.md
+          if-no-files-found: ignore
