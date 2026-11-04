@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Public-site browser QA for ODEVI+. Fails closed and writes a human-readable report."""
 from pathlib import Path
+from io import BytesIO
+from reportlab.pdfgen import canvas
 from playwright.sync_api import sync_playwright
 
 BASE = "https://odevitools.com"
@@ -12,6 +14,24 @@ PAGES = [
 ]
 findings = []
 checks = 0
+
+def make_uber_pdf_fixture():
+    """Create a synthetic, non-personal Uber-style PDF to exercise the real PDF.js upload path."""
+    output = BytesIO()
+    pdf = canvas.Canvas(output, pagesize=(612, 792))
+    lines = [
+        "Uber", "01-31 Outubro 2026", "Resumo fiscal",
+        "Ganhos totais", "GBP 1.825,65",
+        "Valores extras", "GBP 73,47",
+        "Total de despesas", "GBP 0,00",
+        "Valor liquido de repasse", "GBP 1.825,65",
+    ]
+    y = 740
+    for line in lines:
+        pdf.drawString(50, y, line)
+        y -= 32
+    pdf.save()
+    return output.getvalue()
 
 with sync_playwright() as p:
     browser = p.chromium.launch()
@@ -49,7 +69,6 @@ with sync_playwright() as p:
                     findings.append("Tax Assistant: UK selector did not activate")
             except Exception as exc:
                 findings.append(f"Tax Assistant selector interaction failed: {exc}")
-        if label == "desktop":
             try:
                 page.goto(BASE + "/tax-assistant-demo.html", wait_until="domcontentloaded", timeout=45000)
                 page.locator("#file").set_input_files({
@@ -63,6 +82,22 @@ with sync_playwright() as p:
                     findings.append("Free Tax Assistant demo: CSV upload did not render the expected 2 transactions")
             except Exception as exc:
                 findings.append(f"Free Tax Assistant demo CSV upload failed: {exc}")
+            try:
+                page.goto(BASE + "/tax-assistant-demo.html", wait_until="domcontentloaded", timeout=45000)
+                page.wait_for_function("!!window.pdfjsLib", timeout=15000)
+                page.locator("#file").set_input_files({
+                    "name": "odevi-qa-uber-sample.pdf",
+                    "mimeType": "application/pdf",
+                    "buffer": make_uber_pdf_fixture(),
+                })
+                page.locator("#pdfResults").wait_for(state="visible", timeout=15000)
+                row = page.locator("#pdfRows").inner_text()
+                checks += 1
+                for expected in ("Uber", "01-31 Outubro 2026", "£1,825.65", "£73.47"):
+                    if expected not in row:
+                        findings.append(f"Free Tax Assistant demo: PDF extraction missing expected value: {expected}; got: {row}")
+            except Exception as exc:
+                findings.append(f"Free Tax Assistant demo PDF upload failed: {exc}")
     browser.close()
 
 report = ["# ODEVI+ browser QA", "", f"- Checks: {checks}", f"- Findings: {len(findings)}", ""]
