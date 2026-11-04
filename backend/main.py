@@ -76,19 +76,26 @@ def home():
     }
 
 
-@app.post("/download")
-def download_media(request: DownloadRequest):
-    """Download supported public media URLs as MP4 or MP3."""
-    parsed_url = urlparse(request.url)
+def validate_download_url(url: str):
+    """Allow only explicitly supported public media hosts."""
+    parsed_url = urlparse(url)
     allowed_hosts = {
-        "youtube.com", "www.youtube.com", "youtu.be", "www.youtube-nocookie.com",
-        "tiktok.com", "www.tiktok.com", "vm.tiktok.com", "vt.tiktok.com",
+        "youtube.com", "www.youtube.com", "m.youtube.com", "music.youtube.com",
+        "youtu.be", "www.youtube-nocookie.com", "tiktok.com", "www.tiktok.com",
+        "vm.tiktok.com", "vt.tiktok.com",
     }
     if parsed_url.scheme not in {"http", "https"} or parsed_url.hostname not in allowed_hosts:
         raise HTTPException(
             status_code=400,
             detail="Usa um link público válido do YouTube ou TikTok.",
         )
+    return parsed_url
+
+
+@app.post("/download")
+def download_media(request: DownloadRequest):
+    """Download supported public media URLs as MP4 or MP3."""
+    validate_download_url(request.url)
     if request.format not in {"mp4", "mp3"}:
         raise HTTPException(status_code=400, detail="Formato deve ser mp4 ou mp3.")
 
