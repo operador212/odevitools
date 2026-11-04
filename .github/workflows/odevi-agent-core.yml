@@ -1,0 +1,62 @@
+name: ODEVI Agent Core
+
+on:
+  push:
+    branches: [main, "agents/**", "fix/**"]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: odevi-agent-core-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  site-auditor:
+    name: Auditor + QA
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Audit static website
+        id: audit
+        run: python .github/agents/site_auditor.py
+      - name: Check backend regression suite
+        working-directory: backend
+        run: |
+          python -m pip install -r requirements.txt
+          python -m unittest discover -v
+      - name: Upload audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: odevi-audit-report
+          path: odevi-audit-report.md
+          if-no-files-found: ignore
+
+  production-smoke:
+    name: Production availability check
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check public website
+        run: |
+          curl --fail --silent --show-error --location --max-time 30 https://odevi.com/ -o /tmp/odevi-home.html
+          grep -qi '<html' /tmp/odevi-home.html
+      - name: Check backend response
+        run: |
+          code=$(curl --silent --show-error --location --max-time 30 -o /tmp/odevi-backend.txt -w '%{http_code}' https://odevi-backend.onrender.com/)
+          echo "Backend HTTP status: $code"
+          test "$code" -ge 200 && test "$code" -lt 500
