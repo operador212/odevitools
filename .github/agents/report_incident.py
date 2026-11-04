@@ -40,7 +40,7 @@ try:
         request(existing["url"], "PATCH", {"body": issue_body})
         print(f"Updated incident #{existing['number']}")
     else:
-        created = request(api, "POST", {"title": "[Agent] ODEVI+ browser QA needs attention", "body": issue_body, "labels": ["bug"]})
+        created = request(api, "POST", {"title": "[Agent] ODEVI+ browser QA needs attention", "body": issue_body})
         print(f"Created incident #{created['number']}: {created['html_url']}")
 except urllib.error.HTTPError as exc:
     print(f"Could not publish QA incident: HTTP {exc.code}: {exc.read().decode()[:500]}")
