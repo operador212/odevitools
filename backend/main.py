@@ -1,9 +1,12 @@
 from fastapi import FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
+from urllib.parse import urlparse
 import os
 import uuid
 import stripe
+import yt_dlp
 from bank_csv_importer import parse_bank_csv
 from tax_report_builder import build_tax_report
 
@@ -22,6 +25,15 @@ app.add_middleware(
 
 # Stripe secrets must be configured as environment variables in Render.
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY", "")
+
+
+DOWNLOAD_DIR = "/tmp/odevi_downloads"
+os.makedirs(DOWNLOAD_DIR, exist_ok=True)
+
+
+class DownloadRequest(BaseModel):
+    url: str
+    format: str = "mp4"
 
 
 class TaxCheckoutRequest(BaseModel):
@@ -59,8 +71,71 @@ def home():
     return {
         "status": "online",
         "service": "ODEVI+",
+        "downloads": "enabled",
         "tax_checkout": "configured" if stripe.api_key else "not_configured",
     }
+
+
+@app.post("/download")
+def download_media(request: DownloadRequest):
+    """Download supported public media URLs as MP4 or MP3."""
+    parsed_url = urlparse(request.url)
+    allowed_hosts = {
+        "youtube.com", "www.youtube.com", "youtu.be", "www.youtube-nocookie.com",
+        "tiktok.com", "www.tiktok.com", "vm.tiktok.com", "vt.tiktok.com",
+    }
+    if parsed_url.scheme not in {"http", "https"} or parsed_url.hostname not in allowed_hosts:
+        raise HTTPException(
+            status_code=400,
+            detail="Usa um link público válido do YouTube ou TikTok.",
+        )
+    if request.format not in {"mp4", "mp3"}:
+        raise HTTPException(status_code=400, detail="Formato deve ser mp4 ou mp3.")
+
+    file_id = str(uuid.uuid4())
+    output_template = os.path.join(DOWNLOAD_DIR, f"{file_id}.%(ext)s")
+    extractor_args = {
+        "youtubepot-bgutilhttp": {"base_url": "http://127.0.0.1:4416"}
+    }
+    if request.format == "mp3":
+        options = {
+            "format": "bestaudio/best",
+            "outtmpl": output_template,
+            "noplaylist": True,
+            "extractor_args": extractor_args,
+            "postprocessors": [{
+                "key": "FFmpegExtractAudio",
+                "preferredcodec": "mp3",
+                "preferredquality": "192",
+            }],
+        }
+    else:
+        options = {
+            "format": "bestvideo+bestaudio/best",
+            "outtmpl": output_template,
+            "merge_output_format": "mp4",
+            "noplaylist": True,
+            "extractor_args": extractor_args,
+        }
+
+    try:
+        with yt_dlp.YoutubeDL(options) as ydl:
+            info = ydl.extract_info(request.url, download=True)
+        filename = f"{file_id}.{request.format}"
+        filepath = os.path.join(DOWNLOAD_DIR, filename)
+        if not os.path.isfile(filepath):
+            raise HTTPException(status_code=500, detail="O ficheiro não foi criado.")
+        title = info.get("title", "ODEVI Download")
+        safe_title = "".join(c for c in title if c.isalnum() or c in " -_").strip()
+        return FileResponse(
+            filepath,
+            media_type="audio/mpeg" if request.format == "mp3" else "video/mp4",
+            filename=f"{safe_title or 'ODEVI Download'}.{request.format}",
+        )
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail="Não foi possível processar este link.") from exc
 
 
 @app.post("/tax/checkout")
