@@ -49,6 +49,20 @@ with sync_playwright() as p:
                     findings.append("Tax Assistant: UK selector did not activate")
             except Exception as exc:
                 findings.append(f"Tax Assistant selector interaction failed: {exc}")
+        if label == "desktop":
+            try:
+                page.goto(BASE + "/tax-assistant-demo.html", wait_until="domcontentloaded", timeout=45000)
+                page.locator("#file").set_input_files({
+                    "name": "odevi-qa-sample.csv",
+                    "mimeType": "text/csv",
+                    "buffer": b"date,description,amount,currency\n2026-11-01,Delivery payout,125.50,GBP\n2026-11-02,Fuel,-18.20,GBP\n",
+                })
+                page.locator("#results").wait_for(state="visible", timeout=10000)
+                checks += 1
+                if "2 transações reconhecidas" not in page.locator("#count").inner_text():
+                    findings.append("Free Tax Assistant demo: CSV upload did not render the expected 2 transactions")
+            except Exception as exc:
+                findings.append(f"Free Tax Assistant demo CSV upload failed: {exc}")
     browser.close()
 
 report = ["# ODEVI+ browser QA", "", f"- Checks: {checks}", f"- Findings: {len(findings)}", ""]
