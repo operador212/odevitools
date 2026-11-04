@@ -53,7 +53,7 @@ jobs:
     steps:
       - name: Check public website
         run: |
-          curl --fail --silent --show-error --location --max-time 30 https://odevi.com/ -o /tmp/odevi-home.html
+          curl --fail --silent --show-error --location --max-time 30 https://odevitools.com/ -o /tmp/odevi-home.html
           grep -qi '<html' /tmp/odevi-home.html
       - name: Check backend response
         run: |
