@@ -11,6 +11,7 @@ on:
 
 permissions:
   contents: read
+  issues: write
 
 concurrency:
   group: odevi-agent-core-${{ github.ref }}
@@ -43,6 +44,41 @@ jobs:
           name: odevi-audit-report
           path: odevi-audit-report.md
           if-no-files-found: ignore
+
+  browser-qa:
+    name: Public browser QA (mobile + desktop)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install browser test runner
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Test public journeys and responsive layouts
+        id: browser
+        continue-on-error: true
+        run: python .github/agents/browser_qa.py
+      - name: Publish deduplicated incident for failures
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python .github/agents/report_incident.py
+      - name: Upload browser QA report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: odevi-browser-qa-report
+          path: odevi-browser-report.md
+          if-no-files-found: ignore
+      - name: Fail workflow when browser QA finds problems
+        if: steps.browser.outcome == 'failure'
+        run: exit 1
 
   production-smoke:
     name: Production availability check
