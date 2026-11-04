@@ -21,10 +21,10 @@ def make_uber_pdf_fixture():
     pdf = canvas.Canvas(output, pagesize=(612, 792))
     lines = [
         "Uber", "01-31 Outubro 2026", "Resumo fiscal",
-        "Ganhos totais", "GBP 1.825,65",
-        "Valores extras", "GBP 73,47",
-        "Total de despesas", "GBP 0,00",
-        "Valor liquido de repasse", "GBP 1.825,65",
+        "Ganhos totais", "£ 1.825,65",
+        "Valores extras", "£ 73,47",
+        "Total de despesas", "£ 0,00",
+        "Valor liquido de repasse", "£ 1.825,65",
     ]
     y = 740
     for line in lines:
