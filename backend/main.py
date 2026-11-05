@@ -83,11 +83,13 @@ def validate_download_url(url: str):
         "youtube.com", "www.youtube.com", "m.youtube.com", "music.youtube.com",
         "youtu.be", "www.youtube-nocookie.com", "tiktok.com", "www.tiktok.com",
         "vm.tiktok.com", "vt.tiktok.com",
+        "instagram.com", "www.instagram.com",
     }
-    if parsed_url.scheme not in {"http", "https"} or parsed_url.hostname not in allowed_hosts:
+    if (parsed_url.scheme not in {"http", "https"} or parsed_url.hostname not in allowed_hosts
+            or parsed_url.username or parsed_url.password or parsed_url.port not in (None, 80, 443)):
         raise HTTPException(
             status_code=400,
-            detail="Usa um link público válido do YouTube ou TikTok.",
+            detail="Usa um link público válido do YouTube, TikTok ou Instagram.",
         )
     return parsed_url
 
@@ -147,8 +149,8 @@ def download_media(request: DownloadRequest):
 
 @app.post("/tax/checkout")
 def create_tax_checkout(request: TaxCheckoutRequest):
-    """Create a one-time Stripe Checkout Session for the ODEVI tax report."""
-    require_stripe_config()
+    """Paid report checkout is intentionally unavailable until fulfilment is production-ready."""
+    raise HTTPException(status_code=503, detail="O relatório pago está temporariamente indisponível. Usa o organizador gratuito enquanto concluímos a entrega segura do relatório.")
 
     jurisdiction = request.jurisdiction.upper().strip()
     if jurisdiction not in {"UK", "PT"}:
@@ -208,8 +210,8 @@ def create_tax_checkout(request: TaxCheckoutRequest):
 
 @app.get("/tax/payment-status/{session_id}")
 def tax_payment_status(session_id: str):
-    """Verify payment directly with Stripe; never trust browser redirect alone."""
-    require_stripe_config()
+    """Paid report delivery is disabled until durable fulfilment is implemented."""
+    raise HTTPException(status_code=503, detail="A confirmação e entrega de relatórios pagos ainda não está disponível.")
 
     try:
         session = stripe.checkout.Session.retrieve(session_id)
@@ -285,12 +287,8 @@ async def process_paid_csv_report(
     session_id: str,
     files: list[UploadFile] = File(...),
 ):
-    """Process multiple CSV bank exports in memory after verifying payment.
-
-    Files are not persisted by this endpoint. PDF/OCR and email/PDF delivery
-    are not supported here yet.
-    """
-    require_stripe_config()
+    """Paid processing is disabled until secure storage and delivery are ready."""
+    raise HTTPException(status_code=503, detail="O processamento pago está temporariamente indisponível. Usa o organizador gratuito local.")
     if not files or len(files) > MAX_CSV_FILES:
         raise HTTPException(
             status_code=400,

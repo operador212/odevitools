@@ -7,13 +7,15 @@ from main import validate_download_url, validate_tax_checkout_session
 
 
 class DownloadUrlValidationTests(unittest.TestCase):
-    def test_accepts_supported_youtube_and_tiktok_hosts(self):
+    def test_accepts_supported_youtube_tiktok_and_instagram_hosts(self):
         for url in (
             "https://www.youtube.com/watch?v=example",
             "https://youtu.be/example",
             "https://m.youtube.com/watch?v=example",
             "https://www.tiktok.com/@creator/video/123",
             "https://vm.tiktok.com/example",
+            "https://www.instagram.com/reel/ABC123/",
+            "https://instagram.com/p/ABC123/",
         ):
             with self.subTest(url=url):
                 self.assertIn(validate_download_url(url).scheme, {"http", "https"})
@@ -24,6 +26,9 @@ class DownloadUrlValidationTests(unittest.TestCase):
             "https://notyoutube.com/",
             "file://youtube.com/video.mp4",
             "javascript://youtube.com/",
+            "https://instagram.com.evil.example/p/1",
+            "https://user:pass@instagram.com/p/1",
+            "https://instagram.com:444/p/1",
         ):
             with self.subTest(url=url):
                 with self.assertRaises(HTTPException):
