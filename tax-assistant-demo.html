@@ -116,7 +116,7 @@ function parsePdfText(text,fileName){
  const period=periodMatch?periodMatch[1].trim():extractPdfPeriod(text);
  if(uber && /ganhos totais|total earnings|valor l[ií]quido de repasse|net payout/i.test(n)){
   const gross=extractMoney(text,[/(?:Ganhos totais|Total earnings)[\s\S]{0,120}?(?:£\s*)?([0-9][0-9.,]*)/i]);
-  const fees=extractMoney(text,[/(?:Total de despesas|Total expenses)[\s\S]{0,120}?(?:£\s*)?\(?([0-9][0-9.,]*)\)?/i]);
+  const fees=extractMoney(text,[/Total de despesas[\s\S]{0,120}?£?\s*\(?([0-9][0-9.,]*)/i,/Total expenses[\s\S]{0,120}?£?\s*\(?([0-9][0-9.,]*)/i]);
   const tips=extractMoney(text,[/(?:Valores extras|Extra amounts|Other earnings)[\s\S]{0,120}?(?:£\s*)?([0-9][0-9.,]*)/i]);
   const net=extractMoney(text,[/(?:Valor l[ií]quido de repasse|Net payout|Net transfer)[\s\S]{0,120}?(?:£\s*)?([0-9][0-9.,]*)/i]);
   const flags=[];
