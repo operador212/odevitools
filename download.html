@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080a10">
+<meta name="description" content="Descarrega vídeos públicos do YouTube, TikTok e Instagram em MP4 ou áudio MP3 com o ODEVI+.">
+<link rel="canonical" href="https://odevitools.com/download.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ODEVI+">
+<meta property="og:title" content="Video Downloader gratuito | ODEVI+">
+<meta property="og:description" content="Cola um link público e prepara o teu ficheiro em MP4 ou MP3.">
+<title>Video Downloader gratuito | ODEVI+</title>
+<style>
+:root{color-scheme:dark;--bg:#080a10;--panel:#11141d;--border:#2a303c;--text:#f5f7fb;--muted:#a7afbd;--green:#68f39a;--red:#ff8585}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,sans-serif}.wrap{max-width:760px;margin:auto;padding:24px 18px 64px}a{color:var(--green)}header{margin:10px 0 28px}header a{display:inline-block;margin-bottom:20px}h1{font-size:clamp(30px,7vw,46px);line-height:1.1;margin:0 0 12px}h2{font-size:21px;margin:0 0 12px}.muted{color:var(--muted)}.panel{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:22px;margin:20px 0}.eyebrow{color:var(--green);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}label{display:block;font-weight:700;margin:16px 0 7px}input,select{width:100%;padding:14px;border:1px solid var(--border);border-radius:11px;background:#090c13;color:var(--text);font:inherit}button,.button{display:inline-block;border:0;border-radius:11px;background:var(--green);color:#07110b;padding:14px 18px;font-weight:800;font-size:16px;text-decoration:none;cursor:pointer;margin-top:16px;width:100%}button:disabled{opacity:.55;cursor:wait}.status{display:none;margin-top:16px;padding:13px;border-radius:10px;background:#0a0e16;border:1px solid var(--border);overflow-wrap:anywhere}.status.show{display:block}.status.error{border-color:#743d3d;color:#ffb2b2}.status.ok{border-color:#376a4c;color:#b9ffd0}.platforms{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}.platforms span{border:1px solid var(--border);border-radius:999px;padding:5px 11px;color:var(--muted);font-size:13px}.note{font-size:13px;color:var(--muted)}footer{border-top:1px solid var(--border);margin-top:36px;padding-top:18px;font-size:13px;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header>
+<a href="index.html">← Voltar ao ODEVI+</a>
+<p class="eyebrow">Ferramenta gratuita</p>
+<h1>Video Downloader</h1>
+<p class="muted">Cola um link público, escolhe o formato e prepara o ficheiro diretamente no teu dispositivo.</p>
+<div class="platforms" aria-label="Plataformas suportadas"><span>YouTube</span><span>TikTok</span><span>Instagram</span></div>
+</header>
+<section class="panel">
+<h2>Preparar download</h2>
+<form id="downloadForm">
+<label for="videoUrl">Link do vídeo</label>
+<input id="videoUrl" name="url" type="url" inputmode="url" autocomplete="url" placeholder="https://..." required>
+<label for="format">Formato</label>
+<select id="format" name="format"><option value="mp4">Vídeo MP4</option><option value="mp3">Áudio MP3</option></select>
+<button id="downloadButton" type="submit">Preparar download</button>
+</form>
+<div id="status" class="status" role="status" aria-live="polite"></div>
+</section>
+<section class="panel">
+<h2>Como funciona?</h2>
+<ol>
+<li>Copia o link de um conteúdo público suportado.</li>
+<li>Cola o link e escolhe MP4 ou MP3.</li>
+<li>Espera pelo processamento e o ficheiro será descarregado.</li>
+</ol>
+<p class="note">A disponibilidade depende das regras e limitações de cada plataforma. Conteúdos privados, protegidos ou que exijam autenticação podem não funcionar.</p>
+<p class="note">Descarrega apenas conteúdos teus ou para os quais tenhas autorização e respeita os direitos de autor e os termos das plataformas.</p>
+</section>
+<footer>© 2026 ODEVI+ · <a href="privacidade.html">Privacidade</a> · <a href="contacto.html">Contacto</a></footer>
+</main>
+<script>
+(function(){
+ const API_BASE='https://odevi-backend.onrender.com';
+ const form=document.getElementById('downloadForm');
+ const button=document.getElementById('downloadButton');
+ const status=document.getElementById('status');
+ function show(message,type){status.textContent=message;status.className='status show '+(type||'');}
+ form.addEventListener('submit',async function(event){
+  event.preventDefault();
+  const url=document.getElementById('videoUrl').value.trim();
+  const format=document.getElementById('format').value;
+  if(!url){show('Cola primeiro um link válido.','error');return;}
+  button.disabled=true;button.textContent='A processar…';
+  show('A preparar o ficheiro. Isto pode demorar algum tempo; mantém esta página aberta.');
+  try{
+   const response=await fetch(API_BASE+'/download',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:url,format:format})});
+   if(!response.ok){
+    let message='Não foi possível processar este link. Confirma se é público e tenta novamente.';
+    try{const data=await response.json();if(data.detail)message=data.detail;}catch(_){}
+    throw new Error(message);
+   }
+   const blob=await response.blob();
+   if(!blob.size)throw new Error('O ficheiro recebido está vazio. Tenta novamente.');
+   const disposition=response.headers.get('Content-Disposition')||'';
+   const match=disposition.match(/filename="?([^";]+)"?/i);
+   const filename=match?match[1]:'odevi-download.'+format;
+   const objectUrl=URL.createObjectURL(blob);
+   const anchor=document.createElement('a');anchor.href=objectUrl;anchor.download=filename;document.body.appendChild(anchor);anchor.click();anchor.remove();
+   setTimeout(()=>URL.revokeObjectURL(objectUrl),60000);
+   show('Download preparado. Se o ficheiro não aparecer automaticamente, verifica a pasta de downloads do teu dispositivo.','ok');
+  }catch(error){show(error.message||'Ocorreu um erro de ligação. Tenta novamente mais tarde.','error');}
+  finally{button.disabled=false;button.textContent='Preparar download';}
+ });
+})();
+</script>
+</body>
+</html>
