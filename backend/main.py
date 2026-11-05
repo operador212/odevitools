@@ -112,6 +112,10 @@ def download_media(request: DownloadRequest):
             "outtmpl": output_template,
             "noplaylist": True,
             "extractor_args": extractor_args,
+            "js_runtimes": {"deno": {}},
+            "sleep_interval_requests": 1,
+            "retries": 3,
+            "fragment_retries": 3,
             "postprocessors": [{
                 "key": "FFmpegExtractAudio",
                 "preferredcodec": "mp3",
@@ -144,7 +148,24 @@ def download_media(request: DownloadRequest):
     except HTTPException:
         raise
     except Exception as exc:
-        raise HTTPException(status_code=502, detail="Não foi possível processar este link.") from exc
+        error_text = str(exc).lower()
+        if any(marker in error_text for marker in (
+            "http error 429",
+            "too many requests",
+            "sign in to confirm",
+            "not a bot",
+        )):
+            raise HTTPException(
+                status_code=503,
+                detail=(
+                    "A plataforma está a limitar temporariamente os pedidos deste servidor. "
+                    "Tenta novamente mais tarde. Não é necessário alterar o link."
+                ),
+            ) from exc
+        raise HTTPException(
+            status_code=502,
+            detail="A plataforma não permitiu processar este conteúdo. Confirma se é público e tenta novamente.",
+        ) from exc
 
 
 @app.post("/tax/checkout")
