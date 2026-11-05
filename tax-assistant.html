@@ -18,8 +18,8 @@ main{max-width:760px;margin:0 auto}.brand{font-weight:800;letter-spacing:.12em;c
 <div class="eyebrow">Preparação fiscal simplificada</div>
 <h1>Prepare o teu relatório fiscal com menos confusão.</h1>
 <p>Uma ferramenta de apoio para trabalhadores independentes no Reino Unido e em Portugal. Importa extratos CSV e organiza movimentos bancários num resumo preparatório.</p>
-<div class="price">£5,99 <span class="small">/ relatório · pagamento único</span></div>
-<p class="small">Pagamento único por relatório. Sem versão gratuita nem subscrição mensal.</p>
+<div class="price">Em preparação</div>
+<p class="small">O relatório pago ainda não está disponível. Não será cobrado qualquer valor nesta fase.</p>
 </section>
 <section class="panel">
 <h2>Onde declaras os teus rendimentos?</h2>
@@ -35,9 +35,9 @@ main{max-width:760px;margin:0 auto}.brand{font-weight:800;letter-spacing:.12em;c
 <li>Deteção de duplicados exatos entre extratos e sinalização de movimentos para revisão.</li>
 <li>Exportação do resumo em formato JSON para guardar e continuar a preparar os registos.</li>
 </ul>
-<div id="checkoutStatus" class="status" role="status" aria-live="polite"><strong>Relatório automático — £5,99.</strong><br>Escolhe o país e inicia o pagamento seguro. Depois do pagamento, poderás carregar até 10 extratos CSV (máximo de 5 MB por ficheiro).</div>
-<button id="checkoutButton" class="button" type="button">Continuar para pagamento — £5,99</button>
-<p class="small">O pagamento é processado pelo Stripe. Nesta versão, o relatório aceita extratos bancários CSV; PDFs, faturas e recibos ainda não são suportados neste fluxo.</p>
+<div id="checkoutStatus" class="status" role="status" aria-live="polite"><strong>Pagamentos temporariamente desativados.</strong><br>Estamos a concluir o armazenamento seguro, a geração e a entrega do relatório. Não introduzas dados de pagamento nesta versão.</div>
+<button id="checkoutButton" class="button" type="button" disabled>Relatório pago em desenvolvimento</button>
+<p class="small">Enquanto a versão paga não estiver pronta, podes testar gratuitamente o organizador local. Os ficheiros desse organizador são processados no teu navegador.</p>
 <section id="uploadPanel" hidden style="margin-top:18px;border:1px solid var(--line);border-radius:12px;padding:18px">
 <h3>Enviar os teus extratos CSV</h3>
 <p class="small">Pagamento confirmado. Seleciona os ficheiros CSV exportados do banco. Os ficheiros são processados em memória e não são guardados pelo endpoint atual. Não envies palavras-passe nem documentos de identificação.</p>
@@ -79,6 +79,9 @@ function showProcessStatus(message,isError=false){
  el.style.borderColor=isError?'#8b3e3e':'#6c5530';
 }
 async function startCheckout(){
+ showStatus("O checkout pago está temporariamente desativado. Usa o organizador gratuito local.",true);
+ return;
+
  const button=document.getElementById('checkoutButton');
  button.disabled=true;button.textContent='A abrir o pagamento…';
  showStatus('A criar uma sessão de pagamento segura…');
@@ -102,6 +105,9 @@ async function startCheckout(){
  }
 }
 async function processFiles(){
+ showProcessStatus("O processamento pago está temporariamente desativado. Usa o organizador gratuito local.",true);
+ return;
+
  const input=document.getElementById('csvFiles'),button=document.getElementById('processButton');
  const files=Array.from(input.files||[]);
  if(!activeSessionId){showProcessStatus('Não encontrei uma sessão de pagamento. Volta a confirmar o pagamento.',true);return}
@@ -151,7 +157,9 @@ document.getElementById('downloadReport').addEventListener('click',()=>{
  const blob=new Blob([JSON.stringify(latestReport,null,2)],{type:'application/json;charset=utf-8'});
  const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='odevi-relatorio-fiscal-preparatorio.json';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
 });
-restorePaymentSession();
+// Checkout and paid processing remain disabled until fulfilment is production-ready.
+// Ignore old success query strings; no payment can unlock an unfinished report.
+
 </script>
 </body>
 </html>
