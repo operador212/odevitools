@@ -5,7 +5,12 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     ffmpeg \
     git \
+    curl \
+    unzip \
     && rm -rf /var/lib/apt/lists/*
+
+ENV DENO_INSTALL=/usr/local
+RUN curl -fsSL https://deno.land/install.sh | sh -s v2.2.12
 
 WORKDIR /app
 
