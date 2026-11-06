@@ -5,6 +5,6 @@ PT_PACK = JurisdictionPack(
     code="PT",
     name="Portugal",
     currency="EUR",
-    tax_year_pattern=r"\\d{4}",
+    tax_year_pattern=r"\d{4}",
     version="pt-metadata-v1",
 )
