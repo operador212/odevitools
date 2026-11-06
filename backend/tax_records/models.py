@@ -133,3 +133,17 @@ class AuditEvent(Base):
     entity_id: Mapped[str] = mapped_column(String(36), nullable=False)
     change_reference: Mapped[str | None] = mapped_column(String(128))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utc_now)
+
+class TenantMembership(Base):
+    __tablename__ = "tax_tenant_memberships"
+    __table_args__ = (
+        UniqueConstraint("tenant_id", "identity_issuer", "user_subject", name="uq_tax_tenant_identity"),
+        CheckConstraint("role IN ('viewer', 'contributor', 'owner')", name="ck_tax_membership_role"),
+    )
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
+    tenant_id: Mapped[str] = mapped_column(ForeignKey("tax_tenants.id", ondelete="CASCADE"), nullable=False, index=True)
+    identity_issuer: Mapped[str] = mapped_column(String(255), nullable=False)
+    user_subject: Mapped[str] = mapped_column(String(255), nullable=False)
+    role: Mapped[str] = mapped_column(String(24), nullable=False)
+    is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utc_now)
