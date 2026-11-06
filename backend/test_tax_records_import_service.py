@@ -5,7 +5,7 @@ from decimal import Decimal
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import Session
 
-from tax_records.models import Base, AuditEvent, FinancialAccount, FinancialTransaction, ImportJob, Tenant
+from tax_records.models import Base, AuditEvent, ClassificationSuggestion, FinancialAccount, FinancialTransaction, ImportJob, Tenant
 from tax_records.import_service import import_bank_csv
 
 
@@ -46,6 +46,8 @@ class TaxRecordsImportServiceTests(unittest.TestCase):
             self.assertEqual(rows[0].amount, Decimal("120.50"))
             self.assertEqual(len(session.scalars(select(AuditEvent).where(
                 AuditEvent.tenant_id == self.tenant_a_id)).all()), 1)
+            self.assertEqual(len(session.scalars(select(ClassificationSuggestion).where(
+                ClassificationSuggestion.transaction_id.in_([row.id for row in rows]))).all()), 2)
 
     def test_replaying_same_file_is_idempotent(self):
         with Session(self.engine) as session:
