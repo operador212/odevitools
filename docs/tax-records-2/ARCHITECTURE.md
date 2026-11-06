@@ -12,7 +12,7 @@ This decision minimizes migration risk, preserves the existing ODEVI frontend/ba
 
 ## Why not embed Akaunting now?
 
-Akaunting's upstream README identifies the project as BSL-licensed and its repository is source-available, not a conventional permissive open-source dependency. The exact Additional Use Grant and Change Date must be reviewed from the release's LICENSE.txt before any commercial deployment. ODEVI intends to offer a hosted multi-tenant paid service, so no assumption of permission is safe. Obtain written confirmation or a commercial licence before embedding, modifying, white-labelling, or offering it as a service.
+Akaunting 3.3.0's upstream LICENSE.txt is Business Source License 1.1. Its Additional Use Grant permits production use only within stated limits (no more than two users, one company, or one thousand invoices) and expressly excludes use as an “Accounting Service” where third parties access the accounting/invoicing functionality for their benefit. That definition directly conflicts with ODEVI's intended hosted multi-tenant bookkeeping service. The licence also restricts white-labelling; the Change License is GPLv3 four years after the version's publication (or the stated first-distribution anniversary, whichever comes first). Therefore, do not embed or fork this release for ODEVI's hosted product unless Akaunting grants a suitable commercial licence in writing. Re-check the exact LICENSE.txt for the specific version before any future use.
 
 ## Why not ERPNext now?
 
