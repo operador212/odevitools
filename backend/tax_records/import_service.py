@@ -16,7 +16,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from bank_csv_importer import parse_bank_csv
-from tax_records.models import AuditEvent, FinancialAccount, FinancialTransaction, ImportJob, Tenant
+from tax_records.models import AuditEvent, ClassificationSuggestion, FinancialAccount, FinancialTransaction, ImportJob, Tenant
 
 PARSER_VERSION = "csv-v1"
 
@@ -110,6 +110,14 @@ def import_bank_csv(
             review_status=review_status,
         )
         session.add(transaction)
+        session.flush()
+        session.add(ClassificationSuggestion(
+            transaction_id=transaction.id,
+            confidence=Decimal(str(item.get("confidence", 0))).quantize(Decimal("0.0001")),
+            rationale=str(item.get("matched_rule") or "No deterministic rule matched; manual review required"),
+            engine_version="transaction-classifier-v1",
+            reviewed=False,
+        ))
         added += 1
 
     job.status = "completed"
