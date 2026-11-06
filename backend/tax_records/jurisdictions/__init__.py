@@ -1,5 +1,5 @@
 """Jurisdiction metadata registry. No tax calculations are performed here."""
-from .base import JurisdictionPack, get_jurisdiction_pack, validate_tax_year
+from .base import JurisdictionPack
 from .uk import UK_PACK
 from .pt import PT_PACK
 
