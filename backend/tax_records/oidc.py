@@ -54,7 +54,7 @@ async def get_current_principal(request: Request) -> VerifiedPrincipal:
     try:
         return verify_oidc_access_token(credentials.credentials, issuer=issuer,
                                         audience=audience, jwks_url=jwks_url)
-    except (InvalidTokenError, ValueError, Exception) as exc:
+    except Exception as exc:
         # Fail closed and never disclose token parsing details to the caller.
         raise HTTPException(status_code=401, detail="Token inválido ou expirado",
                             headers={"WWW-Authenticate": "Bearer"}) from exc
