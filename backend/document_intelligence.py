@@ -115,6 +115,14 @@ def analyze_document(filename: str, raw: bytes, *, perform_ocr: bool = False) ->
     if extension == ".pdf":
         text, warnings = _extract_pdf(raw)
         needs_ocr = not text.strip()
+        if needs_ocr and perform_ocr:
+            try:
+                text = _ocr_pdf(raw)
+                needs_ocr = not text.strip()
+                if needs_ocr:
+                    warnings.append("O OCR não encontrou texto legível.")
+            except Exception:
+                warnings.append("OCR indisponível ou falhou neste servidor.")
         if needs_ocr:
             warnings.append("Não foi possível extrair texto; este PDF pode ser digitalizado e precisar de OCR.")
     elif extension == ".docx":
