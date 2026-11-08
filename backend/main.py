@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, HTTPException, Request, UploadFile
+from fastapi import FastAPI, File, HTTPException, Request, UploadFile, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
@@ -366,12 +366,12 @@ async def process_paid_csv_report(
 
 # ODEVI AI document intelligence — in-memory extraction; no upload persistence.
 from document_intelligence import analyze_document, MAX_DOCUMENT_BYTES
-from tax_records.oidc import get_current_principal
+from document_auth import get_document_principal
 
 @app.post("/documents/analyze")
 async def analyze_uploaded_document(
     file: UploadFile = File(...),
-    principal = Depends(get_current_principal),
+    principal = Depends(get_document_principal),
 ):
     """Extract a document for an authenticated OIDC user; bytes are not persisted."""
     _ = principal  # Identity is verified server-side; this endpoint is intentionally stateless.
