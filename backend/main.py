@@ -1,9 +1,10 @@
-from fastapi import FastAPI, File, HTTPException, Request, UploadFile
+from fastapi import FastAPI, File, Header, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from urllib.parse import urlparse
 import os
+import secrets
 import uuid
 import stripe
 import yt_dlp
@@ -368,12 +369,20 @@ async def process_paid_csv_report(
 from document_intelligence import analyze_document, MAX_DOCUMENT_BYTES
 
 @app.post("/documents/analyze")
-async def analyze_uploaded_document(file: UploadFile = File(...)):
-    """Extract text and suggest a document type without retaining uploaded files."""
+async def analyze_uploaded_document(
+    file: UploadFile = File(...),
+    x_odevi_document_key: str | None = Header(default=None),
+):
+    """Internal document extraction endpoint; disabled until a server-side key is configured."""
+    expected_key = os.getenv("ODEVI_DOCUMENT_API_KEY", "")
+    if not expected_key:
+        raise HTTPException(status_code=503, detail="A análise de documentos ainda não está ativada.")
+    if not x_odevi_document_key or not secrets.compare_digest(x_odevi_document_key, expected_key):
+        raise HTTPException(status_code=401, detail="Não autorizado.")
     if not file.filename:
         raise HTTPException(status_code=400, detail="Nome do ficheiro em falta.")
-    raw = await file.read(MAX_DOCUMENT_BYTES + 1)
     try:
+        raw = await file.read(MAX_DOCUMENT_BYTES + 1)
         result = analyze_document(file.filename, raw)
         return result.to_dict()
     except ValueError as exc:
