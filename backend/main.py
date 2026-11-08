@@ -383,7 +383,7 @@ async def analyze_uploaded_document(
         raise HTTPException(status_code=400, detail="Nome do ficheiro em falta.")
     try:
         raw = await file.read(MAX_DOCUMENT_BYTES + 1)
-        result = analyze_document(file.filename, raw)
+        result = analyze_document(file.filename, raw, perform_ocr=os.getenv("ODEVI_OCR_ENABLED", "").lower() == "true")
         return result.to_dict()
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
