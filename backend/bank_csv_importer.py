@@ -33,7 +33,7 @@ def _norm(value: Any) -> str:
     raw = str(value or "").strip().lower()
     raw = unicodedata.normalize("NFKD", raw)
     raw = "".join(ch for ch in raw if not unicodedata.combining(ch))
-    return re.sub(r"\\s+", " ", raw)
+    return re.sub(r"\s+", " ", raw)
 
 
 def _parse_amount(value: Any) -> Decimal | None:
