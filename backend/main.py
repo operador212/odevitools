@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, HTTPException, Request, UploadFile
+from fastapi import FastAPI, File, HTTPException, Request, UploadFile, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
@@ -362,3 +362,31 @@ async def process_paid_csv_report(
         "os documentos nem envia o relatório por email."
     )
     return report
+
+
+# ODEVI AI document intelligence — in-memory extraction; no upload persistence.
+from document_intelligence import analyze_document, MAX_DOCUMENT_BYTES
+from document_auth import get_document_principal
+
+@app.post("/documents/analyze")
+async def analyze_uploaded_document(
+    file: UploadFile = File(...),
+    principal = Depends(get_document_principal),
+):
+    """Extract a document for an authenticated OIDC user; bytes are not persisted."""
+    _ = principal  # Identity is verified server-side; this endpoint is intentionally stateless.
+    if not file.filename:
+        raise HTTPException(status_code=400, detail="Nome do ficheiro em falta.")
+    try:
+        raw = await file.read(MAX_DOCUMENT_BYTES + 1)
+        result = analyze_document(file.filename, raw, perform_ocr=os.getenv("ODEVI_OCR_ENABLED", "").lower() == "true")
+        return result.to_dict()
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:
+        # Do not expose parser internals or document contents in API errors.
+        if exc.__class__.__module__.startswith(("pypdf", "docx")):
+            raise HTTPException(status_code=422, detail="Não foi possível ler este documento.") from None
+        raise
+    finally:
+        await file.close()
