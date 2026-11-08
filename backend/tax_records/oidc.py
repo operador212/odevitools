@@ -11,6 +11,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 import jwt
 from jwt import InvalidTokenError
 from jwt import PyJWKClient
+from jwt.exceptions import PyJWKClientConnectionError, PyJWKClientError
 from tax_records.access import VerifiedPrincipal
 
 _bearer = HTTPBearer(auto_error=False)
@@ -54,7 +55,14 @@ async def get_current_principal(request: Request) -> VerifiedPrincipal:
     try:
         return verify_oidc_access_token(credentials.credentials, issuer=issuer,
                                         audience=audience, jwks_url=jwks_url)
-    except Exception as exc:
-        # Fail closed and never disclose token parsing details to the caller.
+    except PyJWKClientConnectionError as exc:
+        raise HTTPException(status_code=503, detail="Serviço de autenticação temporariamente indisponível") from exc
+    except PyJWKClientError as exc:
         raise HTTPException(status_code=401, detail="Token inválido ou expirado",
                             headers={"WWW-Authenticate": "Bearer"}) from exc
+    except InvalidTokenError as exc:
+        raise HTTPException(status_code=401, detail="Token inválido ou expirado",
+                            headers={"WWW-Authenticate": "Bearer"}) from exc
+    except Exception as exc:
+        # Fail closed; distinguish unexpected infrastructure faults from bad credentials.
+        raise HTTPException(status_code=503, detail="Não foi possível validar a autenticação") from exc
