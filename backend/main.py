@@ -362,3 +362,26 @@ async def process_paid_csv_report(
         "os documentos nem envia o relatório por email."
     )
     return report
+
+
+# ODEVI AI document intelligence — in-memory extraction; no upload persistence.
+from document_intelligence import analyze_document, MAX_DOCUMENT_BYTES
+
+@app.post("/documents/analyze")
+async def analyze_uploaded_document(file: UploadFile = File(...)):
+    """Extract text and suggest a document type without retaining uploaded files."""
+    if not file.filename:
+        raise HTTPException(status_code=400, detail="Nome do ficheiro em falta.")
+    raw = await file.read(MAX_DOCUMENT_BYTES + 1)
+    try:
+        result = analyze_document(file.filename, raw)
+        return result.to_dict()
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:
+        # Do not expose parser internals or document contents in API errors.
+        if exc.__class__.__module__.startswith(("pypdf", "docx")):
+            raise HTTPException(status_code=422, detail="Não foi possível ler este documento.") from None
+        raise
+    finally:
+        await file.close()
