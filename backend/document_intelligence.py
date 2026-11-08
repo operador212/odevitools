@@ -7,6 +7,7 @@ from __future__ import annotations
 import hashlib
 import io
 import re
+import zipfile
 from dataclasses import asdict, dataclass
 from typing import Any
 
@@ -52,6 +53,19 @@ def _extract_pdf(raw: bytes) -> tuple[str, list[str]]:
     return "\n".join(page.extract_text() or "" for page in reader.pages), []
 
 def _extract_docx(raw: bytes) -> tuple[str, list[str]]:
+    # DOCX is a ZIP container: reject suspicious expansion before parsing XML.
+    try:
+        with zipfile.ZipFile(io.BytesIO(raw)) as archive:
+            entries = archive.infolist()
+            expanded_size = sum(entry.file_size for entry in entries)
+            if len(entries) > 200 or expanded_size > 32 * 1024 * 1024:
+                raise ValueError("O documento DOCX excede os limites de segurança.")
+            if any(entry.file_size > 0 and entry.compress_size == 0 for entry in entries):
+                raise ValueError("O documento DOCX contém uma entrada inválida.")
+            if any(entry.compress_size and entry.file_size / entry.compress_size > 1000 for entry in entries):
+                raise ValueError("O documento DOCX tem uma taxa de compressão não permitida.")
+    except zipfile.BadZipFile as exc:
+        raise ValueError("O ficheiro DOCX está danificado ou não é válido.") from exc
     from docx import Document
     document = Document(io.BytesIO(raw))
     chunks = [p.text for p in document.paragraphs if p.text]
