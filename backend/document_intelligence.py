@@ -14,6 +14,7 @@ from typing import Any
 MAX_DOCUMENT_BYTES = 8 * 1024 * 1024
 MAX_EXTRACTED_CHARS = 40_000
 MAX_PDF_PAGES = 30
+MAX_OCR_PAGES = 10
 ALLOWED_EXTENSIONS = {".pdf", ".docx", ".txt", ".csv"}
 
 @dataclass(frozen=True)
@@ -74,7 +75,33 @@ def _extract_docx(raw: bytes) -> tuple[str, list[str]]:
             chunks.append(" | ".join(cell.text for cell in row.cells))
     return "\n".join(chunks), []
 
-def analyze_document(filename: str, raw: bytes) -> DocumentAnalysis:
+def _ocr_pdf(raw: bytes) -> str:
+    """Optional local OCR. Requires pypdfium2, pytesseract and the Tesseract binary."""
+    import os
+    import pypdfium2 as pdfium
+    import pytesseract
+    pdf = pdfium.PdfDocument(raw)
+    chunks = []
+    try:
+        for index in range(min(len(pdf), MAX_OCR_PAGES)):
+            page = pdf[index]
+            bitmap = page.render(scale=180 / 72)
+            image = bitmap.to_pil()
+            try:
+                chunks.append(pytesseract.image_to_string(
+                    image, lang=os.getenv("ODEVI_OCR_LANG", "eng+por"),
+                    config="--psm 3",
+                ))
+            finally:
+                image.close()
+                bitmap.close()
+                page.close()
+    finally:
+        pdf.close()
+    return "\\n".join(chunks)
+
+
+def analyze_document(filename: str, raw: bytes, *, perform_ocr: bool = False) -> DocumentAnalysis:
     """Extract text and suggest a document category without retaining file bytes."""
     if not isinstance(raw, bytes) or not raw:
         raise ValueError("O ficheiro está vazio.")
