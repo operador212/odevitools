@@ -8,6 +8,7 @@ from __future__ import annotations
 import csv
 import io
 import re
+import unicodedata
 from collections import defaultdict
 from datetime import datetime
 from decimal import Decimal, InvalidOperation
@@ -29,7 +30,10 @@ CURRENCY_HEADERS = {"currency", "currency code", "ccy", "moeda", "divisa"}
 
 
 def _norm(value: Any) -> str:
-    return re.sub(r"\s+", " ", str(value or "").strip().lower())
+    raw = str(value or "").strip().lower()
+    raw = unicodedata.normalize("NFKD", raw)
+    raw = "".join(ch for ch in raw if not unicodedata.combining(ch))
+    return re.sub(r"\\s+", " ", raw)
 
 
 def _parse_amount(value: Any) -> Decimal | None:
@@ -113,9 +117,9 @@ def parse_bank_csv(csv_text: str, jurisdiction: str = "UK") -> dict[str, Any]:
     for row in reader:
         description = str(row.get(desc_col, "") or "").strip()
         date = _parse_date(row.get(date_col))
-        if amount_col:
-            amount = _parse_amount(row.get(amount_col))
-        else:
+        amount = _parse_amount(row.get(amount_col)) if amount_col else None
+        # Fall back to Credit/Debit when an Amount column exists but is blank.
+        if amount is None and (credit_col or debit_col):
             credit = _parse_amount(row.get(credit_col)) if credit_col else None
             debit = _parse_amount(row.get(debit_col)) if debit_col else None
             amount = (credit or Decimal("0")) - abs(debit or Decimal("0"))
