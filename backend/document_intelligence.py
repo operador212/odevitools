@@ -98,7 +98,7 @@ def _ocr_pdf(raw: bytes) -> str:
                 page.close()
     finally:
         pdf.close()
-    return "\\n".join(chunks)
+    return "\n".join(chunks)
 
 
 def analyze_document(filename: str, raw: bytes, *, perform_ocr: bool = False) -> DocumentAnalysis:
