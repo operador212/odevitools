@@ -1,10 +1,9 @@
-from fastapi import FastAPI, File, Header, HTTPException, Request, UploadFile
+from fastapi import FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from urllib.parse import urlparse
 import os
-import secrets
 import uuid
 import stripe
 import yt_dlp
@@ -367,18 +366,15 @@ async def process_paid_csv_report(
 
 # ODEVI AI document intelligence — in-memory extraction; no upload persistence.
 from document_intelligence import analyze_document, MAX_DOCUMENT_BYTES
+from tax_records.oidc import get_current_principal
 
 @app.post("/documents/analyze")
 async def analyze_uploaded_document(
     file: UploadFile = File(...),
-    x_odevi_document_key: str | None = Header(default=None),
+    principal = Depends(get_current_principal),
 ):
-    """Internal document extraction endpoint; disabled until a server-side key is configured."""
-    expected_key = os.getenv("ODEVI_DOCUMENT_API_KEY", "")
-    if not expected_key:
-        raise HTTPException(status_code=503, detail="A análise de documentos ainda não está ativada.")
-    if not x_odevi_document_key or not secrets.compare_digest(x_odevi_document_key, expected_key):
-        raise HTTPException(status_code=401, detail="Não autorizado.")
+    """Extract a document for an authenticated OIDC user; bytes are not persisted."""
+    _ = principal  # Identity is verified server-side; this endpoint is intentionally stateless.
     if not file.filename:
         raise HTTPException(status_code=400, detail="Nome do ficheiro em falta.")
     try:
