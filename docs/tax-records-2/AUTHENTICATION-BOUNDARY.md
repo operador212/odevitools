@@ -2,24 +2,30 @@
 
 ## Implemented in this branch
 
-- TenantMembership stores an identity-provider issuer and opaque provider subject, tenant, role and active flag. Email addresses are not used as identity keys.
-- VerifiedPrincipal is an immutable value object representing a subject only after a trusted identity adapter has validated its token.
-- require_tenant_access resolves active membership server-side and enforces viewer/contributor/owner role levels. Missing membership, wrong issuer, wrong subject and insufficient role fail closed.
-- Alembic migration 0002_tenant_memberships creates the membership table and role constraint.
+- TenantMembership stores identity-provider issuer and opaque provider subject, tenant, role and active flag. Email addresses are not identity keys.
+- VerifiedPrincipal is created only after the server validates a signed access token.
+- OIDC JWT validation uses provider JWKS, fixed RS256/ES256 algorithms, issuer, audience, expiry, issued-at and required claims.
+- FastAPI dependencies enforce active membership and Viewer / Contributor / Owner role levels.
+- The API exposes workspace listing and first-workspace creation for the authenticated identity. The server creates the owner membership using the verified issuer and subject.
+- Transaction list, CSV import and review routes use tenant access dependencies. The browser cannot select another user's identity; tenant IDs are checked against membership.
+- The static dashboard implements provider-neutral Authorization Code + PKCE and uses only public client configuration. It never contains a client secret or database URL.
+- Automated tests cover workspace creation, listing, duplicate workspace prevention, invalid tax year and isolation by identity.
 
-## Not implemented / release blockers
+## External configuration still required
 
-- A provider-neutral OIDC JWT verification adapter now validates signed access tokens using the configured JWKS endpoint, a fixed RS256/ES256 algorithm allowlist, issuer, audience, expiry and required claims. The adapter creates VerifiedPrincipal only after successful verification. FastAPI dependencies are available for bearer-token authentication and tenant role checks; no Tax Records route currently uses them.
-- No identity provider has been selected or connected. Login screens, logout, MFA, password reset, session cookies, CSRF handling, account recovery, invitation and membership provisioning are not implemented.
-- Server configuration required before authentication can work: OIDC_ISSUER, OIDC_AUDIENCE and OIDC_JWKS_URL. These must be set as server-side environment variables after selecting and configuring an OIDC provider. Never put provider secrets in frontend code.
-- VerifiedPrincipal must only be constructed by a future server-side adapter after signature, issuer, audience, expiry and nonce/session checks. It must never be populated from request JSON, query parameters, arbitrary user-ID headers, or browser local storage.
-- Existing import/review services are internal functions and are not yet wrapped by authenticated API dependencies. Do not mount routes until every service call requires a verified principal and an authorized tenant access result.
-- Tenant membership provisioning, invitation acceptance, ownership transfer, support access and account deletion still need explicit workflows and tests.
+- No OIDC provider has been selected or configured for production. The public `tax-records-config.js` values `issuer`, `clientId` and `audience` are intentionally blank.
+- Render must be configured with `OIDC_ISSUER`, `OIDC_AUDIENCE`, `OIDC_JWKS_URL` and `TAX_RECORDS_DATABASE_URL`.
+- The provider must allow `https://odevitools.com/tax-records.html` as a redirect URI and `https://odevitools.com` as an origin.
+- Login, logout and access-token session handling are implemented in the SPA, but real provider sign-in cannot be verified until provider configuration and real test credentials exist.
+- No invitation, team-management or membership-recovery flow exists yet. Workspace creation is owner-only bootstrap for the authenticated subject.
 
-## Roles
+## Security requirements
 
-- viewer: read-only access.
-- contributor: import and review financial records.
-- owner: manage workspace membership and settings.
+- Never construct VerifiedPrincipal from request JSON, query parameters, arbitrary user-ID headers or browser-supplied identity fields.
+- Never expose provider client secrets, PostgreSQL URLs or signing private keys in static frontend files.
+- All tenant-scoped queries must include tenant_id and must be reached only after tenant_access_dependency succeeds.
+- Keep token lifetime short. The SPA stores the access token in sessionStorage for the current tab; protect the frontend against XSS and do not add untrusted scripts.
+- Configure provider MFA / account recovery policies in the identity provider according to the business risk.
+- Do not enable production customer data until a staging OIDC configuration, persistent database, backup/restore drill and cross-tenant security tests have passed.
 
-Role policy is a starting boundary and must be reviewed before customer launch. No default or anonymous membership is granted.
+See RELEASE-AND-SETUP.md for exact deployment steps and release gates.
