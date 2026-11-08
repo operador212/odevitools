@@ -12,6 +12,10 @@ from tax_report_builder import build_tax_report
 
 app = FastAPI(title="ODEVI+ API")
 
+# Tax Records v2 routes fail closed until OIDC and PostgreSQL are configured.
+from tax_records.api import router as tax_records_router
+app.include_router(tax_records_router)
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[

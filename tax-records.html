@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10141d">
+<title>ODEVI+ · Tax Records</title>
+<style>
+:root{color-scheme:dark;--bg:#10141d;--panel:#191f2b;--line:#30394a;--text:#f4f6fb;--muted:#aeb8ca;--blue:#8db1ff;--green:#62d6a4;--amber:#f2cf88}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}main{max-width:1180px;margin:auto;padding:24px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}.brand{font-weight:900;letter-spacing:.14em;color:var(--blue)}h1{font-size:clamp(2rem,4vw,3rem);line-height:1.1;margin:.6rem 0}h2{font-size:1.15rem;margin:0 0 12px}p{color:var(--muted)}.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:18px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.metric{padding:16px;border:1px solid var(--line);border-radius:12px;background:#111722}.metric small{display:block;color:var(--muted)}.metric strong{font-size:1.5rem;display:block;overflow-wrap:anywhere}button,.btn{border:0;border-radius:9px;padding:11px 15px;background:var(--blue);color:#101827;font-weight:800;font:inherit;cursor:pointer;text-decoration:none;display:inline-block}.secondary{background:#293345;color:var(--text);border:1px solid var(--line)}button:disabled{opacity:.45;cursor:not-allowed}input,select{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;background:#111722;color:var(--text);font:inherit}label{display:block;color:var(--muted);font-size:.9rem;margin:10px 0 5px}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row>*{flex:1}.notice{border:1px solid #6b5630;background:#2b2417;color:var(--amber);padding:12px;border-radius:10px}.success{color:var(--green)}.muted{color:var(--muted)}.tablewrap{overflow:auto}table{border-collapse:collapse;width:100%;min-width:720px}th,td{text-align:left;padding:11px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-size:.85rem}.pill{font-size:.78rem;padding:3px 8px;border:1px solid var(--line);border-radius:30px}.hidden{display:none!important}#status{min-height:1.5em}footer{margin:30px 0;color:var(--muted);font-size:.85rem}a{color:var(--blue)}@media(max-width:680px){main{padding:14px}.grid{grid-template-columns:1fr}.panel{padding:16px}}
+</style>
+</head>
+<body><main>
+<header class="top"><div class="brand">ODEVI+</div><div class="row" style="flex:0 1 auto"><span id="userLabel" class="muted">Sessão não iniciada</span><button id="loginBtn">Entrar</button><button id="logoutBtn" class="secondary hidden">Sair</button></div></header>
+<section class="panel"><p class="muted">GESTÃO FINANCEIRA · TAX RECORDS 2.0</p><h1>As tuas finanças, organizadas.</h1><p>Importa extratos, acompanha movimentos e revê classificações. O sistema organiza os dados; não transforma automaticamente entradas bancárias em rendimento tributável nem saídas em despesas dedutíveis.</p><div class="notice">Esta ferramenta está em fase de integração. Os cálculos fiscais oficiais e a submissão de declarações não estão disponíveis.</div></section>
+<section id="setup" class="panel"><h2>Configuração necessária</h2><p id="configText">A autenticação ainda não foi configurada pelo administrador. Não introduzas palavras-passe nem dados bancários nesta página até a configuração estar concluída.</p><p class="muted">Quando o fornecedor OIDC e a API estiverem configurados, o botão Entrar inicia uma sessão segura através de OAuth 2.0 Authorization Code + PKCE.</p></section>
+<section id="workspacePanel" class="panel hidden"><div class="row"><div><h2>Espaço de trabalho</h2><select id="workspaceSelect"></select></div><div><h2>Importar extrato CSV</h2><input id="csvFile" type="file" accept=".csv,text/csv"></div><div><h2>País</h2><select id="country"><option value="UK">Reino Unido · GBP</option><option value="PT">Portugal · EUR</option></select></div><div><h2>Ano fiscal</h2><input id="taxYear" value="2026-27" maxlength="7"></div></div><div class="row" style="margin-top:14px"><button id="createWorkspace">Criar espaço de trabalho</button><button id="importBtn" class="secondary" disabled>Importar CSV</button><button id="refreshBtn" class="secondary">Atualizar movimentos</button></div><p id="status" role="status" aria-live="polite"></p></section>
+<section id="dashboard" class="panel hidden"><h2>Movimentos importados</h2><div class="grid"><div class="metric"><small>Movimentos apresentados</small><strong id="count">0</strong></div><div class="metric"><small>A rever</small><strong id="review">0</strong></div><div class="metric"><small>Moedas</small><strong id="currencies">—</strong></div></div><p class="muted">Valores apresentados por moeda e sem conversão cambial automática.</p><div class="tablewrap"><table><thead><tr><th>Data</th><th>Descrição</th><th>Valor</th><th>Moeda</th><th>Estado</th><th>Ação</th></tr></thead><tbody id="transactions"></tbody></table></div></section>
+<section class="panel"><h2>Como funciona a classificação</h2><p>As sugestões automáticas são apenas assistência. O utilizador revê cada movimento. Transferências entre contas, reembolsos, empréstimos, pagamentos pessoais e movimentos pendentes exigem tratamento próprio.</p></section>
+<footer><a href="index.html">ODEVI+ início</a> · <a href="privacidade.html">Privacidade</a> · <a href="contacto.html">Contacto</a></footer>
+</main>
+<script src="tax-records-config.js"></script>
+<script>
+(()=> {
+'use strict';
+const cfg=window.ODEVI_TAX_CONFIG||{};
+const $=id=>document.getElementById(id);
+let accessToken=sessionStorage.getItem('odevi_tax_access_token')||'';
+let currentTenant='';
+const configured=!!(cfg.issuer&&cfg.clientId&&cfg.apiBase&&cfg.audience);
+if(configured){$('configText').textContent='Fornecedor de identidade configurado. Usa Entrar para autenticar. A API continua a validar a assinatura e as permissões no servidor.';$('loginBtn').disabled=false;}else{$('loginBtn').disabled=true;}
+function status(message,isError=false){$('status').textContent=message;$('status').className=isError?'error':'success';}
+function b64url(bytes){return btoa(String.fromCharCode(...new Uint8Array(bytes))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
+async function digest(value){return crypto.subtle.digest('SHA-256',new TextEncoder().encode(value));}
+async function login(){
+ const discovery=await fetch(cfg.issuer.replace(/\/$/,'')+'/.well-known/openid-configuration').then(r=>{if(!r.ok)throw Error('Não foi possível obter a configuração OIDC.');return r.json();});
+ const verifier=b64url(crypto.getRandomValues(new Uint8Array(48)));
+ const challenge=b64url(await digest(verifier)),state=b64url(crypto.getRandomValues(new Uint8Array(24))),nonce=b64url(crypto.getRandomValues(new Uint8Array(24)));
+ sessionStorage.setItem('odevi_pkce',verifier);sessionStorage.setItem('odevi_state',state);sessionStorage.setItem('odevi_nonce',nonce);
+ const redirect=cfg.redirectUri||location.origin+location.pathname;
+ const u=new URL(discovery.authorization_endpoint);u.search=new URLSearchParams({response_type:'code',client_id:cfg.clientId,redirect_uri:redirect,scope:'openid profile email',audience:cfg.audience,code_challenge:challenge,code_challenge_method:'S256',state,nonce}).toString();
+ location.assign(u.toString());
+}
+async function callback(){
+ const q=new URLSearchParams(location.search),code=q.get('code');
+ if(!code)return;
+ if(q.get('state')!==sessionStorage.getItem('odevi_state'))throw Error('Estado de autenticação inválido.');
+ const verifier=sessionStorage.getItem('odevi_pkce');if(!verifier)throw Error('Sessão PKCE expirada. Tenta entrar novamente.');
+ const discovery=await fetch(cfg.issuer.replace(/\/$/,'')+'/.well-known/openid-configuration').then(r=>r.json());
+ const redirect=cfg.redirectUri||location.origin+location.pathname;
+ const response=await fetch(discovery.token_endpoint,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({grant_type:'authorization_code',client_id:cfg.clientId,code,redirect_uri:redirect,code_verifier:verifier})});
+ const data=await response.json();if(!response.ok||!data.access_token)throw Error('Não foi possível concluir o login.');
+ if(data.id_token){const payload=JSON.parse(atob(data.id_token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));if(payload.nonce!==sessionStorage.getItem('odevi_nonce'))throw Error('Validação de nonce falhou.');}
+ accessToken=data.access_token;sessionStorage.setItem('odevi_tax_access_token',accessToken);
+ ['odevi_pkce','odevi_state','odevi_nonce'].forEach(k=>sessionStorage.removeItem(k));
+ history.replaceState({},'',location.pathname);await loadWorkspaces();
+}
+async function api(path,options={}){
+ const r=await fetch(cfg.apiBase.replace(/\/$/, '')+path,{...options,headers:{...(options.headers||{}),Authorization:'Bearer '+accessToken}});
+ if(r.status===401){logout();throw Error('Sessão expirada. Entra novamente.');}
+ const data=await r.json().catch(()=>({detail:'Resposta inválida da API'}));if(!r.ok)throw Error(data.detail||'Erro na API');return data;
+}
+function logout(){accessToken='';sessionStorage.removeItem('odevi_tax_access_token');$('workspacePanel').classList.add('hidden');$('dashboard').classList.add('hidden');$('logoutBtn').classList.add('hidden');$('loginBtn').classList.remove('hidden');$('userLabel').textContent='Sessão não iniciada';}
+async function loadWorkspaces(){
+ const data=await api('/tax-records/workspaces');$('workspaceSelect').innerHTML='';
+ data.items.forEach(w=>{const o=document.createElement('option');o.value=w.id;o.textContent=w.name+' · '+w.country_code+' '+w.tax_year;$('workspaceSelect').append(o);});
+ $('workspacePanel').classList.remove('hidden');$('setup').classList.add('hidden');$('loginBtn').classList.add('hidden');$('logoutBtn').classList.remove('hidden');$('userLabel').textContent='Sessão autenticada';
+ if(data.items.length){currentTenant=data.items[0].id;$('workspaceSelect').value=currentTenant;$('importBtn').disabled=false;await loadTransactions();}else{status('Cria o teu primeiro espaço de trabalho para começar.');}
+}
+async function createWorkspace(){
+ const country=$('country').value,year=$('taxYear').value.trim();
+ const w=await api('/tax-records/workspaces',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({country_code:country,tax_year:year,name:country==='UK'?'O meu espaço Reino Unido':'O meu espaço Portugal'})});
+ await loadWorkspaces();$('workspaceSelect').value=w.id;currentTenant=w.id;status('Espaço de trabalho criado.');
+}
+async function loadTransactions(){
+ currentTenant=$('workspaceSelect').value;if(!currentTenant)return;
+ const data=await api('/tax-records/'+encodeURIComponent(currentTenant)+'/transactions?limit=100');
+ $('transactions').innerHTML='';
+ let review=0;const currencies=new Set();
+ data.items.forEach(t=>{if(['needs_review','unreviewed','possible_duplicate'].includes(t.review_status))review++;currencies.add(t.currency);
+ const tr=document.createElement('tr');for(const val of [t.date,t.description,t.amount,t.currency,t.review_status]){const td=document.createElement('td');td.textContent=val;tr.append(td);}
+ const td=document.createElement('td');const b=document.createElement('button');b.className='secondary';b.textContent='Confirmar';b.addEventListener('click',()=>changeReview(t.id,'confirmed'));td.append(b);tr.append(td);$('transactions').append(tr);});
+ $('count').textContent=data.count;$('review').textContent=review;$('currencies').textContent=[...currencies].join(', ')||'—';$('dashboard').classList.remove('hidden');
+}
+async function changeReview(id,value){await api('/tax-records/'+encodeURIComponent(currentTenant)+'/transactions/'+encodeURIComponent(id)+'/review',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({review_status:value})});await loadTransactions();}
+async function importCsv(){
+ const file=$('csvFile').files[0];if(!file)throw Error('Escolhe um ficheiro CSV.');
+ const form=new FormData();form.append('file',file);
+ const result=await api('/tax-records/'+encodeURIComponent(currentTenant)+'/imports/csv?jurisdiction='+$('country').value,{method:'POST',body:form});
+ status('Importação concluída: '+result.transactions_added+' movimentos; '+result.possible_duplicates+' possíveis duplicados.');await loadTransactions();
+}
+$('loginBtn').addEventListener('click',()=>login().catch(e=>status(e.message,true)));
+$('logoutBtn').addEventListener('click',logout);
+$('createWorkspace').addEventListener('click',()=>createWorkspace().catch(e=>status(e.message,true)));
+$('refreshBtn').addEventListener('click',()=>loadTransactions().catch(e=>status(e.message,true)));
+$('importBtn').addEventListener('click',()=>importCsv().catch(e=>status(e.message,true)));
+$('workspaceSelect').addEventListener('change',()=>loadTransactions().catch(e=>status(e.message,true)));
+if(accessToken&&configured){loadWorkspaces().catch(e=>status(e.message,true));}
+if(configured)callback().catch(e=>status(e.message,true));
+})();
+</script></body></html>
