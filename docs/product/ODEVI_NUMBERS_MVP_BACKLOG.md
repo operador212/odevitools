@@ -123,3 +123,17 @@ Webhooks do fornecedor:
 ## Estado atual
 
 Protótipo de interface apenas. Nenhum endpoint telecom, conta de fornecedor, inventário real, compra, subscrição, crédito ou fluxo KYC foi ativado.
+
+## Atualização do piloto Portugal — adapter técnico (9 novembro 2026)
+
+- [x] Criado `backend/number_providers/zadarma.py` como cliente API Zadarma read-only.
+- [x] Implementada assinatura HMAC-SHA1 conforme algoritmo documentado pelo fornecedor.
+- [x] Implementadas operações de leitura para países, destinos por país e números disponíveis.
+- [x] Credenciais lidas apenas de `ZADARMA_API_KEY` e `ZADARMA_API_SECRET` no servidor.
+- [x] Cliente sem credenciais falha fechado e não faz pedidos de rede.
+- [x] Não existem métodos de compra, renovação, top-up ou ativação de SMS neste adapter.
+- [x] Testes unitários adicionados para assinatura, ausência de credenciais e validação dos parâmetros.
+
+**Limite de validação:** os testes não efetuam chamadas reais à Zadarma. Não existem credenciais do fornecedor neste ambiente, pelo que não foi possível confirmar inventário autenticado, custos, seleção de número ou eventos de tráfego real. O adapter é apenas a primeira camada técnica e não está ligado a endpoints públicos do backend.
+
+Antes de expandir para métodos de escrita, exigir aprovação contratual de revenda B2C e validação regulatória ANACOM.
