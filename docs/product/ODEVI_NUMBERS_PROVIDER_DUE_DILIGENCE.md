@@ -70,3 +70,24 @@ Não publicar preços finais antes de conhecer custos reais por país e calcular
 ## Estado
 
 Esta é uma due diligence documental inicial. Não houve contacto comercial com os fornecedores, acesso a inventário autenticado, cotação vinculativa, parecer jurídico, aquisição de números ou teste de tráfego real.
+
+## Atualização específica — piloto Portugal (9 novembro 2026)
+
+A análise do produto português da Zadarma encontrou evidência direta de um número móvel +351 9 com chamadas recebidas e SMS recebidos. A ativação de SMS exige período mínimo de 3 meses; a página pública indica atribuição aleatória sem escolha do número em Portugal, documento de identificação e endereço em Portugal. A FAQ limita a receção de SMS a 10 números virtuais por conta e não garante mensagens de serviços terceiros.
+
+Fontes:
+- https://zadarma.com/pt/tariffs/numbers/portugal/mobile/
+- https://zadarma.com/pt/support/faq/sms/how-to-receive-sms/
+
+A documentação da API Zadarma mostra endpoints para consultar países/destinos, consultar números disponíveis, encomendar e prolongar números, ativar receção de SMS e gerir subutilizadores de revendedor. O parâmetro `user_id` em encomenda/prolongamento está documentado para parceiros ou utilizadores criados pelo parceiro. A documentação menciona também telefonia white-label. Isto é um sinal técnico de integração possível, mas **não confirma autorização contratual para revenda B2C nem resolve o limite de 10 números, a seleção individual de números ou as regras ANACOM**.
+
+Fonte: https://zadarma.com/pt/support/api/
+
+DIDWW: a página pública de Portugal lista números +351 (30) e +351 (707), com chamadas recebidas e SMS não suportados; a página pública de Mobile DIDs não inclui Portugal na lista de cobertura apresentada.
+- https://www.didww.com/phone-numbers/all-phone-numbers/Portugal/National
+- https://www.didww.com/phone-numbers/mobile-numbers
+
+Telnyx: a página de requisitos portugueses indica que números locais exigem uso empresarial e não permitem uso privado. Os números nacionais têm um fluxo de identidade pessoal/empresarial, mas a documentação consultada não prova um número móvel +351 com SMS e voz no mesmo SKU nem autorização de revenda B2C.
+- https://support-v2.telnyx.com/en/articles/5466980-portugal-did-requirements
+
+**Estado do piloto:** Zadarma é o primeiro candidato para RFI e prova técnica condicionada. Nenhum fornecedor está aprovado para produção. O novo documento `ODEVI_NUMBERS_PORTUGAL_PILOT.md` contém o RFI e os critérios de Go/No-Go.
