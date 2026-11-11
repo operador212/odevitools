@@ -1,0 +1,25 @@
+{
+  "updatedAt": "2026-11-11T00:00:00Z",
+  "items": [
+    {
+      "id": "gta6-release-2026-11-19",
+      "status": "published",
+      "type": "official",
+      "title": "GTA VI chega em 19 de novembro de 2026: data confirmada",
+      "excerpt": "A Rockstar mantém o lançamento de Grand Theft Auto VI para 19 de novembro de 2026, para PlayStation 5 e Xbox Series X|S.",
+      "source": "Rockstar Games",
+      "date": "2026-11-11",
+      "url": "https://www.rockstargames.com/VI"
+    },
+    {
+      "id": "gta6-preload-region-times",
+      "status": "published",
+      "type": "official",
+      "title": "Pré-carregamento: confira datas e horários por plataforma",
+      "excerpt": "Os horários de pré-carregamento podem variar conforme plataforma e região. Consulte o suporte oficial antes de preparar o console.",
+      "source": "Rockstar Support",
+      "date": "2026-11-07",
+      "url": "https://support.rockstargames.com/articles/29jV3Cv2cCgvwM1XgtMO5o/grand-theft-auto-vi-regional-pre-load-and-release-times-on-playstation-5-and-xbox-series-x-or-s"
+    }
+  ]
+}
