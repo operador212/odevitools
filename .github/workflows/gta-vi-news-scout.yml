@@ -1,0 +1,35 @@
+name: ODEVI GTA VI News Scout
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: odevi-gta6-news-scout
+  cancel-in-progress: false
+
+jobs:
+  scout:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Collect official Rockstar GTA VI Newswire items
+        run: python3 scripts/update_gta_news.py
+      - name: Commit new drafts
+        run: |
+          if git diff --quiet -- data/gta-news.json; then
+            echo "No new drafts to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/gta-news.json
+          git commit -m "chore: collect official GTA VI news drafts"
+          git push

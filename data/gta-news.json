@@ -1,25 +1,75 @@
 {
-  "updatedAt": "2026-11-11T00:00:00Z",
+  "updatedAt": "2026-11-17T10:40:00Z",
   "items": [
     {
-      "id": "gta6-release-2026-11-19",
+      "id": "gta6-launch-trailer-2026-10-15",
       "status": "published",
       "type": "official",
-      "title": "GTA VI chega em 19 de novembro de 2026: data confirmada",
-      "excerpt": "A Rockstar mantém o lançamento de Grand Theft Auto VI para 19 de novembro de 2026, para PlayStation 5 e Xbox Series X|S.",
+      "title": "Trailer de lançamento de GTA VI já está disponível",
+      "excerpt": "O trailer oficial de lançamento está disponível. Assista no site da Rockstar e confira os materiais originais, sem depender de reuploads de terceiros.",
       "source": "Rockstar Games",
-      "date": "2026-11-11",
+      "date": "2026-10-15",
       "url": "https://www.rockstargames.com/VI"
     },
     {
-      "id": "gta6-preload-region-times",
+      "id": "gta6-festival-2026-11-09",
       "status": "published",
       "type": "official",
-      "title": "Pré-carregamento: confira datas e horários por plataforma",
-      "excerpt": "Os horários de pré-carregamento podem variar conforme plataforma e região. Consulte o suporte oficial antes de preparar o console.",
+      "title": "Rockstar anuncia GTA VI: The Festival para 21 de novembro",
+      "excerpt": "O evento oficial de lançamento acontece em 21 de novembro no Mana Wynwood, em Miami, com artistas ligados ao jogo e à trilha sonora. Veja o line-up e as informações no anúncio oficial.",
+      "source": "Rockstar Games Brasil",
+      "date": "2026-11-09",
+      "url": "https://www.rockstargames.com/br/newswire/article/o39o87a435a25a/grand-theft-auto-vi-the-festival"
+    },
+    {
+      "id": "gta6-preload-now-2026-11-10",
+      "status": "published",
+      "type": "official",
+      "title": "Pré-carregamento de GTA VI já está disponível",
+      "excerpt": "A Rockstar confirmou que o pré-carregamento digital está disponível para quem fez a pré-venda. No PS5, começa à meia-noite local; no Xbox Series X|S, às 00:00 GMT. Confira os detalhes oficiais antes de liberar espaço no console.",
+      "source": "Rockstar Games",
+      "date": "2026-11-10",
+      "url": "https://www.rockstargames.com/newswire/article/89834o94713o21/pre-load-grand-theft-auto-vi-now"
+    },
+    {
+      "id": "gta6-release-times-2026-11-03",
+      "status": "published",
+      "type": "official",
+      "title": "Que horas GTA VI desbloqueia? Rockstar confirma lançamento à meia-noite local",
+      "excerpt": "GTA VI será lançado à meia-noite de 19 de novembro no horário local de cada região, para PlayStation 5 e Xbox Series X|S. Consulte a página oficial para confirmar as instruções da sua plataforma.",
       "source": "Rockstar Support",
-      "date": "2026-11-07",
+      "date": "2026-11-03",
       "url": "https://support.rockstargames.com/articles/29jV3Cv2cCgvwM1XgtMO5o/grand-theft-auto-vi-regional-pre-load-and-release-times-on-playstation-5-and-xbox-series-x-or-s"
+    },
+    {
+      "id": "gta6-launch-gallery-2026-11-05",
+      "status": "published",
+      "type": "official",
+      "title": "Rockstar libera galeria oficial de lançamento de GTA VI",
+      "excerpt": "Novas imagens oficiais mostram Vice City e outras áreas de Leonida. A galeria completa está disponível no site da Rockstar.",
+      "source": "Rockstar Games",
+      "date": "2026-11-05",
+      "url": "https://www.rockstargames.com/newswire/article/39ak81277255o9/explore-the-grand-theft-auto-vi-launch-gallery"
+    },
+    {
+      "id": "gta6-preload-faq-2026-11-03",
+      "status": "published",
+      "type": "official",
+      "title": "Guia oficial: pré-carregamento, espaço e preparação do console",
+      "excerpt": "A FAQ oficial explica como ativar o download antecipado no PS5 e Xbox Series X|S e quais condições precisam estar ativas para o download automático.",
+      "source": "Rockstar Support",
+      "date": "2026-11-03",
+      "url": "https://support.rockstargames.com/articles/7nPqOA2uCbpEQHXx7KVrYd/grand-theft-auto-vi-pre-load-faq"
+    },
+    {
+      "id": "gta6-preload-begins-2026-11-03",
+      "status": "published",
+      "type": "official",
+      "title": "Rockstar detalha o pré-carregamento e o tamanho do download",
+      "excerpt": "A publicação oficial em português informa que o pré-carregamento começou em 10 de novembro e recomenda reservar espaço suficiente no dispositivo; o tamanho pode chegar a até 212 GB, dependendo da plataforma.",
+      "source": "Rockstar Games Brasil",
+      "date": "2026-11-03",
+      "url": "https://www.rockstargames.com/br/newswire/article/k4ak9okk485712/grand-theft-auto-vi-pre-load-begins-on-november-10"
     }
   ]
 }
