@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: "0 */6 * * *"
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/gta-vi-news-scout.yml"
+      - "scripts/update_gta_news.py"
 
 permissions:
   contents: write
