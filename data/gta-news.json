@@ -2,6 +2,16 @@
   "updatedAt": "2026-11-17T10:40:00Z",
   "items": [
     {
+      "id": "gta6-three-presidents-meme-2026-11-17",
+      "status": "published",
+      "type": "analysis",
+      "title": "Trump, Putin e Xi vão reunir-se — mas não há prova de que vão jogar GTA VI",
+      "excerpt": "Os líderes dos Estados Unidos, Rússia e China têm uma reunião trilateral prevista para 19 de novembro, em Shenzhen, à margem da cimeira da APEC. A internet transformou a coincidência com o lançamento de GTA VI num meme: não existe confirmação credível de que o encontro inclua jogar o videojogo. O que está na agenda pública são temas diplomáticos e de segurança internacional.",
+      "source": "Reuters · ABC News · ODEVI+",
+      "date": "2026-11-17",
+      "url": "https://www.reuters.com/world/china/kremlin-dismisses-comparisons-between-trilateral-meeting-yalta-conference-2026-11-17"
+    },
+    {
       "id": "gta6-launch-trailer-2026-10-15",
       "status": "published",
       "type": "official",
@@ -72,4 +82,4 @@
       "url": "https://www.rockstargames.com/br/newswire/article/k4ak9okk485712/grand-theft-auto-vi-pre-load-begins-on-november-10"
     }
   ]
-}
+}\n
