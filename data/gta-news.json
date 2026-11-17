@@ -1,6 +1,36 @@
 {
-  "updatedAt": "2026-11-17T10:40:00Z",
+  "updatedAt": "2026-11-17T12:00:00Z",
   "items": [
+    {
+      "id": "gta6-uk-broadband-traffic-2026-11-13",
+      "status": "published",
+      "type": "analysis",
+      "title": "GTA VI fez o tráfego de banda larga subir 33% no Reino Unido",
+      "excerpt": "O início do pré-carregamento de GTA VI esteve associado a um aumento de cerca de 33% no tráfego de download da rede nacional da Openreach face a uma terça-feira média. Não significa que a internet vá acabar: é um pico de utilização, com redes e operadores a gerir a procura. A Virgin Media O2 também reportou recordes de tráfego na semana do pré-download.",
+      "source": "ISPreview · The Independent · ODEVI+",
+      "date": "2026-11-13",
+      "url": "https://www.ispreview.co.uk/index.php/2026/11/openreach-details-uk-broadband-traffic-impact-from-gta-6-pre-loading.html"
+    },
+    {
+      "id": "gta6-global-search-interest-2026-11-17",
+      "status": "published",
+      "type": "analysis",
+      "title": "GTA VI está a gerar pesquisas em dezenas de países",
+      "excerpt": "Um painel de tendências de pesquisa regista o termo Grand Theft Auto VI em 61 países e GTA 6 em 79 países. Reino Unido e Brasil aparecem entre os mercados com faixas de pesquisa mais elevadas. Os números são sinais de tendência de pesquisa, não vendas nem contagem de jogadores.",
+      "source": "Trendomap · ODEVI+",
+      "date": "2026-11-17",
+      "url": "https://en.trendomap.com/trend/grand-theft-auto-vi"
+    },
+    {
+      "id": "gta6-world-map-leonida-2026-11-16",
+      "status": "published",
+      "type": "press",
+      "title": "Novos detalhes sobre o mapa de Leonida circulam após exposição de material",
+      "excerpt": "Imagens de um mapa impresso associado a uma edição especial foram divulgadas pela imprensa. A Rockstar já apresentou Vice City e várias regiões de Leonida; nomes adicionais que surgem nas imagens devem ser tratados como informação reportada, não como confirmação detalhada da jogabilidade.",
+      "source": "UOL Tilt",
+      "date": "2026-11-16",
+      "url": "https://www.uol.com.br/tilt/noticias/redacao/2026/11/16/gta-6-que-horas-sera-lancado-no-brasil-e-quais-consoles-vao-rodar.ghtm"
+    },
     {
       "id": "gta6-three-presidents-meme-2026-11-17",
       "status": "published",
@@ -82,4 +112,4 @@
       "url": "https://www.rockstargames.com/br/newswire/article/k4ak9okk485712/grand-theft-auto-vi-pre-load-begins-on-november-10"
     }
   ]
-}\n
+}
