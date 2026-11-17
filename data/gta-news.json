@@ -1,6 +1,26 @@
 {
-  "updatedAt": "2026-11-17T10:30:00Z",
+  "updatedAt": "2026-11-17T10:40:00Z",
   "items": [
+    {
+      "id": "gta6-launch-trailer-2026-10-15",
+      "status": "published",
+      "type": "official",
+      "title": "Trailer de lançamento de GTA VI já está disponível",
+      "excerpt": "O trailer oficial de lançamento está disponível. Assista no site da Rockstar e confira os materiais originais, sem depender de reuploads de terceiros.",
+      "source": "Rockstar Games",
+      "date": "2026-10-15",
+      "url": "https://www.rockstargames.com/VI"
+    },
+    {
+      "id": "gta6-festival-2026-11-09",
+      "status": "published",
+      "type": "official",
+      "title": "Rockstar anuncia GTA VI: The Festival para 21 de novembro",
+      "excerpt": "O evento oficial de lançamento acontece em 21 de novembro no Mana Wynwood, em Miami, com artistas ligados ao jogo e à trilha sonora. Veja o line-up e as informações no anúncio oficial.",
+      "source": "Rockstar Games Brasil",
+      "date": "2026-11-09",
+      "url": "https://www.rockstargames.com/br/newswire/article/o39o87a435a25a/grand-theft-auto-vi-the-festival"
+    },
     {
       "id": "gta6-preload-now-2026-11-10",
       "status": "published",
