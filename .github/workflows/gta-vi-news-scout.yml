@@ -9,6 +9,8 @@ on:
     paths:
       - ".github/workflows/gta-vi-news-scout.yml"
       - "scripts/update_gta_news.py"
+      - "scripts/update_gta_shorts.py"
+      - "config/youtube-channels.json"
 
 permissions:
   contents: write
@@ -27,14 +29,16 @@ jobs:
           ref: main
       - name: Collect Rockstar and selected international GTA VI press RSS drafts
         run: python3 scripts/update_gta_news.py
+      - name: Refresh YouTube Shorts gallery from public channel RSS feeds
+        run: python3 scripts/update_gta_shorts.py
       - name: Commit new drafts
         run: |
-          if git diff --quiet -- data/gta-news.json; then
+          if git diff --quiet -- data/gta-news.json data/gta-shorts.json; then
             echo "No new drafts to commit."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/gta-news.json
+          git add data/gta-news.json data/gta-shorts.json
           git commit -m "chore: collect GTA VI news drafts"
           git push

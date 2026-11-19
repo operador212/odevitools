@@ -1,0 +1,16 @@
+{
+  "updatedAt": "2026-11-19T09:30:00Z",
+  "channels": [
+    {
+      "name": "Rockstar Games (oficial)",
+      "channelId": "UC6VcWc1rAoWdBCM0JxrRQ3A",
+      "enabled": true,
+      "keywords": [
+        "GTA VI",
+        "GTA 6",
+        "Grand Theft Auto"
+      ]
+    }
+  ],
+  "notes": "Adicionar canais parceiros selecionados pelo ODEVI+ quando os respetivos links/IDs forem confirmados. Não inventar IDs."
+}
