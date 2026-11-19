@@ -1,7 +1,17 @@
 {
-  "updatedAt": "2026-11-19T10:34:45Z",
+  "updatedAt": "2026-11-19T17:06:33Z",
   "source": "YouTube public Atom/RSS feeds",
   "items": [
+    {
+      "id": "T95WGWkx7P0",
+      "status": "published",
+      "title": "Grand Theft Auto VI Now Available",
+      "creator": "Rockstar Games (oficial)",
+      "url": "https://www.youtube.com/watch?v=T95WGWkx7P0",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/T95WGWkx7P0",
+      "pubDate": "2026-11-19T13:59:56+00:00",
+      "source": "YouTube RSS público"
+    },
     {
       "id": "TIPlpDAsfWo",
       "status": "published",
@@ -15,7 +25,7 @@
     {
       "id": "_yl5ELcmugI",
       "status": "published",
-      "title": "Grand Theft Auto VI: Pre-Load Now",
+      "title": "Grand Theft Auto VI: Out Now",
       "creator": "Rockstar Games (oficial)",
       "url": "https://www.youtube.com/watch?v=_yl5ELcmugI",
       "embedUrl": "https://www.youtube-nocookie.com/embed/_yl5ELcmugI",
