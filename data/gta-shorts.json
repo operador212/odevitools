@@ -1,4 +1,146 @@
 {
-  "updatedAt": "2026-11-11T00:00:00Z",
-  "items": []
+  "updatedAt": "2026-11-19T09:29:37Z",
+  "source": "YouTube public Atom/RSS feeds",
+  "items": [
+    {
+      "id": "TIPlpDAsfWo",
+      "status": "published",
+      "title": "Grand Theft Auto VI: Pre-Load Now",
+      "creator": "Rockstar Games (oficial)",
+      "url": "https://www.youtube.com/watch?v=TIPlpDAsfWo",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/TIPlpDAsfWo",
+      "pubDate": "2026-11-10T13:55:42+00:00",
+      "source": "YouTube RSS público"
+    },
+    {
+      "id": "_yl5ELcmugI",
+      "status": "published",
+      "title": "Grand Theft Auto VI: Pre-Load Now",
+      "creator": "Rockstar Games (oficial)",
+      "url": "https://www.youtube.com/watch?v=_yl5ELcmugI",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/_yl5ELcmugI",
+      "pubDate": "2026-11-10T13:55:06+00:00",
+      "source": "YouTube RSS público"
+    },
+    {
+      "id": "AvBcfBrBl60",
+      "status": "published",
+      "title": "Grand Theft Auto VI: The Festival",
+      "creator": "Rockstar Games (oficial)",
+      "url": "https://www.youtube.com/watch?v=AvBcfBrBl60",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/AvBcfBrBl60",
+      "pubDate": "2026-11-10T12:59:01+00:00",
+      "source": "YouTube RSS público"
+    },
+    {
+      "id": "rz1B4B2yBZY",
+      "status": "published",
+      "title": "Grand Theft Auto VI Launch Trailer",
+      "creator": "Rockstar Games (oficial)",
+      "url": "https://www.youtube.com/watch?v=rz1B4B2yBZY",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/rz1B4B2yBZY",
+      "pubDate": "2026-10-15T13:00:26+00:00",
+      "source": "YouTube RSS público"
+    },
+    {
+      "id": "icy-lhqJhMQ",
+      "status": "published",
+      "title": "Grand Theft Auto VI Launch Trailer",
+      "creator": "Rockstar Games (oficial)",
+      "url": "https://www.youtube.com/watch?v=icy-lhqJhMQ",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/icy-lhqJhMQ",
+      "pubDate": "2026-10-15T13:00:04+00:00",
+      "source": "YouTube RSS público"
+    },
+    {
+      "id": "MJOrsRRa9GM",
+      "status": "published",
+      "title": "Grand Theft Auto VI: An Extended Look — Now Playing",
+      "creator": "Rockstar Games (oficial)",
+      "url": "https://www.youtube.com/watch?v=MJOrsRRa9GM",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/MJOrsRRa9GM",
+      "pubDate": "2026-08-28T01:01:30+00:00",
+      "source": "YouTube RSS público"
+    },
+    {
+      "id": "53C6gUqRpK4",
+      "status": "published",
+      "title": "Grand Theft Auto VI: An Extended Look — Now Playing",
+      "creator": "Rockstar Games (oficial)",
+      "url": "https://www.youtube.com/watch?v=53C6gUqRpK4",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/53C6gUqRpK4",
+      "pubDate": "2026-08-28T01:01:28+00:00",
+      "source": "YouTube RSS público"
+    },
+    {
+      "id": "mAfR_ybf5WM",
+      "status": "published",
+      "title": "Grand Theft Auto VI: An Extended Look — Now Playing",
+      "creator": "Rockstar Games (oficial)",
+      "url": "https://www.youtube.com/watch?v=mAfR_ybf5WM",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/mAfR_ybf5WM",
+      "pubDate": "2026-08-28T01:01:24+00:00",
+      "source": "YouTube RSS público"
+    },
+    {
+      "id": "L-9NI3mHZVo",
+      "status": "published",
+      "title": "Grand Theft Auto VI: An Extended Look — Now Playing",
+      "creator": "Rockstar Games (oficial)",
+      "url": "https://www.youtube.com/watch?v=L-9NI3mHZVo",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/L-9NI3mHZVo",
+      "pubDate": "2026-08-28T01:01:21+00:00",
+      "source": "YouTube RSS público"
+    },
+    {
+      "id": "GVTE_MuInQg",
+      "status": "published",
+      "title": "Grand Theft Auto VI: An Extended Look — Now Playing",
+      "creator": "Rockstar Games (oficial)",
+      "url": "https://www.youtube.com/watch?v=GVTE_MuInQg",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/GVTE_MuInQg",
+      "pubDate": "2026-08-28T01:01:18+00:00",
+      "source": "YouTube RSS público"
+    },
+    {
+      "id": "Xzxv75FjMJk",
+      "status": "published",
+      "title": "Grand Theft Auto VI: An Extended Look — Now Playing",
+      "creator": "Rockstar Games (oficial)",
+      "url": "https://www.youtube.com/watch?v=Xzxv75FjMJk",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/Xzxv75FjMJk",
+      "pubDate": "2026-08-28T01:01:15+00:00",
+      "source": "YouTube RSS público"
+    },
+    {
+      "id": "tJbzMqJGH4k",
+      "status": "published",
+      "title": "Grand Theft Auto VI: An Extended Look",
+      "creator": "Rockstar Games (oficial)",
+      "url": "https://www.youtube.com/watch?v=tJbzMqJGH4k",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/tJbzMqJGH4k",
+      "pubDate": "2026-08-28T01:00:48+00:00",
+      "source": "YouTube RSS público"
+    },
+    {
+      "id": "YmzCydc4qOk",
+      "status": "published",
+      "title": "Grand Theft Auto VI: An Extended Look Coming August 27",
+      "creator": "Rockstar Games (oficial)",
+      "url": "https://www.youtube.com/watch?v=YmzCydc4qOk",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/YmzCydc4qOk",
+      "pubDate": "2026-08-06T12:09:13+00:00",
+      "source": "YouTube RSS público"
+    },
+    {
+      "id": "qq76pQsI1iw",
+      "status": "published",
+      "title": "Grand Theft Auto VI: An Extended Look Coming August 27",
+      "creator": "Rockstar Games (oficial)",
+      "url": "https://www.youtube.com/watch?v=qq76pQsI1iw",
+      "embedUrl": "https://www.youtube-nocookie.com/embed/qq76pQsI1iw",
+      "pubDate": "2026-08-06T12:00:25+00:00",
+      "source": "YouTube RSS público"
+    }
+  ]
 }
