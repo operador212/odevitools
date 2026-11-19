@@ -8,7 +8,9 @@ on:
     branches: [main]
     paths:
       - ".github/workflows/gta-vi-news-scout.yml"
-      - "scripts/update_gta_news.py"\n      - "scripts/update_gta_shorts.py"\n      - "config/youtube-channels.json"
+      - "scripts/update_gta_news.py"
+      - "scripts/update_gta_shorts.py"
+      - "config/youtube-channels.json"
 
 permissions:
   contents: write
@@ -27,6 +29,8 @@ jobs:
           ref: main
       - name: Collect Rockstar and selected international GTA VI press RSS drafts
         run: python3 scripts/update_gta_news.py
+      - name: Refresh YouTube Shorts gallery from public channel RSS feeds
+        run: python3 scripts/update_gta_shorts.py
       - name: Commit new drafts
         run: |
           if git diff --quiet -- data/gta-news.json data/gta-shorts.json; then
