@@ -23,7 +23,7 @@ def resolve_channel_id(handle: str) -> str:
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (compatible; ODEVI-RSS/1.0)"})
     with urllib.request.urlopen(req, timeout=25) as response:
         html = response.read(5_000_000).decode("utf-8", errors="replace")
-    patterns = [r'"channelId"\\s*:\\s*"(UC[a-zA-Z0-9_-]{22})"', r'"externalId"\\s*:\\s*"(UC[a-zA-Z0-9_-]{22})"', r'<meta itemprop="channelId" content="(UC[a-zA-Z0-9_-]{22})"']
+    patterns = [r'"channelId"\s*:\s*"(UC[a-zA-Z0-9_-]{22})"', r'"externalId"\s*:\s*"(UC[a-zA-Z0-9_-]{22})"', r'<meta itemprop="channelId" content="(UC[a-zA-Z0-9_-]{22})"']
     for pattern in patterns:
         match = re.search(pattern, html)
         if match:
