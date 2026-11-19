@@ -10,7 +10,67 @@
         "GTA 6",
         "Grand Theft Auto"
       ]
+    },
+    {
+      "name": "ItsJaruba",
+      "handle": "ItsJaruba",
+      "enabled": true,
+      "keywords": []
+    },
+    {
+      "name": "JetroYT",
+      "handle": "JetroYT",
+      "enabled": true,
+      "keywords": []
+    },
+    {
+      "name": "Sav Official",
+      "handle": "Sav_Official_YT",
+      "enabled": true,
+      "keywords": []
+    },
+    {
+      "name": "Perfect Enrager",
+      "handle": "perfectenrager",
+      "enabled": true,
+      "keywords": []
+    },
+    {
+      "name": "Adiant Online",
+      "handle": "adiantonline",
+      "enabled": true,
+      "keywords": []
+    },
+    {
+      "name": "No Fast Travel",
+      "handle": "NoFastTravelYT",
+      "enabled": true,
+      "keywords": []
+    },
+    {
+      "name": "Mr Lore GTA",
+      "handle": "MrLoreGTA",
+      "enabled": true,
+      "keywords": []
+    },
+    {
+      "name": "Rielzinz",
+      "handle": "Rielzinz",
+      "enabled": true,
+      "keywords": []
+    },
+    {
+      "name": "Melvins Enterprises",
+      "handle": "MelvinsEnterprises",
+      "enabled": true,
+      "keywords": []
+    },
+    {
+      "name": "PC INDIE",
+      "handle": "PCINDIE1",
+      "enabled": true,
+      "keywords": []
     }
   ],
-  "notes": "Adicionar canais parceiros selecionados pelo ODEVI+ quando os respetivos links/IDs forem confirmados. Não inventar IDs."
+  "notes": "Canais parceiros selecionados pelo utilizador; o workflow resolve os handles para Channel IDs automaticamente a cada execução. Feeds públicos do YouTube; incorporar apenas players oficiais."
 }
