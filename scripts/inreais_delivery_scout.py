@@ -20,6 +20,10 @@ QUERIES = {
     "rules_and_rights": 'UK delivery couriers riders employment rights legislation rules',
     "pay_and_fees": 'UK food delivery rider pay fees insurance account deactivation',
     "incidents_and_disputes": 'UK delivery rider controversy dispute protest accident platform',
+    "brazil": "entregadores delivery aplicativos Brasil iFood greve confusao violencia direitos",
+    "portugal": "estafetas entregadores brasileiros Portugal Uber Eats Glovo polemica regras",
+    "ireland": "delivery riders couriers Ireland Dublin Brazilian migrant gig workers news",
+    "uk": "UK delivery riders couriers Brazilian migrant Uber Eats Deliveroo Just Eat news",
     "industry": 'UK gig economy food delivery courier industry changes',
 }
 OUT = Path("data/inreais-delivery-news.json")
