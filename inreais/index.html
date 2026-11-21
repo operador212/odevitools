@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10131b"><title>INREAIS • Central de Conteúdo</title>
+<style>
+:root{color-scheme:dark;--bg:#10131b;--panel:#191f2b;--muted:#9ca8bb;--line:#2a3445;--accent:#ffb547;--green:#67d6a3}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f5f7fb;font:15px system-ui,-apple-system,sans-serif}
+header{padding:24px 18px;background:linear-gradient(135deg,#222d40,#111722);border-bottom:1px solid var(--line)}
+main{max-width:920px;margin:auto;padding:18px}h1{margin:0;font-size:25px}h2{font-size:18px;margin:0 0 12px}.muted{color:var(--muted)}.pill{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:5px 10px;font-size:12px;color:var(--green)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:16px 0}.stat,.panel,.item{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}.stat b{font-size:24px;display:block}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}input,select,button{background:#202a39;color:#fff;border:1px solid var(--line);border-radius:10px;padding:11px;font:inherit}input{flex:1;min-width:160px}button{cursor:pointer}button.primary{background:var(--accent);color:#171717;border:0;font-weight:700}
+.items{display:grid;gap:10px}.item h3{font-size:16px;margin:7px 0}.item a{color:var(--accent);overflow-wrap:anywhere}.meta{font-size:12px;color:var(--muted)}.tag{font-size:11px;border:1px solid var(--line);padding:3px 7px;border-radius:7px}
+footer{padding:25px 18px;color:var(--muted);text-align:center;font-size:12px}
+@media(min-width:650px){main{padding:26px}.stats{gap:14px}.stat{padding:18px}}
+</style></head>
+<body><header><main style="padding:0"><div class="pill">INREAIS DELIVERY • PAINEL BETA</div><h1 style="margin-top:10px">Central de notícias e vídeos</h1><p class="muted">Brasil · Portugal · Reino Unido · Irlanda</p></main></header>
+<main>
+<div class="stats"><div class="stat"><span class="muted">Notícias na fila</span><b id="count">—</b></div><div class="stat"><span class="muted">A verificar</span><b id="review">—</b></div><div class="stat"><span class="muted">Última atualização</span><b id="updated" style="font-size:13px">—</b></div></div>
+<section class="panel"><h2>Fila editorial</h2><p class="muted">As notícias são pistas para investigação. Confirma sempre o artigo original antes de publicar.</p>
+<div class="toolbar"><input id="q" placeholder="Pesquisar notícia, plataforma ou país…"><select id="region"><option value="">Todas as regiões</option><option value="brazil">Brasil</option><option value="portugal">Portugal</option><option value="uk">Reino Unido</option><option value="ireland">Irlanda</option></select><button class="primary" id="refresh">Atualizar</button></div>
+<div class="items" id="items"><div class="item">A carregar notícias…</div></div></section>
+<section class="panel" style="margin-top:14px"><h2>Fluxo de produção</h2><p>1. Selecionar notícia → 2. Confirmar fonte e data → 3. Criar guião original → 4. Gravar/gerar narração → 5. Editar vertical 9:16 → 6. Aprovar → 7. Publicar no TikTok e YouTube Shorts.</p><p class="muted">Publicação automática e geração de voz ficam desligadas até configurar e testar as credenciais oficiais e os serviços necessários.</p></section>
+</main><footer>INREAIS • Painel privado de trabalho. Não contém credenciais nem publica automaticamente.</footer>
+<script>
+const DATA='../data/inreais-delivery-news.json';
+let all=[];
+function regionOf(x){const s=((x.title||'')+' '+(x.source||'')+' '+(x.url||'')).toLowerCase();if(/brasil|brazil|brasileir|são paulo|rio de janeiro|ifood/.test(s))return'brazil';if(/portugal|lisboa|porto|glovo pt/.test(s))return'portugal';if(/ireland|dublin|irish/.test(s))return'ireland';if(/uk|united kingdom|britain|england|scotland|wales|deliveroo|just eat|uber eats/.test(s))return'uk';return''}
+function render(){const q=document.querySelector('#q').value.toLowerCase(),r=document.querySelector('#region').value;const list=all.filter(x=>(!r||regionOf(x)===r)&&(!q||((x.title||'')+' '+(x.source||'')+' '+(x.category||'')).toLowerCase().includes(q)));document.querySelector('#items').innerHTML=list.length?list.map(x=>'<article class="item"><div class="meta">'+(x.source||'Fonte não identificada')+' · '+(x.published_at||'Data não indicada')+'</div><h3>'+esc(x.title)+'</h3><div class="toolbar"><span class="tag">'+esc(x.category||'descoberta')+'</span><span class="tag">'+esc(x.status||'needs_review')+'</span></div><a href="'+safe(x.url)+'" target="_blank" rel="noopener">Abrir fonte original ↗</a></article>').join(''):'<div class="item">Nenhum resultado. A recolha automática ainda pode não ter sido executada.</div>'}
+function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function safe(u){try{const x=new URL(u);return ['http:','https:'].includes(x.protocol)?x.href:'#'}catch{return '#'}}
+async function load(){document.querySelector('#items').innerHTML='<div class="item">A carregar…</div>';try{const res=await fetch(DATA+'?t='+Date.now());if(!res.ok)throw Error('HTTP '+res.status);const data=await res.json();all=data.items||[];document.querySelector('#count').textContent=all.length;document.querySelector('#review').textContent=all.filter(x=>x.status==='needs_review').length;document.querySelector('#updated').textContent=data.updated_at?new Date(data.updated_at).toLocaleString('pt-PT'):'—';render()}catch(e){document.querySelector('#items').innerHTML='<div class="item">Ainda sem dados publicados. Executa o scout no GitHub Actions e atualiza este painel.</div>';}}
+document.querySelector('#q').addEventListener('input',render);document.querySelector('#region').addEventListener('change',render);document.querySelector('#refresh').addEventListener('click',load);load();
+</script></body></html>
