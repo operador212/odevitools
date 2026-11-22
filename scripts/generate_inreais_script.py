@@ -16,7 +16,7 @@ def main():
     source=item.get("source","Fonte a confirmar")
     published=item.get("published_at","Data a confirmar")
     # Editorial template, deliberately not an AI-generated factual assertion.
-    safe_title=re.sub(r"\\s+"," ",title).strip()
+    safe_title=re.sub(r"\s+"," ",title).strip()
     slug=re.sub(r"[^a-z0-9]+","-",safe_title.lower()).strip("-")[:55] or "noticia"
     out=Path("drafts")/f"{slug}.md"
     out.parent.mkdir(exist_ok=True)
