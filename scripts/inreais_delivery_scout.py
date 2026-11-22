@@ -20,8 +20,15 @@ QUERIES = {
     "deliveroo": 'Deliveroo (rider OR courier OR delivery driver OR entregador) food delivery news',
     "just_eat": '"Just Eat" (courier OR rider OR delivery driver) food delivery news',
     "glovo": 'Glovo (courier OR rider OR repartidor OR estafeta OR entregador) food delivery news',
-    "brazil": '(motoboy OR entregador OR delivery) (iFood OR Rappi) (greve OR viral OR acidente OR polemica OR direitos OR pagamento)',
-    "portugal": '(estafeta OR entregador OR courier) (Glovo OR Uber Eats) (greve OR viral OR acidente OR polemica OR pagamento)',
+    # Editorial priority 1 — Brazil
+    "brazil": '(motoboy OR entregador OR delivery) (iFood OR Rappi OR "entrega de comida") (greve OR viral OR acidente OR polemica OR direitos OR pagamento OR bloqueio OR taxa OR novidade)',
+    "brazil_platform_updates": '(iFood OR Rappi OR "99Food") (entregador OR motoboy) (atualizacao OR nova regra OR pagamento OR bloqueio OR taxa OR pedido)',
+    "brazil_creator_stories": '(motoboy OR entregador de aplicativo OR entregadora) (viral OR TikTok OR YouTube OR influenciador OR ganhos OR faturamento)',
+    # Editorial priority 2 — Portugal
+    "portugal": '(estafeta OR entregador OR courier) (Glovo OR Uber Eats) (greve OR viral OR acidente OR polemica OR pagamento OR bloqueio OR contas OR impostos)',
+    "portugal_platform_updates": '(estafeta OR entregador) (Glovo OR "Uber Eats") (novas regras OR taxas OR pagamentos OR recibos verdes OR fiscalidade)',
+    "portugal_creator_stories": '(motoboy OR estafeta OR entregador) Portugal (TikTok OR YouTube OR influenciador OR ganhos OR rotina)',
+    "uk_europe_tax_accounts": '("food delivery courier" OR "food delivery rider" OR "Wolt courier" OR "Uber Eats courier" OR Deliveroo) (tax OR self-employed OR "account rental" OR "renting accounts" OR "shared accounts" OR substitution) (UK OR Europe OR Finland OR Ireland)',
     "ireland": '("food delivery" OR takeaway courier) (rider OR cyclist OR motorbike) Ireland Dublin',
     "uk": '("food delivery" OR takeaway courier) (rider OR cyclist OR motorbike) UK London',
     "viral_food_delivery": '("food delivery rider" OR "Uber Eats rider" OR "Deliveroo rider" OR motoboy OR estafeta) (viral OR trending OR bizarre OR unusual OR funny OR shocking)',
