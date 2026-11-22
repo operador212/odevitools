@@ -32,7 +32,7 @@ USER_AGENT = "InreaisDeliveryNewsScout/1.0 (public RSS headlines; contact: repos
 
 
 def clean(value: str) -> str:
-    return re.sub(r"\\s+", " ", value or "").strip()
+    return re.sub(r"\s+", " ", value or "").strip()
 
 
 def fetch_feed(query: str) -> list[dict]:
