@@ -25,6 +25,10 @@ QUERIES = {
     "ireland": "delivery riders couriers Ireland Dublin Brazilian migrant gig workers news",
     "uk": "UK delivery riders couriers Brazilian migrant Uber Eats Deliveroo Just Eat news",
     "industry": 'UK gig economy food delivery courier industry changes',
+    "viral_stories": '("delivery rider" OR courier OR motoboy OR estafeta) (viral OR trending OR bizarre OR unusual OR funny OR shocking) video',
+    "controversies": '("delivery rider" OR courier OR motoboy OR estafeta) (controversy OR dispute OR scandal OR protest OR allegation) delivery app',
+    "curious_stories": '("delivery driver" OR courier OR motoboy OR estafeta) (strange order OR unusual delivery OR rescued OR surprising story)',
+    "creator_stories": 'delivery rider creator viral TikTok YouTube Shorts Instagram courier story',
 }
 OUT = Path("data/inreais-delivery-news.json")
 MAX_PER_QUERY = 20
