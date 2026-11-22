@@ -21,7 +21,8 @@ Updated: 2026-11-22
 - That run executed the RSS collection and the queue-commit step. The queue file was not present in the repository afterward, revealing a first-run staging bug.
 - The workflow was corrected to stage the generated JSON before checking the staged diff. The corrected workflow has not yet had a new run verified. The next scheduled run should validate this fix.
 - RSS discovery is not the same as social-platform trend monitoring. Direct automated monitoring of TikTok, Instagram, YouTube, public Facebook pages and Reddit is not implemented.
-- The existing script generator creates a structured draft/template, not a fully researched, fact-checked AI script.
+- The existing script generator creates a structured draft/template, not a fully researched, fact-checked AI script. Its title whitespace-normalisation regex was corrected and verified in the committed source.
+- First editorial package prepared at `inreais/shorts/short-001-uk-parcel-driver-study.md`: a source-grounded UK parcel-driver study story with script, storyboard, platform copy and approval checklist. Voice generation and final render are intentionally pending owner approval.
 - HeyGen voice clone v2 is active in the connected HeyGen workspace; voice generation is available, but the repository workflow is not yet integrated with HeyGen.
 - Automated video assembly/rendering, caption timing, and publishing integrations are not implemented.
 
