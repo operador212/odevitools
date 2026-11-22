@@ -413,5 +413,36 @@
       "Check current follower counts and recent posting cadence for every creator",
       "Identify Portugal-based women food-delivery creators"
     ]
+  },
+  "channel_positioning": {
+    "identity": "Manter a identidade ampla e reconhecível do canal Inreais: variedade, ideias, dicas, experiências, curiosidades e projetos. A cobertura do universo dos entregadores passa a ser uma frente editorial diária, sem transformar o canal num noticiário exclusivo nem apagar os formatos já existentes.",
+    "role": "comunicador_do_universo_dos_entregadores",
+    "editorial_promise": "Informar, explicar, comentar e contextualizar o que acontece no mundo dos entregadores de comida — não depender de filmar a própria rotina de trabalho.",
+    "creator_principle": "O Inreais comunica o universo dos entregadores como observador, pesquisador e participante dessa comunidade; não precisa aparecer em serviço ou gravar entregas para produzir conteúdo relevante.",
+    "daily_output": "Publicar conteúdo diário relacionado ao universo dos entregadores quando houver pauta relevante, alternando notícias, explicadores, dicas, comentários, histórias, curiosidades e tendências. Não fabricar notícia para preencher calendário.",
+    "preserve_existing_channel": "Manter vídeos variados, ideias e dicas que já fazem parte do canal. Novas frentes editoriais devem ampliar a identidade, não substituí-la.",
+    "editorial_pillars": [
+      {
+        "name": "Mundo dos entregadores",
+        "content": "Notícias, mudanças de aplicativos, pagamentos, bloqueios, direitos, conflitos, acidentes, greves e histórias virais."
+      },
+      {
+        "name": "Dicas e conhecimento prático",
+        "content": "Equipamentos, segurança, custos, estratégias, organização financeira, aplicações e oportunidades."
+      },
+      {
+        "name": "Comunicação e análise",
+        "content": "Comentários, opiniões identificadas como opinião, explicações, comparações entre países e debates."
+      },
+      {
+        "name": "Histórias e comunidade",
+        "content": "Experiências de entregadores, criadores, mulheres na atividade, imigrantes e situações curiosas, sempre com contexto e verificação."
+      },
+      {
+        "name": "Variedade Inreais",
+        "content": "Preservar ideias, dicas, experiências, projetos e vídeos variados que já caracterizam o canal."
+      }
+    ],
+    "editorial_mix_guidance": "O conteúdo sobre o universo dos entregadores ganha presença diária, mas a programação não deve ser composta apenas por notícias de última hora. Alternar formatos informativos, educativos, opinativos e conteúdos variados da identidade Inreais."
   }
 }
