@@ -35,7 +35,7 @@ def main():
 - [ ] Se envolver imigração, não generalizar nem expor dados pessoais.
 - [ ] Confirmar autorização/licença antes de usar qualquer vídeo de terceiros.
 
-## Direção editorial aplicada\n- Idioma/voz: português brasileiro (PT-BR), natural e direto.\n- Estilo: viral e provocador, sem sensacionalismo enganoso.\n- Gancho: abrir com consequência concreta, pergunta forte ou contraste — nunca inventar impacto.\n- Responsabilidade: separar fato confirmado, alegação, opinião e ponto ainda não confirmado.\n\n## Guião vertical (45–60 segundos)
+## Direção editorial aplicada\n- Idioma/voz: português brasileiro (PT-BR), natural e direto.\n- Estilo: viral e provocador, sem sensacionalismo enganoso.\n- Gancho: abrir com consequência concreta, pergunta forte ou contraste — nunca inventar impacto.\n- Responsabilidade: separar fato confirmado, alegação, opinião e ponto ainda não confirmado.\n\n## Guião vertical (máximo 60 segundos; alvo 45–55 segundos)
 
 **Gancho (0–4s):**
 "Entregador, presta atenção: isso pode mexer com o seu dinheiro e com o seu trabalho."
@@ -49,7 +49,7 @@ def main():
 **O que ainda falta confirmar (35–45s):**
 "[Indicar claramente dúvidas, versões em conflito ou informação não confirmada.]"
 
-**Fecho (45–60s):**
+**Fecho (45–55s):**
 "Isso pode afetar quem trabalha com entregas? Conta a tua experiência nos comentários."
 
 ## Pacote TikTok
