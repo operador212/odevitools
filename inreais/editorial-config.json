@@ -1,6 +1,6 @@
 {
   "project": "INREAIS DELIVERY",
-  "version": 2,
+  "version": 3,
   "language": "pt-BR",
   "narration_voice": {
     "locale": "pt-BR",
@@ -39,7 +39,17 @@
   ],
   "default_duration_seconds": 50,
   "maximum_duration_seconds": 60,
-  "short_video_spec": {"aspect_ratio":"9:16","target_resolution":"1080x1920","target_word_count":115,"hard_max_seconds":60,"platforms":["TikTok","YouTube Shorts"]},
+  "short_video_spec": {
+    "aspect_ratio": "9:16",
+    "target_resolution": "1080x1920",
+    "target_word_count": 115,
+    "hard_max_seconds": 60,
+    "platforms": [
+      "TikTok",
+      "YouTube Shorts"
+    ],
+    "maximum_duration_seconds": 60
+  },
   "publishing": {
     "automatic": false,
     "require_human_approval": true
@@ -72,8 +82,25 @@
       "Ireland"
     ],
     "discovery_only": true,
-    "story_types": ["breaking delivery news", "controversies and disputes", "viral rider videos and posts", "curious and unusual delivery stories", "first-person rider experiences", "platform policy and pay changes", "safety, theft and road incidents", "worker rights and immigration-related stories"],
-    "trend_sources": ["public news RSS", "TikTok public posts", "Instagram public posts", "YouTube public videos and Shorts", "public Facebook pages", "Reddit public communities", "creator-submitted tips"],
+    "story_types": [
+      "breaking delivery news",
+      "controversies and disputes",
+      "viral rider videos and posts",
+      "curious and unusual delivery stories",
+      "first-person rider experiences",
+      "platform policy and pay changes",
+      "safety, theft and road incidents",
+      "worker rights and immigration-related stories"
+    ],
+    "trend_sources": [
+      "public news RSS",
+      "TikTok public posts",
+      "Instagram public posts",
+      "YouTube public videos and Shorts",
+      "public Facebook pages",
+      "Reddit public communities",
+      "creator-submitted tips"
+    ],
     "social_discovery_status": "not_automated_yet; public RSS scout currently only",
     "required_fields": [
       "headline",
@@ -88,7 +115,14 @@
       "visual_plan"
     ],
     "selection_gate": "Show candidate stories to the owner. Do not create a publish-ready final or publish before explicit owner selection and approval.",
-    "viral_scoring": ["recency", "engagement evidence where publicly visible", "relevance to delivery workers", "novelty", "source credibility", "visual storytelling potential"],
+    "viral_scoring": [
+      "recency",
+      "engagement evidence where publicly visible",
+      "relevance to delivery workers",
+      "novelty",
+      "source credibility",
+      "visual storytelling potential"
+    ],
     "verification": [
       "Open the original post/article",
       "Confirm author/account identity where possible",
@@ -131,5 +165,60 @@
       "caption and title"
     ],
     "publish_only_after_explicit_owner_ok": true
+  },
+  "niche": {
+    "primary": "food_delivery_couriers",
+    "description": "Entregadores de comida que trabalham de bicicleta, motocicleta ou carro por aplicativos e plataformas de entrega.",
+    "platforms": [
+      "Uber Eats",
+      "Deliveroo",
+      "Just Eat",
+      "Glovo",
+      "iFood",
+      "Rappi",
+      "DoorDash",
+      "outros aplicativos locais"
+    ],
+    "vehicles": [
+      "bicycle",
+      "motorcycle",
+      "car"
+    ],
+    "regions": [
+      "Brazil",
+      "Portugal",
+      "United Kingdom",
+      "Ireland"
+    ],
+    "exclude_topics": [
+      "parcel_delivery",
+      "warehouse_parcel_drivers",
+      "general logistics unless directly relevant to food-delivery couriers"
+    ]
+  },
+  "story_types": [
+    "food_delivery_courier_news",
+    "food_delivery_platform_policy_and_pay",
+    "food_delivery_courier_viral_posts_and_videos",
+    "food_delivery_courier_controversies_and_disputes",
+    "food_delivery_courier_curiosities_and_unusual_orders",
+    "food_delivery_courier_first_person_stories",
+    "food_delivery_courier_safety_theft_and_road_incidents",
+    "food_delivery_courier_worker_rights_and_immigration",
+    "food_delivery_bicycle_motorcycle_and_car_work"
+  ],
+  "source_monitoring": {
+    "required_keywords": [
+      "food delivery",
+      "food courier",
+      "Uber Eats rider",
+      "Deliveroo rider",
+      "Just Eat courier",
+      "Glovo courier",
+      "motoboy",
+      "entregador de aplicativo",
+      "estafeta de comida",
+      "bike courier"
+    ]
   }
 }
