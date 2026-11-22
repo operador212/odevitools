@@ -1,6 +1,6 @@
 {
   "project": "INREAIS DELIVERY",
-  "version": 1,
+  "version": 2,
   "language": "pt-BR",
   "narration_voice": {
     "locale": "pt-BR",
@@ -38,6 +38,8 @@
     "YouTube Shorts 9:16"
   ],
   "default_duration_seconds": 50,
+  "maximum_duration_seconds": 60,
+  "short_video_spec": {"aspect_ratio":"9:16","target_resolution":"1080x1920","target_word_count":115,"hard_max_seconds":60,"platforms":["TikTok","YouTube Shorts"]},
   "publishing": {
     "automatic": false,
     "require_human_approval": true
@@ -70,6 +72,9 @@
       "Ireland"
     ],
     "discovery_only": true,
+    "story_types": ["breaking delivery news", "controversies and disputes", "viral rider videos and posts", "curious and unusual delivery stories", "first-person rider experiences", "platform policy and pay changes", "safety, theft and road incidents", "worker rights and immigration-related stories"],
+    "trend_sources": ["public news RSS", "TikTok public posts", "Instagram public posts", "YouTube public videos and Shorts", "public Facebook pages", "Reddit public communities", "creator-submitted tips"],
+    "social_discovery_status": "not_automated_yet; public RSS scout currently only",
     "required_fields": [
       "headline",
       "country",
@@ -83,6 +88,7 @@
       "visual_plan"
     ],
     "selection_gate": "Show candidate stories to the owner. Do not create a publish-ready final or publish before explicit owner selection and approval.",
+    "viral_scoring": ["recency", "engagement evidence where publicly visible", "relevance to delivery workers", "novelty", "source credibility", "visual storytelling potential"],
     "verification": [
       "Open the original post/article",
       "Confirm author/account identity where possible",
@@ -107,12 +113,16 @@
   "voice_profile": {
     "target": "owner's own voice",
     "delivery": "Brazilian male voice, grounded, hardworking, focused, confident, direct; sounds like a rider reporting from the street, not a commercial announcer",
-    "cloning_status": "not_configured",
-    "required_input": "Owner must provide a clean voice recording and explicitly approve voice cloning with a connected provider",
+    "cloning_status": "active",
+    "provider": "HeyGen",
+    "voice_name": "INREAIS DELIVERY - Voz do Criador v2",
+    "voice_id": "27b2ebdf19fe49dbb6cf72a62ef0be3c",
+    "required_input": "Clone v2 criado a partir de Teste final.m4a com autorização explícita do proprietário.",
     "safety": "Do not imitate any other real person. Do not synthesize or publish the owner's voice without explicit approval."
   },
   "approval_workflow": {
     "owner_is_final_editor": true,
+    "shorts_max_duration_seconds": 60,
     "no_auto_publish": true,
     "approval_required_for": [
       "story selection",
