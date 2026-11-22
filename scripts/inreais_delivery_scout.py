@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Collect public UK delivery-sector headlines into an editorial review queue.
+"""Collect public food-delivery courier headlines across four regions into a review queue.
 
 This scout stores headlines and source links only. It does not download or reuse
 third-party video. Every item requires fact-checking and editorial approval.
