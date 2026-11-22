@@ -1,78 +1,68 @@
-# INREAIS DELIVERY — Short 001 (rascunho para aprovação)
+# INREAIS DELIVERY — Short 001 (substituição do tema)
 
-**Estado:** roteiro e edição editorial preparados; aguardando aprovação do proprietário antes de gerar a narração clonada e renderizar a versão final.  
-**Tema:** estudo sobre condições de trabalho de motoristas de entregas de encomendas no Reino Unido.  
-**Data de referência:** 22/11/2026  
-**Duração prevista:** 48–55 segundos · 9:16 · PT-BR
+**Nicho correto:** entregadores de comida por aplicativo — bicicleta, moto e carro.  
+**Tema:** entregadores de Uber Eats, Deliveroo e Just Eat em Edimburgo questionam a transparência dos algoritmos e a queda no valor pago por pedido.  
+**Estado:** roteiro editorial atualizado; aguarda aprovação antes de gerar a voz v2 e montar o MP4.  
+**Duração:** 45–55 segundos · vertical 9:16 · PT-BR.
 
-## Verificação editorial
+## Factos confirmados na reportagem
 
-**Facto principal:** um estudo da University of Sheffield, publicado em 20/10/2026, entrevistou 1.413 motoristas de carro e carrinha que entregam encomendas para duas grandes empresas britânicas. Entre os motoristas classificados como self-employed na empresa que usa esse modelo, 35% estimaram que os seus ganhos por hora ficavam abaixo do nível do National Minimum Wage.
+O Guardian publicou em 5/9/2026 uma reportagem sobre entregadores de comida em Edimburgo que pedem transparência nos algoritmos usados para distribuir pedidos e calcular pagamentos.
 
-**Limite importante:** são estimativas declaradas pelos participantes, não uma decisão judicial nem uma conclusão de que uma empresa específica violou a lei. Em regra, trabalhadores genuinamente self-employed não têm direito legal ao National Minimum Wage; o estudo usa o valor como referência de comparação. As duas empresas não são nomeadas no relatório.
+A reportagem cita registos de um entregador Deliveroo, identificado como Dylan, segundo os quais a média recebida por pedido caiu de £3,67 em 2023 para £3,42 no primeiro semestre de 2026, enquanto o número de entregas por hora se manteve aproximadamente entre 3,6 e 3,8.
 
-**Corroboração:** CWU publicou em 28/10/2026 um resumo do relatório e confirma a comparação entre dois modelos de contratação. A GMB também publicou uma síntese em 21/10/2026. São organizações sindicais, não fontes independentes do estudo; a fonte primária continua a ser a University of Sheffield.
+A reportagem também descreve testes do Workers' Observatory em que entregadores aceitaram ou rejeitaram ofertas para observar alterações nos valores oferecidos. Um trabalhador foi desativado após um desses testes, mas a causa não foi estabelecida; as plataformas negam que rejeitar ofertas provoque desativação.
 
-## Narração proposta (aprox. 50 segundos)
+As empresas contestaram a interpretação dos trabalhadores e apresentaram as suas explicações sobre pagamento, correspondência de pedidos e revisão humana. O vídeo deve atribuir todas as afirmações e não afirmar que o algoritmo foi provado como causa da queda.
 
-“Entregador, olha para este número: trinta e cinco por cento.
+## Narração proposta
 
-Um estudo da Universidade de Sheffield, no Reino Unido, ouviu mil quatrocentos e treze motoristas que fazem entregas de encomendas para duas grandes empresas.
+“Entregador de comida, já reparaste que às vezes fazemos quase o mesmo número de entregas, mas recebemos menos?
 
-Entre os motoristas que trabalhavam como autónomos numa das empresas, trinta e cinco por cento estimaram ganhar por hora menos do que o valor do salário mínimo britânico.
+Uma reportagem do Guardian acompanhou entregadores em Edimburgo que estão a pedir mais transparência nos algoritmos do Uber Eats, Deliveroo e Just Eat.
 
-Atenção: isto é uma estimativa dos próprios trabalhadores, não uma decisão judicial. E o estudo não revelou os nomes das empresas.
+Um entregador da Deliveroo mostrou os próprios registos: a média por pedido caiu de três libras e sessenta e sete em 2023 para três libras e quarenta e dois no primeiro semestre de 2026.
 
-O relatório também aponta trabalho não pago, custos com combustível e manutenção e muita pressão por metas.
+Ele diz que continuou a fazer praticamente o mesmo número de entregas por hora.
 
-A pergunta é simples: quando fazemos as contas, quanto realmente sobra por hora depois de todos os custos?
+Atenção: são dados pessoais relatados na reportagem, não uma prova de que o algoritmo causou a queda. As plataformas contestam críticas sobre os seus sistemas.
 
-Conta a tua experiência nos comentários. Aqui é o INREAIS DELIVERY.”
+E contigo? O valor por entrega também caiu? Conta a tua experiência.”
 
-## Storyboard / montagem
+## Storyboard
 
-| Tempo | Imagem original a produzir | Texto no ecrã |
+| Tempo | Cena ilustrativa original | Texto no ecrã |
 |---|---|---|
-| 0–4s | Close-up cinematográfico de entregador ao lado de carrinha, chuva leve, Londres ao fundo | **35%: o número que chama atenção** |
-| 4–12s | Pilha de encomendas e motorista a organizar rota no telemóvel; interface sem marcas | **1.413 motoristas ouvidos** |
-| 12–23s | Entregador a conduzir por rua residencial britânica; plano ilustrativo, sem logótipos | **35% dos self-employed estimaram ganhos abaixo da referência do mínimo** |
-| 23–33s | Close-up de calculadora, combustível, seguro e manutenção | **Estimativa dos trabalhadores — não decisão judicial** |
-| 33–43s | Carrinha parada no depósito, motorista a carregar encomendas e olhar para o relógio | **Trabalho não pago + custos do próprio bolso** |
-| 43–52s | Entregador olha para a câmara, fundo urbano desfocado | **Quanto sobra por hora? Comenta.** |
+| 0–4s | Ciclista com mochila térmica à porta de restaurante, cidade britânica | “MESMAS ENTREGAS. MENOS DINHEIRO?” |
+| 4–12s | Ecrã de telemóvel genérico com oferta de entrega, sem logótipos | “Uber Eats • Deliveroo • Just Eat” |
+| 12–23s | Gráfico simples £3.67 → £3.42 | “Média por pedido relatada” |
+| 23–34s | Entregador de bicicleta a aguardar nova chamada | “3,6–3,8 entregas por hora” |
+| 34–45s | Entregador de moto e ciclista a comparar os valores no telemóvel | “O que mudou na tua cidade?” |
+| 45–55s | Close-up da mochila térmica e cidade ao fundo | “Conta a tua experiência” |
 
-**Direção visual:** documental cinematográfica, vertical 9:16, cortes a cada 2–4 segundos, contraste alto, tipografia grande, legendas sincronizadas. Todas as cenas geradas devem ser identificadas como ilustrações com IA; não devem parecer imagens documentais do estudo ou das empresas.
+Todas as imagens geradas devem ser identificadas como ilustrações. Não representar trabalhadores reais da reportagem nem inventar capturas de ecrã das aplicações.
 
-## Áudio e exportação
+## Capa e publicação
 
-- Voz: clone autorizado “INREAIS DELIVERY - Voz do Criador v2”, em PT-BR, ritmo natural e direto.
-- Música: sem música nesta primeira versão; usar apenas voz e ambiente original/licenciado.
-- Legendas: queimadas no vídeo + ficheiro SRT.
-- Exportação: MP4, 1080×1920, 30 fps, H.264, máximo 60 segundos.
-- Publicação: TikTok e YouTube Shorts, somente após aprovação final.
-
-## Título e descrição
-
-**Capa:** “35%: entregadores abaixo do mínimo?”
+**Capa:** “MENOS £ POR ENTREGA?”
 
 **TikTok:**  
-“Um estudo da University of Sheffield ouviu 1.413 motoristas de entregas de encomendas no Reino Unido. Entre os self-employed de uma das empresas analisadas, 35% estimaram ganhos por hora abaixo da referência do salário mínimo. São estimativas dos participantes, não uma decisão judicial. Quanto sobra depois dos custos?  
-#Entregadores #DeliveryUK #Courier #TrabalhoAutonomo #InreaisDelivery”
+“Entregadores de comida em Edimburgo estão a questionar a transparência dos algoritmos. Um rider da Deliveroo relatou uma queda na média por pedido entre 2023 e 2026. As plataformas contestam as críticas. E contigo: quanto recebes por entrega?  
+#UberEats #Deliveroo #JustEat #Entregadores #FoodDelivery #InreaisDelivery”
 
 **YouTube Shorts:**  
-“35% dos motoristas estimaram ganhos abaixo da referência do mínimo? | INREAIS DELIVERY”
+“Entregadores estão a receber menos por pedido? | Uber Eats, Deliveroo e Just Eat”
 
-Descrição: “Um estudo da University of Sheffield sobre motoristas de entregas de encomendas no Reino Unido. Os 35% são estimativas dos participantes e não uma decisão judicial. Fonte primária: https://sheffield.ac.uk/news/over-third-self-employed-parcel-drivers-earn-below-minimum-wage-major-study-finds”
+## Fontes
 
-## Fontes consultadas
+- The Guardian, 5/9/2026 — reportagem e respostas das plataformas: https://www.theguardian.com/business/2026/sep/05/food-delivery-riders-platforms-open-ai-black-box-cut-pay
+- Workers' Observatory — citado na reportagem como grupo que realizou experiências com entregadores; a reportagem é a fonte consultada para este roteiro.
 
-1. University of Sheffield, 20/10/2026 — fonte primária: https://sheffield.ac.uk/news/over-third-self-employed-parcel-drivers-earn-below-minimum-wage-major-study-finds
-2. Communication Workers Union, 28/10/2026 — síntese sindical do relatório: https://www.cwu.org/ltb/ltb-291-26-sheffield-university-report-on-work-and-employment-in-last-mile-parcel-delivery/
-3. GMB, 21/10/2026 — síntese sindical: https://www.gmb.org.uk/news/third-of-delivery-drivers-paid-below-nmw
+## Checklist
 
-## Aprovação pendente
-
-- [ ] Aprovar esta história.
-- [ ] Aprovar o texto da narração.
-- [ ] Aprovar a direção visual ilustrativa.
-- [ ] Gerar a voz clonada v2 e sincronizar legendas.
-- [ ] Renderizar MP4 final e rever antes de publicar.
+- [ ] Aprovar a história e o texto.
+- [ ] Gerar voz v2.
+- [ ] Criar imagens originais ilustrativas.
+- [ ] Montar vídeo 9:16 com legendas.
+- [ ] Rever o MP4 final.
+- [ ] Publicar manualmente após aprovação.
