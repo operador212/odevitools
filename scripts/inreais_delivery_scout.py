@@ -16,19 +16,18 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 QUERIES = {
-    "platform_updates": '("Uber Eats" OR Deliveroo OR "Just Eat") UK rider OR courier news',
-    "rules_and_rights": 'UK delivery couriers riders employment rights legislation rules',
-    "pay_and_fees": 'UK food delivery rider pay fees insurance account deactivation',
-    "incidents_and_disputes": 'UK delivery rider controversy dispute protest accident platform',
-    "brazil": "entregadores delivery aplicativos Brasil iFood greve confusao violencia direitos",
-    "portugal": "estafetas entregadores brasileiros Portugal Uber Eats Glovo polemica regras",
-    "ireland": "delivery riders couriers Ireland Dublin Brazilian migrant gig workers news",
-    "uk": "UK delivery riders couriers Brazilian migrant Uber Eats Deliveroo Just Eat news",
-    "industry": 'UK gig economy food delivery courier industry changes',
-    "viral_stories": '("delivery rider" OR courier OR motoboy OR estafeta) (viral OR trending OR bizarre OR unusual OR funny OR shocking) video',
-    "controversies": '("delivery rider" OR courier OR motoboy OR estafeta) (controversy OR dispute OR scandal OR protest OR allegation) delivery app',
-    "curious_stories": '("delivery driver" OR courier OR motoboy OR estafeta) (strange order OR unusual delivery OR rescued OR surprising story)',
-    "creator_stories": 'delivery rider creator viral TikTok YouTube Shorts Instagram courier story',
+    "uber_eats": '"Uber Eats" (rider OR courier OR delivery driver OR entregador) food delivery news',
+    "deliveroo": 'Deliveroo (rider OR courier OR delivery driver OR entregador) food delivery news',
+    "just_eat": '"Just Eat" (courier OR rider OR delivery driver) food delivery news',
+    "glovo": 'Glovo (courier OR rider OR repartidor OR estafeta OR entregador) food delivery news',
+    "brazil": '(motoboy OR entregador OR delivery) (iFood OR Rappi) (greve OR viral OR acidente OR polemica OR direitos OR pagamento)',
+    "portugal": '(estafeta OR entregador OR courier) (Glovo OR Uber Eats) (greve OR viral OR acidente OR polemica OR pagamento)',
+    "ireland": '("food delivery" OR takeaway courier) (rider OR cyclist OR motorbike) Ireland Dublin',
+    "uk": '("food delivery" OR takeaway courier) (rider OR cyclist OR motorbike) UK London',
+    "viral_food_delivery": '("food delivery rider" OR "Uber Eats rider" OR "Deliveroo rider" OR motoboy OR estafeta) (viral OR trending OR bizarre OR unusual OR funny OR shocking)',
+    "controversies_food_delivery": '("food delivery" OR "Uber Eats" OR Deliveroo OR Glovo OR "Just Eat") (controversy OR dispute OR scandal OR protest OR allegation OR strike) courier rider',
+    "curious_food_delivery": '("food delivery rider" OR motoboy OR estafeta OR courier) (strange order OR unusual delivery OR rescued OR surprising story)',
+    "creator_food_delivery": 'food delivery courier rider creator viral TikTok YouTube Shorts Instagram',
 }
 OUT = Path("data/inreais-delivery-news.json")
 MAX_PER_QUERY = 20
