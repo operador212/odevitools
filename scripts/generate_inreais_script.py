@@ -35,10 +35,10 @@ def main():
 - [ ] Se envolver imigração, não generalizar nem expor dados pessoais.
 - [ ] Confirmar autorização/licença antes de usar qualquer vídeo de terceiros.
 
-## Guião vertical (45–60 segundos)
+## Direção editorial aplicada\n- Idioma/voz: português brasileiro (PT-BR), natural e direto.\n- Estilo: viral e provocador, sem sensacionalismo enganoso.\n- Gancho: abrir com consequência concreta, pergunta forte ou contraste — nunca inventar impacto.\n- Responsabilidade: separar fato confirmado, alegação, opinião e ponto ainda não confirmado.\n\n## Guião vertical (45–60 segundos)
 
 **Gancho (0–4s):**
-"Entregadores brasileiros: atenção a esta notícia."
+"Entregador, presta atenção: isso pode mexer com o seu dinheiro e com o seu trabalho."
 
 **Contexto (4–18s):**
 "[Explicar o que aconteceu, onde e quando — preencher apenas após verificação.]"
