@@ -220,5 +220,198 @@
       "estafeta de comida",
       "bike courier"
     ]
+  },
+  "coverage_priority": [
+    {
+      "region": "Brazil",
+      "priority": 1,
+      "weight": "highest",
+      "focus": [
+        "iFood",
+        "Rappi",
+        "outros aplicativos de comida",
+        "pagamentos e taxas",
+        "bloqueios e desativações",
+        "greves e protestos",
+        "acidentes e segurança",
+        "confusões e conflitos",
+        "novas regras e funcionalidades",
+        "histórias virais e curiosidades"
+      ]
+    },
+    {
+      "region": "Portugal",
+      "priority": 2,
+      "weight": "high",
+      "focus": [
+        "Uber Eats",
+        "Glovo",
+        "outros aplicativos de comida",
+        "pagamentos e taxas",
+        "fiscalidade e recibos verdes",
+        "bloqueios e contas",
+        "aluguel ou cedência de contas",
+        "imigração e direitos",
+        "acidentes e segurança",
+        "novidades e histórias virais"
+      ]
+    },
+    {
+      "region": "United Kingdom and Europe",
+      "priority": 3,
+      "weight": "monitor_and_cross_reference",
+      "focus": [
+        "taxes and self-employment",
+        "account renting, sharing and substitution",
+        "platform regulation and enforcement",
+        "insurance and vehicle costs",
+        "courier pay and platform changes",
+        "worker rights",
+        "cross-border comparisons relevant to Brazil or Portugal"
+      ]
+    }
+  ],
+  "cross_region_editorial_policy": {
+    "purpose": "Use UK and European stories as comparative reporting for Brazil and Portugal when the issue has a clear connection or lesson for food-delivery couriers.",
+    "examples": [
+      "taxation and self-employment",
+      "renting or sharing courier accounts",
+      "platform rules and enforcement",
+      "pay transparency and algorithmic allocation",
+      "insurance, safety and worker rights"
+    ],
+    "rule": "Do not present a UK or European rule as if it applied in Brazil or Portugal. State the country and platform clearly."
+  },
+  "creator_watchlist": {
+    "purpose": "Monitor public posts from food-delivery couriers who document real shifts, earnings, platform experiences, tips, controversies and unusual stories.",
+    "priority_regions": [
+      "Brazil",
+      "Portugal",
+      "United Kingdom"
+    ],
+    "discovery_targets": [
+      "famous food-delivery creators",
+      "couriers who publicly show earnings with context",
+      "women food-delivery couriers",
+      "Brazilian couriers living in London or Portugal",
+      "Goianos in London who work with food delivery",
+      "riders discussing platform rules, account access, taxes and costs"
+    ],
+    "candidate_policy": "Names below are starting points for monitoring, not endorsements. Recheck current public activity, platform and audience before featuring. Do not infer earnings from views or repeat unverified income claims.",
+    "candidates": [
+      {
+        "name": "London Eats / Milo Sterlini",
+        "region": "United Kingdom",
+        "platforms": [
+          "YouTube",
+          "TikTok",
+          "Instagram"
+        ],
+        "handle": "@londoneats10",
+        "focus": "POV delivery shifts, earnings, tips, gear and unusual situations",
+        "source": "https://www.youtube.com/@LondonEats"
+      },
+      {
+        "name": "Cris Zetelina",
+        "region": "Brazilian creator in London",
+        "platforms": [
+          "YouTube",
+          "Instagram"
+        ],
+        "handle": "CristianoZTL (Instagram link referenced in video description)",
+        "focus": "Brazilian delivery routine in London, Uber Eats and Deliveroo, reported daily earnings",
+        "source": "https://www.youtube.com/watch?v=h5rdP36b2y4"
+      },
+      {
+        "name": "Wanderson Constantino",
+        "region": "Goiano in England",
+        "platforms": [
+          "Social video; exact profile to verify"
+        ],
+        "handle": "not verified",
+        "focus": "Viral delivery interactions and language barrier in England",
+        "source": "https://portal6.com.br/2025/07/05/sem-falar-ingles-goiano-mostra-como-se-vira-para-trabalhar-de-entregador-na-inglaterra/"
+      },
+      {
+        "name": "Rick Oliveira / Ricardo Dornelles de Oliveira",
+        "region": "Portugal",
+        "platforms": [
+          "TikTok",
+          "Instagram"
+        ],
+        "handle": "@rickliveira",
+        "focus": "Brazilian motoboy/estafeta in Portugal, daily delivery routine and immigrant life",
+        "source": "https://record.r7.com/record-europa/palco-record/videos/influencer-em-palco-com-rick-oliveira-02032023/"
+      },
+      {
+        "name": "Grasi Motovlog / Grasiella Pacheco",
+        "region": "Brazil",
+        "platforms": [
+          "YouTube",
+          "Instagram"
+        ],
+        "handle": "@grasimotovlog; @grasi_motovlog",
+        "focus": "Woman delivery rider, motorcycle delivery routine, maintenance and women's experience",
+        "source": "https://www.youtube.com/@grasimotovlog"
+      },
+      {
+        "name": "Jeff Fernandes",
+        "region": "Brazil",
+        "platforms": [
+          "YouTube"
+        ],
+        "handle": "Jeff Fernandes",
+        "focus": "Motovlogs, night deliveries, rider life and platform work",
+        "source": "https://www.scielo.br/j/dilemas/a/4gpmcVsrzBZgFBpxy4ZbyJM/?lang=pt"
+      },
+      {
+        "name": "Ralf MT",
+        "region": "Brazil",
+        "platforms": [
+          "YouTube",
+          "Instagram"
+        ],
+        "handle": "@ralf_mt",
+        "focus": "App delivery work, rider organization and worker rights",
+        "source": "https://www.em.com.br/colunistas/fabiano-moraes/2024/08/6931627-rota-sul-cinco-entregadores-viajam-mais-de-4-mil-quilometros-para-retratar.html"
+      },
+      {
+        "name": "Dinho Motoboy",
+        "region": "Brazil",
+        "platforms": [
+          "YouTube"
+        ],
+        "handle": "@dinhomotoboy",
+        "focus": "Delivery app work, earnings optimization and safety",
+        "source": "https://www.brasildefato.com.br/2023/07/28/quer-cooptar-ifood-envia-roteiros-de-videos-e-brindes-para-entregadores-influencers/"
+      },
+      {
+        "name": "Roseno Aventuras",
+        "region": "Brazil",
+        "platforms": [
+          "YouTube"
+        ],
+        "handle": "@roseno.aventuras",
+        "focus": "Delivery routine, routes and earnings per hour",
+        "source": "https://www.em.com.br/colunistas/fabiano-moraes/2024/08/6931627-rota-sul-cinco-entregadores-viajam-mais-de-4-mil-quilometros-para-retratar.html"
+      },
+      {
+        "name": "Marcelo Castelli",
+        "region": "Brazil",
+        "platforms": [
+          "YouTube",
+          "Instagram"
+        ],
+        "handle": "@marcelocastellioficial",
+        "focus": "App updates, rider stories and financial planning",
+        "source": "https://www.em.com.br/colunistas/fabiano-moraes/2024/08/6931627-rota-sul-cinco-entregadores-viajam-mais-4-mil-quilometros-para-retratar.html"
+      }
+    ],
+    "pending_research": [
+      "Identify currently active female Brazilian food-delivery creators in London and Portugal",
+      "Find and verify more Goianos in London who publish food-delivery content",
+      "Check current follower counts and recent posting cadence for every creator",
+      "Identify Portugal-based women food-delivery creators"
+    ]
   }
 }
