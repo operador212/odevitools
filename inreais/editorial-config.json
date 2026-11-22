@@ -1,0 +1,49 @@
+{
+  "project": "INREAIS DELIVERY",
+  "version": 1,
+  "language": "pt-BR",
+  "narration_voice": {
+    "locale": "pt-BR",
+    "style": "natural, energetic, conversational",
+    "pace": "medium-fast",
+    "pronunciation": "Brazilian Portuguese",
+    "instruction": "Fale como um comunicador brasileiro experiente, com clareza e energia. Evite imitar pessoas reais."
+  },
+  "editorial_style": {
+    "mode": "viral-provocative-responsible",
+    "hook": "strong, immediate, consequence-led",
+    "tone": [
+      "direct",
+      "bold",
+      "curious",
+      "grounded"
+    ],
+    "rules": [
+      "Never present allegations, rumors or unverified posts as confirmed facts.",
+      "Attribute claims to the original source.",
+      "Clearly distinguish confirmed facts, allegations, opinion and unknowns.",
+      "Do not exaggerate consequences or invent numbers, quotes or context.",
+      "For immigration-related stories, avoid stereotypes and protect personal data.",
+      "Use provocative questions, not misleading claims."
+    ]
+  },
+  "coverage": [
+    "Brazil",
+    "Portugal",
+    "United Kingdom",
+    "Ireland"
+  ],
+  "formats": [
+    "TikTok 9:16",
+    "YouTube Shorts 9:16"
+  ],
+  "default_duration_seconds": 50,
+  "publishing": {
+    "automatic": false,
+    "require_human_approval": true
+  },
+  "third_party_media": {
+    "downloading": false,
+    "reuse_requires_permission": true
+  }
+}
