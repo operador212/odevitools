@@ -1,6 +1,6 @@
 {
   "project": "INREAIS DELIVERY",
-  "updated_at": "2026-11-26T03:32:43.105740+00:00",
+  "updated_at": "2026-11-26T16:50:28.418183+00:00",
   "source_policy": "Headlines and links for editorial review; no video reuse permission is implied.",
   "items": [
     {
@@ -9,7 +9,7 @@
       "published_at": "Wed, 30 Sep 2026 07:00:00 GMT",
       "source": "Wales Online",
       "category": "deliveroo",
-      "discovered_at": "2026-11-24T02:10:48.055955+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -42,7 +42,7 @@
       "published_at": "Wed, 29 Jul 2026 07:00:00 GMT",
       "source": "Deadline News",
       "category": "deliveroo",
-      "discovered_at": "2026-11-24T02:10:48.055955+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -64,7 +64,7 @@
       "published_at": "Wed, 28 Sep 2016 07:00:00 GMT",
       "source": "The Independent",
       "category": "uk",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -75,7 +75,7 @@
       "published_at": "Wed, 27 Nov 2024 08:00:00 GMT",
       "source": "The Guardian",
       "category": "uk",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -97,7 +97,7 @@
       "published_at": "Wed, 26 Jun 2024 07:00:00 GMT",
       "source": "Rolling Stone",
       "category": "portugal_creator_stories",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -108,7 +108,7 @@
       "published_at": "Wed, 26 Jun 2024 07:00:00 GMT",
       "source": "Variety",
       "category": "portugal_creator_stories",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -119,7 +119,7 @@
       "published_at": "Wed, 26 Jun 2024 07:00:00 GMT",
       "source": "BrooklynVegan",
       "category": "portugal_creator_stories",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -130,7 +130,7 @@
       "published_at": "Wed, 26 Aug 2026 07:00:00 GMT",
       "source": "The Mary Sue",
       "category": "portugal",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -141,7 +141,7 @@
       "published_at": "Wed, 26 Aug 2026 07:00:00 GMT",
       "source": "BBC",
       "category": "uber_eats",
-      "discovered_at": "2026-11-24T23:53:09.199341+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -152,7 +152,7 @@
       "published_at": "Wed, 25 Mar 2026 07:00:00 GMT",
       "source": "Daily Mail",
       "category": "uk",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -196,7 +196,7 @@
       "published_at": "Wed, 22 May 2024 07:00:00 GMT",
       "source": "RTE.ie",
       "category": "ireland",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -207,7 +207,7 @@
       "published_at": "Wed, 22 Jul 2026 07:00:00 GMT",
       "source": "RTE.ie",
       "category": "just_eat",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -229,7 +229,7 @@
       "published_at": "Wed, 19 Apr 2023 07:00:00 GMT",
       "source": "NDTV Food",
       "category": "viral_food_delivery",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -251,7 +251,7 @@
       "published_at": "Wed, 18 Nov 2026 11:00:56 GMT",
       "source": "Tech.eu",
       "category": "glovo",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -262,7 +262,7 @@
       "published_at": "Wed, 17 Jun 2020 07:00:00 GMT",
       "source": "Outras Palavras",
       "category": "brazil",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -295,7 +295,7 @@
       "published_at": "Wed, 15 Jul 2026 07:00:00 GMT",
       "source": "BBC",
       "category": "glovo",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -316,8 +316,8 @@
       "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPbVg4WFB5MV9BWThMWmVDTG9hMmVtTGVIeU5qOXRNQkRyRFdhNE9hMVdrdVQwVU96VU1oVTVfODBmOFpWejZVanRIN0Mta25oRXZIN1ZYdmYxVFA1Y2FHUjIzYkYySkpPQUk0bHVDa3U0bWdYaXpjdlZzdlZZd0szQVVTWjhpb20yRjhDWmpzLVAtYzd6?oc=5",
       "published_at": "Wed, 15 Jul 2026 07:00:00 GMT",
       "source": "Wanted in Milan",
-      "category": "glovo",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "category": "controversies_food_delivery",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -328,7 +328,7 @@
       "published_at": "Wed, 15 Jul 2026 07:00:00 GMT",
       "source": "Startup Story",
       "category": "curious_food_delivery",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -350,7 +350,7 @@
       "published_at": "Wed, 14 Feb 2024 08:00:00 GMT",
       "source": "BBC",
       "category": "controversies_food_delivery",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -361,7 +361,7 @@
       "published_at": "Wed, 14 Feb 2024 08:00:00 GMT",
       "source": "Big Issue",
       "category": "controversies_food_delivery",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -372,7 +372,7 @@
       "published_at": "Wed, 13 May 2026 07:00:00 GMT",
       "source": "BBC",
       "category": "just_eat",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -394,7 +394,7 @@
       "published_at": "Wed, 12 Oct 2022 07:00:00 GMT",
       "source": "Novara Media",
       "category": "controversies_food_delivery",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -405,7 +405,7 @@
       "published_at": "Wed, 12 Nov 2025 08:00:00 GMT",
       "source": "Observador",
       "category": "portugal_creator_stories",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -438,7 +438,7 @@
       "published_at": "Wed, 12 Aug 2026 07:00:00 GMT",
       "source": "Romania Insider",
       "category": "glovo",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -449,7 +449,7 @@
       "published_at": "Wed, 11 Mar 2026 07:00:00 GMT",
       "source": "BreakingNews.ie",
       "category": "ireland",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -471,7 +471,7 @@
       "published_at": "Wed, 08 Jul 2026 07:00:00 GMT",
       "source": "Le Monde.fr",
       "category": "uber_eats",
-      "discovered_at": "2026-11-24T23:53:09.199341+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -482,7 +482,7 @@
       "published_at": "Wed, 08 Apr 2026 07:00:00 GMT",
       "source": "Retail Technology Innovation Hub",
       "category": "just_eat",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -493,7 +493,7 @@
       "published_at": "Wed, 07 Apr 2021 07:00:00 GMT",
       "source": "The Guardian",
       "category": "controversies_food_delivery",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -504,7 +504,7 @@
       "published_at": "Wed, 06 May 2026 07:00:00 GMT",
       "source": "Reuters",
       "category": "glovo",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -525,8 +525,8 @@
       "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNU1hHSVM5M0pMcGs3T0s3T3NxVDdMVEV2dWhiUkhnZWUyWnRaVVBSV2ZWUThxUUotbVlrOWxobEVKb2owZXdsdC1JZXZmWlVDMHBaWWRZUG5DVUVNckJhNDBMN3BJcDdUQ1k3dnBqMlc4eGNuR1ZqT29xOE5MdWdQUXdNNmVOOXFLZElyamxlTQ?oc=5",
       "published_at": "Wed, 05 Apr 2017 07:00:00 GMT",
       "source": "The Guardian",
-      "category": "uk_europe_tax_accounts",
-      "discovered_at": "2026-11-25T19:13:21.520979+00:00",
+      "category": "controversies_food_delivery",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -537,7 +537,7 @@
       "published_at": "Wed, 04 Jun 2025 07:00:00 GMT",
       "source": "Bloomberg.com",
       "category": "ireland",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -548,7 +548,7 @@
       "published_at": "Wed, 04 Feb 2026 08:00:00 GMT",
       "source": "NDTV Food",
       "category": "viral_food_delivery",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -558,8 +558,8 @@
       "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOUTJWT2hua0YxM0Rya1RHQV9WU0VKbmlmVUNGZTJ4LXRPaGxpRVR2YTlyVnlPN0xiUm1zRkItUk1NRFY0QWZfRzlfRDE5WmVuV0F2QzdQVDNOdmNSQUNIU2pWVTg0Nmp4TFZpT0xTNVNWNUpHV09sclVzV1NwazczQm5QRXJZLWVXRFRiUNIBkgFBVV95cUxQU2xjSHJiaFczbGltRzRzclI0U2EwQVd5WkNTTXMxV0dXOU9ta1RLVklfNHZSUk5PV3phdHNSLUFLY2tLeG43NjFRTEZEUUwzZkFjbXpIWWp5WUtVd1BwNFhlNmN0c0VhMDgwQlpGdHM2azdRcHdlVzhyOUxVaHQ4clE4UXhLZXlTekI0WHRRTFdXdw?oc=5",
       "published_at": "Wed, 03 Sep 2025 07:00:00 GMT",
       "source": "The New Arab",
-      "category": "glovo",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "category": "controversies_food_delivery",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -569,8 +569,8 @@
       "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxQNTgyZDYzZVRaaml5aHVHN3BhRjVFTmIyby1tc2VWN1ptbENPbWNCV0k2WTJkSWJXY3FXcS1seFBvRXBodG1Ya3hFcng5S0NzTGt5OHd2TnpWNGtidEs4eU13V25pT3oxenlUcFBoSWhOaG0xZWRYRDdGZ2hWMkJ1RHZEZzdtOGp1NFlMc3BELUVjUVU3R2R0VjJ5Y1M1UzNkYWtBcTZrQVhzZzJEUnl1UF9ocnBXTXk2RkxYbVJyV2d2OC1zZHdneERORGNaSThTMjFaX3JoOWlvZ01ZU2lYcw?oc=5",
       "published_at": "Wed, 03 Jun 2026 07:00:00 GMT",
       "source": "Facebook",
-      "category": "portugal",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "category": "uber_eats",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -592,7 +592,7 @@
       "published_at": "Wed, 01 Apr 2026 07:00:00 GMT",
       "source": "BBC",
       "category": "uber_eats",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -603,7 +603,7 @@
       "published_at": "Tue, 31 Mar 2026 07:00:00 GMT",
       "source": "ITVX",
       "category": "uber_eats",
-      "discovered_at": "2026-11-24T23:53:09.199341+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -614,7 +614,7 @@
       "published_at": "Tue, 31 Mar 2026 07:00:00 GMT",
       "source": "BBC",
       "category": "uber_eats",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -625,7 +625,7 @@
       "published_at": "Tue, 29 Sep 2026 07:00:00 GMT",
       "source": "The Edinburgh Reporter",
       "category": "just_eat",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -636,7 +636,7 @@
       "published_at": "Tue, 28 Nov 2023 08:00:00 GMT",
       "source": "The Conversation",
       "category": "uk_europe_tax_accounts",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -647,7 +647,7 @@
       "published_at": "Tue, 28 Mar 2023 07:00:00 GMT",
       "source": "Washingtonian",
       "category": "portugal",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -680,7 +680,7 @@
       "published_at": "Tue, 27 Dec 2022 08:00:00 GMT",
       "source": "CNA",
       "category": "viral_food_delivery",
-      "discovered_at": "2026-11-24T23:53:09.199341+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -713,18 +713,7 @@
       "published_at": "Tue, 25 Aug 2026 07:00:00 GMT",
       "source": "BBC",
       "category": "uk",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
-      "status": "needs_review",
-      "editorial_note": "",
-      "video_permission": "not_checked"
-    },
-    {
-      "title": "Italy : Prosecutors open investigation against food delivery platform Foodinho over alleged labour exploitation - Business and Human Rights Centre",
-      "url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxPWUVWeDRqWHExTVBlcnU2SnItd3VWWl9USWtuMjVFVFk1bHNuVlY1OG91MjFmSmFXdTIxaGhVYXRHMHdhSDRaRzAxNDBDVEhIU3NKd2F3QzNHV0ZGc0tHbnlvblJLSHlzdDRPWG5fbERDQ0MwV3kyc0VrU2UyQWVoV21vZ2s0WkViRjQ4czdHTjZ6ZjVGanRZR2hxTjVkSFV3eHRjLXlsN3BoMG5rTGYxLUZIVi1Uc0Y1SHpDLUtUd3JBb2hWOWdTZklMT1RmOWdnaFdTeXBSZURnV1NJbWlHaWJLMTlSM3hsTHpVTEVR?oc=5",
-      "published_at": "Tue, 24 Nov 2026 08:42:45 GMT",
-      "source": "Business and Human Rights Centre",
-      "category": "glovo",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -768,7 +757,7 @@
       "published_at": "Tue, 24 Jan 2023 08:00:00 GMT",
       "source": "Reuters",
       "category": "glovo",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -779,7 +768,7 @@
       "published_at": "Tue, 21 Nov 2023 08:00:00 GMT",
       "source": "Institute of Employment Rights",
       "category": "uk_europe_tax_accounts",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -790,7 +779,7 @@
       "published_at": "Tue, 21 Nov 2023 08:00:00 GMT",
       "source": "BBC",
       "category": "uk_europe_tax_accounts",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -801,7 +790,7 @@
       "published_at": "Tue, 21 Nov 2023 08:00:00 GMT",
       "source": "Sky News",
       "category": "uk_europe_tax_accounts",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -856,7 +845,7 @@
       "published_at": "Tue, 21 Mar 2023 07:00:00 GMT",
       "source": "The Irish Times",
       "category": "ireland",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -878,7 +867,7 @@
       "published_at": "Tue, 19 May 2026 07:00:00 GMT",
       "source": "New York Post",
       "category": "portugal",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -917,23 +906,23 @@
       "video_permission": "not_checked"
     },
     {
-      "title": "Uber Eats launches new drone delivery service - ABC News - Breaking News, Latest News and Videos",
-      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQUjhmRnNqam4zc0Y2YUxyN0Z2N0k0SkJzdDNSTmFtUVhGQXZkaFM2bnpzS3hHa2IxRkhia1EtM2VsX0FfSFlmcW1MeTlqQ2JiN0NFQWRuNEZxQVp2SkZBOVBJWmkxcFZieFZfazRRU1FsRnJJZmhhRHozY1dLMnotSGY2M2l5cUtQakdTZ3loeUt1OHFXMU5feWt30gGfAUFVX3lxTE1ORFdrenlZeUxVWUVMRlNlS1J4aVdlYTZGdTVJa1o4Wm9JYVJqM2FyajhfUDZRellselhFLURySEdtX3BoSTRiQWtZQVY4TDY1MDZzcWJ1UHZyUndtZ2lJLWVGQTB0X1EyWmw5NEVUaGN6Tk9SRzNta2NvTk5xX04wMXpkOWpqa3dPcHJpR0VsZTVIM3ZlV2doR3lvUndiaw?oc=5",
-      "published_at": "Tue, 17 Nov 2026 13:35:12 GMT",
-      "source": "ABC News - Breaking News, Latest News and Videos",
-      "category": "uber_eats",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
-      "status": "needs_review",
-      "editorial_note": "",
-      "video_permission": "not_checked"
-    },
-    {
       "title": "Uber Eats launches new drone delivery service - Good Morning America",
       "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNeTc4ZjVualhzdVpZM2plbDhYMTNlVEVmQ2t4SlpjYmhteWhaYjFSRXI4azNCbU02ek1idUoxRWJ1RWVLQkpNT3NQc3ZlQjMxMEtSamFXcFdnLUJBSHNqdUJmQlhrRFdhOExlRHd4eTFHV05MZ0FRUGFVc3kwNTJMb3BVcjM5VUxzeVlBc0VUX3RaczVCdGNjX1BWRWNHSnhmYlphQ9IBqgFBVV95cUxPYk9fTk5JaWdoZDlVMEoteHlUNmJ1SFlHeDRWZXJQWkxIRHl4Y0lxQnQtTVBqbFMtMUU2SmdkMElCaklmZ2NNRENwSFpfNWRaXzVUek5WcEtmQkJfeGw4eFhWTmhKTmEzVDNfRWRrcnRzZHlZN3kxOVZKWHdnLWJ1MUd5ZHdDSXNSZHFsbm8wT1lfZjlaZjZkSFppRERXMEF6cXZaOVZza3lPUQ?oc=5",
       "published_at": "Tue, 17 Nov 2026 13:16:00 GMT",
       "source": "Good Morning America",
       "category": "uber_eats",
       "discovered_at": "2026-11-24T23:53:09.199341+00:00",
+      "status": "needs_review",
+      "editorial_note": "",
+      "video_permission": "not_checked"
+    },
+    {
+      "title": "Uber Eats launches new drone delivery service - ABC News - Breaking News, Latest News and Videos",
+      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQUjhmRnNqam4zc0Y2YUxyN0Z2N0k0SkJzdDNSTmFtUVhGQXZkaFM2bnpzS3hHa2IxRkhia1EtM2VsX0FfSFlmcW1MeTlqQ2JiN0NFQWRuNEZxQVp2SkZBOVBJWmkxcFZieFZfazRRU1FsRnJJZmhhRHozY1dLMnotSGY2M2l5cUtQakdTZ3loeUt1OHFXMU5feWt30gGfAUFVX3lxTE1ORFdrenlZeUxVWUVMRlNlS1J4aVdlYTZGdTVJa1o4Wm9JYVJqM2FyajhfUDZRellselhFLURySEdtX3BoSTRiQWtZQVY4TDY1MDZzcWJ1UHZyUndtZ2lJLWVGQTB0X1EyWmw5NEVUaGN6Tk9SRzNta2NvTk5xX04wMXpkOWpqa3dPcHJpR0VsZTVIM3ZlV2doR3lvUndiaw?oc=5",
+      "published_at": "Tue, 17 Nov 2026 08:00:00 GMT",
+      "source": "ABC News - Breaking News, Latest News and Videos",
+      "category": "uber_eats",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -966,7 +955,7 @@
       "published_at": "Tue, 17 Mar 2026 07:00:00 GMT",
       "source": "BBC",
       "category": "just_eat",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -988,7 +977,7 @@
       "published_at": "Tue, 16 Jan 2024 08:00:00 GMT",
       "source": "International Bar Association | IBA",
       "category": "uk_europe_tax_accounts",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1065,7 +1054,7 @@
       "published_at": "Tue, 14 Jul 2026 07:00:00 GMT",
       "source": "ANSA",
       "category": "glovo",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1076,7 +1065,7 @@
       "published_at": "Tue, 14 Jul 2026 07:00:00 GMT",
       "source": "Wrexham and Flintshire News, Sport, Events | The Leader",
       "category": "just_eat",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1087,7 +1076,7 @@
       "published_at": "Tue, 13 Sep 2022 07:00:00 GMT",
       "source": "InfoMigrants",
       "category": "controversies_food_delivery",
-      "discovered_at": "2026-11-25T08:27:23.762453+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1131,7 +1120,7 @@
       "published_at": "Tue, 13 Feb 2024 08:00:00 GMT",
       "source": "Dublin Live",
       "category": "ireland",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1142,7 +1131,7 @@
       "published_at": "Tue, 12 Sep 2023 07:00:00 GMT",
       "source": "Fleet News",
       "category": "uk",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1164,7 +1153,7 @@
       "published_at": "Tue, 11 May 2021 07:00:00 GMT",
       "source": "The Guardian",
       "category": "glovo",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1175,7 +1164,7 @@
       "published_at": "Tue, 11 Aug 2026 07:00:00 GMT",
       "source": "The Guardian",
       "category": "uber_eats",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1208,7 +1197,18 @@
       "published_at": "Tue, 10 May 2022 07:00:00 GMT",
       "source": "BreakingNews.ie",
       "category": "ireland",
-      "discovered_at": "2026-11-25T19:13:21.520979+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
+      "status": "needs_review",
+      "editorial_note": "",
+      "video_permission": "not_checked"
+    },
+    {
+      "title": "Police investigate food delivery rider for verbal abuse - NST Online",
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPRURiQVVlNGlyRFNLUkpLZnJZa3A1VUpxdHpuMjJxTzBuWTZicF9VcU41U2RFaGpUajRjbUJ4SVdVMTVITGxaMWNDY05pMUliQWJKQjZEVmtPX0EwWk50QjRoRUxBb2M4VHNKNnhQYzhNT2lRZ09tWnZnQjkycURUcFB2UFhITExxRmtwTGlQR1IyS09CU2EyM3BxdUhmZUFqaGJNZk9scTlURzTSAbABQVVfeXFMTk5rekNaTE9ZemJEQjhmLTVOOTlrQkM0NmxPdWdBbkphVzJKVzRzX1Z2MWJxWlhKcE5pRlp1NXA4cF83WDRNVElWTFB4RjQySkdsT1M4QXNKYzA1bUwwYXUwTUF3Y1JKOW1feG5LTXZaSFFpUmw1RndTUWJVVlpRX3UtZWd4blFENDZBczhRTGdVV2dCRlFhQ2Y3UmRjZm1BNEJ4a1BRbjZlbHE4cUo4YWc?oc=5",
+      "published_at": "Tue, 10 Jan 2023 08:00:00 GMT",
+      "source": "NST Online",
+      "category": "viral_food_delivery",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1219,7 +1219,18 @@
       "published_at": "Tue, 10 Feb 2026 09:16:28 GMT",
       "source": "Business and Human Rights Centre",
       "category": "glovo",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
+      "status": "needs_review",
+      "editorial_note": "",
+      "video_permission": "not_checked"
+    },
+    {
+      "title": "Italy : Prosecutors open investigation against food delivery platform Foodinho over alleged labour exploitation - Business and Human Rights Centre",
+      "url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxPWUVWeDRqWHExTVBlcnU2SnItd3VWWl9USWtuMjVFVFk1bHNuVlY1OG91MjFmSmFXdTIxaGhVYXRHMHdhSDRaRzAxNDBDVEhIU3NKd2F3QzNHV0ZGc0tHbnlvblJLSHlzdDRPWG5fbERDQ0MwV3kyc0VrU2UyQWVoV21vZ2s0WkViRjQ4czdHTjZ6ZjVGanRZR2hxTjVkSFV3eHRjLXlsN3BoMG5rTGYxLUZIVi1Uc0Y1SHpDLUtUd3JBb2hWOWdTZklMT1RmOWdnaFdTeXBSZURnV1NJbWlHaWJLMTlSM3hsTHpVTEVR?oc=5",
+      "published_at": "Tue, 10 Feb 2026 08:00:00 GMT",
+      "source": "Business and Human Rights Centre",
+      "category": "glovo",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1252,7 +1263,7 @@
       "published_at": "Tue, 07 Apr 2026 07:00:00 GMT",
       "source": "The Independent",
       "category": "uk_europe_tax_accounts",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1263,7 +1274,7 @@
       "published_at": "Tue, 06 May 2025 07:00:00 GMT",
       "source": "Monmouthshire Beacon",
       "category": "curious_food_delivery",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1274,7 +1285,7 @@
       "published_at": "Tue, 06 Jan 2026 08:00:00 GMT",
       "source": "FIJ NG",
       "category": "curious_food_delivery",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1285,7 +1296,7 @@
       "published_at": "Tue, 06 Apr 2021 07:00:00 GMT",
       "source": "The Guardian",
       "category": "controversies_food_delivery",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1296,7 +1307,7 @@
       "published_at": "Tue, 05 May 2026 07:00:00 GMT",
       "source": "The Guardian",
       "category": "just_eat",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1340,7 +1351,7 @@
       "published_at": "Tue, 02 Jun 2026 07:00:00 GMT",
       "source": "The Courier Mail",
       "category": "curious_food_delivery",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1351,7 +1362,7 @@
       "published_at": "Tue, 02 Dec 2025 08:00:00 GMT",
       "source": "Metro.co.uk",
       "category": "uk",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1362,7 +1373,7 @@
       "published_at": "Tue, 01 Sep 2026 07:00:00 GMT",
       "source": "International Business Times UK",
       "category": "portugal",
-      "discovered_at": "2026-11-25T19:13:21.520979+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1373,7 +1384,7 @@
       "published_at": "Tue, 01 Sep 2026 07:00:00 GMT",
       "source": "BBC",
       "category": "just_eat",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1406,7 +1417,7 @@
       "published_at": "Thu, 30 Nov 2023 08:00:00 GMT",
       "source": "Slaughter and May",
       "category": "uk_europe_tax_accounts",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1428,7 +1439,7 @@
       "published_at": "Thu, 30 Jul 2026 07:00:00 GMT",
       "source": "Wanted in Rome",
       "category": "controversies_food_delivery",
-      "discovered_at": "2026-11-25T08:27:23.762453+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1439,7 +1450,7 @@
       "published_at": "Thu, 30 Apr 2026 07:00:00 GMT",
       "source": "InfoMigrants",
       "category": "uber_eats",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1450,7 +1461,7 @@
       "published_at": "Thu, 29 Oct 2026 07:00:00 GMT",
       "source": "Harrogate Advertiser",
       "category": "viral_food_delivery",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1461,7 +1472,7 @@
       "published_at": "Thu, 29 Jun 2023 07:00:00 GMT",
       "source": "YouTube",
       "category": "portugal_creator_stories",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1483,7 +1494,7 @@
       "published_at": "Thu, 28 Mar 2024 07:00:00 GMT",
       "source": "London Evening Standard",
       "category": "viral_food_delivery",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1494,7 +1505,7 @@
       "published_at": "Thu, 27 Jun 2024 07:00:00 GMT",
       "source": "vijesti.me",
       "category": "portugal_creator_stories",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1544,12 +1555,34 @@
       "video_permission": "not_checked"
     },
     {
+      "title": "Top-Rated Car Insurance Services for Food Delivery Drivers - LoveBelfast",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOdkRSOEtWczlldUM4OUZuSnlUVXVVTEszUnUza0dqQXNpeTdkU1F1Y0pBY2hBUHdRVXUwSW5NYmlIdWt5ZDE2eTBtT25QckEwMzR3TUV5ci00M0c2SkkwNlM3T2g0dDFXeEZFd3VZbEtDVkNzSTA4ZnFQdWdrR1JCaVFEbnZMZmhSaS1zMTZB?oc=5",
+      "published_at": "Thu, 26 Nov 2026 11:22:22 GMT",
+      "source": "LoveBelfast",
+      "category": "uber_eats",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
+      "status": "needs_review",
+      "editorial_note": "",
+      "video_permission": "not_checked"
+    },
+    {
+      "title": "Naspers' local platforms now support 59,000 livelihoods as group bets big abroad - Mail & Guardian",
+      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQMzVCaHkxemthbmNrbGV2ZFEzZk1YUXBrSW5BNnNER1RXVTJ2Y19yY1AyaHhLdkVQS2h4Q0N3OTc3WEx5YUl2Z2JzQkpOODM5SWpQZlhQcDdjdlA1eGRnempLc2Nrb2ZfTERwWi1Oei12UUJGYl9JS3BTSWp6NWp3c1RiWHRFQzU2dFBwMktqdTFWY2RmNk9ESXg3a3ZaYVhvTnVuOEw3V3FoTHJVSzBiUUpCNDZNcmxHenROcDNhVnJZdw?oc=5",
+      "published_at": "Thu, 26 Nov 2026 09:07:39 GMT",
+      "source": "Mail & Guardian",
+      "category": "just_eat",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
+      "status": "needs_review",
+      "editorial_note": "",
+      "video_permission": "not_checked"
+    },
+    {
       "title": "Asylum seeker Deliveroo driver jailed for sexually assaulting two women - Kent Online",
       "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxORzdSOXRyWjBwN2tqTlhRT05qUy1hVW4zSHh3YmpiOGNxQ2ZtaVA0NElXSXJJYmJGelY3c1VzdHM2YjUweGRta01sczBGWGx1TE43T25SUUdyOUtSczFZdGlHZlFCdS0xMXE2VnlaVkdHbmstc0NTZVBjOEtrYkVZT1lEY2Z2ekhWN1RCdm5PTnBfbkpXN2VLMVNEVzRLUlpxQjg0bzdvMHlfdUZNeHFlaA?oc=5",
       "published_at": "Thu, 26 Feb 2026 08:00:00 GMT",
       "source": "Kent Online",
       "category": "deliveroo",
-      "discovered_at": "2026-11-24T02:10:48.055955+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1571,7 +1604,7 @@
       "published_at": "Thu, 25 Nov 2021 08:00:00 GMT",
       "source": "The Grocer",
       "category": "controversies_food_delivery",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
+      "discovered_at": "2026-11-26T16:50:28.418183+00:00",
       "status": "needs_review",
       "editorial_note": "",
       "video_permission": "not_checked"
@@ -1615,39 +1648,6 @@
       "published_at": "Thu, 25 Apr 2024 07:00:00 GMT",
       "source": "Business Daily",
       "category": "glovo",
-      "discovered_at": "2026-11-25T08:27:23.762453+00:00",
-      "status": "needs_review",
-      "editorial_note": "",
-      "video_permission": "not_checked"
-    },
-    {
-      "title": "Spanish Supreme Court rules food-delivery riders are employees, not self-employed - EL PAÍS English",
-      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQYUg1dlFMYWpNYkNrdEs3VzFkT1RoSmZfSE8wdVBBamxfTUF1TjI1OVJtU1RadXMtMmI1bFV1eFZCNHVGUElyNkM4MHFHcTVJd3M3ZmpzMERyMldMSDdSVEhid3hrQmVOT1I1UzZQbmJWYUs1ZWY4OUY3WG5aaTAzQ2RTWEpQblJWbWdVMkRTUHh5Vks5R2N4U1RmdDI4UXhLbU1OcXJFWDRRTGNMYlJsOXl0by13Y043QTJKb0ZaTG1ndWs00gHYAUFVX3lxTE9sZzhpOFNhRXNCYk4xaVVhRF8tajFPYWVFQ1Vrem9scTdjRmJKVEFzLVhvNl9Ob1RRbndlb3B4MXFrZEJEQzZrMWQwclFCTFVocGl0Q3U4UHd1Z05ETlJUU1VMOUpSUUNRZGdEZnlCQVVlUmxBYWNpQ0ptOUNiT0tsZ3FWbFdUYjBNN0RJOTNpTEFfRk80NDlrY0RISHh4RTVLUFcyLVRVT0RCVnVLVUtUYWdRNGk0UHp6eWhrNHJza3htLUc5SUltem9fNVhoemNtSlV1aXRvSQ?oc=5",
-      "published_at": "Thu, 24 Sep 2020 07:00:00 GMT",
-      "source": "EL PAÍS English",
-      "category": "glovo",
-      "discovered_at": "2026-11-25T08:27:23.762453+00:00",
-      "status": "needs_review",
-      "editorial_note": "",
-      "video_permission": "not_checked"
-    },
-    {
-      "title": "UK Court of Appeal confirms Deliveroo riders are self employed - Reuters",
-      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPOXRkeU1Ta2xnb29KMHFMSTJXbFItckJHUGxHeHVZV25fdjcxblpBdnVkVFZiQ05FY3hfVE9iZnhFNjlyN1UxWkpjaDJjbEk5RjhCalE5N1BMU0NqRVJ0MENJeXZMMlNES0FkSVdKNDd3MzFDdHNfNTFYUEkyaTlOTDJCQWlmUzJVMFV3SzN0T3dGZkF1RE05Qzh5WGNuOWdvSHdtMXhwbw?oc=5",
-      "published_at": "Thu, 24 Jun 2021 07:00:00 GMT",
-      "source": "Reuters",
-      "category": "uk_europe_tax_accounts",
-      "discovered_at": "2026-11-26T03:32:43.105740+00:00",
-      "status": "needs_review",
-      "editorial_note": "",
-      "video_permission": "not_checked"
-    },
-    {
-      "title": "Deliveroo shares surge after a UK court rules its couriers are self-employed - CNBC",
-      "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPSlZLb1RYMFRZUE9HN3hvTTM5QWdEeVlBemdWZ3F5NF8xNjlqc19IVm5FR1daNXRjUHh1eVgwYXliUlB6Q2lsdWdwaFhQa09JcFhMTUpqWXVoUDdLdWhfYTBSN2lONWs5c3RmQVJ6dF9oT2lIUUxHa3p4YkZpX29WSng5WU0zREtINnk0QjJDUXZHNGtRTkFBZEJkM2k3RHlYNEh2RdIBqgFBVV95cUxQYTBNVVc1ZklQNmFhaDhYRGdUVlhnOXJPVk5fRmpsNFZnUV9OYW5vOEZORDgzTEpzUUcxaTRfSkVjUUdfejZ2Q0tDRHRzd1A4VUhpWjBpYVFLT2N2OVlmeWNmT2VMaHNDSy1FT1YxSFhiTEM4RmJtRm84YkJrLWVZczAxMkxUNUFicTNGNjZkVGFsTFc4LVNtSDBLQm8ta01LMTJZcGR6eGVKUQ?oc=5",
-      "published_at": "Thu, 24 Jun 2021 07:00:00 GMT",
-      "source": "CNBC",
-      "category": "uk_europe_tax_accounts",
       "discovered_at": "2026-11-25T08:27:23.762453+00:00",
       "status": "needs_review",
       "editorial_note": "",
