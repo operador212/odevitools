@@ -1,6 +1,6 @@
 {
   "project": "INREAIS DELIVERY",
-  "updated_at": "2026-11-27T01:43:00.734699+00:00",
+  "updated_at": "2026-11-27T12:11:14.794927+00:00",
   "source_policy": "Headlines and links for editorial review; no video reuse permission is implied.",
   "items": [
     {
@@ -1654,5 +1654,74 @@
       "video_permission": "not_checked"
     }
   ],
-  "feed_errors": []
+  "feed_errors": [
+    {
+      "category": "uber_eats",
+      "error": "HTTP Error 503: Service Unavailable"
+    },
+    {
+      "category": "deliveroo",
+      "error": "HTTP Error 503: Service Unavailable"
+    },
+    {
+      "category": "just_eat",
+      "error": "HTTP Error 503: Service Unavailable"
+    },
+    {
+      "category": "glovo",
+      "error": "HTTP Error 503: Service Unavailable"
+    },
+    {
+      "category": "brazil",
+      "error": "HTTP Error 503: Service Unavailable"
+    },
+    {
+      "category": "brazil_platform_updates",
+      "error": "HTTP Error 503: Service Unavailable"
+    },
+    {
+      "category": "brazil_creator_stories",
+      "error": "HTTP Error 503: Service Unavailable"
+    },
+    {
+      "category": "portugal",
+      "error": "HTTP Error 503: Service Unavailable"
+    },
+    {
+      "category": "portugal_platform_updates",
+      "error": "HTTP Error 503: Service Unavailable"
+    },
+    {
+      "category": "portugal_creator_stories",
+      "error": "HTTP Error 503: Service Unavailable"
+    },
+    {
+      "category": "uk_europe_tax_accounts",
+      "error": "HTTP Error 429: Too Many Requests"
+    },
+    {
+      "category": "ireland",
+      "error": "HTTP Error 503: Service Unavailable"
+    },
+    {
+      "category": "uk",
+      "error": "HTTP Error 503: Service Unavailable"
+    },
+    {
+      "category": "viral_food_delivery",
+      "error": "HTTP Error 503: Service Unavailable"
+    },
+    {
+      "category": "controversies_food_delivery",
+      "error": "HTTP Error 503: Service Unavailable"
+    },
+    {
+      "category": "curious_food_delivery",
+      "error": "HTTP Error 503: Service Unavailable"
+    },
+    {
+      "category": "creator_food_delivery",
+      "error": "HTTP Error 503: Service Unavailable"
+    }
+  ]
 }
